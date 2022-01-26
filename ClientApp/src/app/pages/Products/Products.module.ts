@@ -18,6 +18,7 @@ import{NgxPaginationModule} from 'ngx-pagination';
 import { AllInventoryComponent } from './AllInventory/AllInventory.component';
 import { StockinService } from './../../../../src/app/_service/stockin.service';
 import { NgxSpinnerModule, NgxSpinnerService } from 'ngx-spinner';
+import { AddInventoryComponent } from './AddInventory/AddInventory.component';
 
 @NgModule({
   imports: [
@@ -54,7 +55,7 @@ import { NgxSpinnerModule, NgxSpinnerService } from 'ngx-spinner';
   declarations: [ProductsComponent,
   AddProductComponent,
 AllProductComponent,
-AllInventoryComponent],
+AllInventoryComponent,AddInventoryComponent],
 providers: [
 Supplier,SupplierService,Product,StockinService,NgxSpinnerService
 ]

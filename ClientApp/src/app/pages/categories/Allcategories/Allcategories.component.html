@@ -9,7 +9,7 @@
       <span class="code-header">All Categories Detail</span>
 
       <div class="row" *ngIf="!showform">
-        <div class="col-sm-10">
+        <div class="col-sm-11">
           <button
             class="btn btn-success pull-right"
             (click)="createCategory(categoryModal)"
@@ -31,7 +31,7 @@
                 Status<i class="fa fa-sort"></i>
               </th>
               
-              <th (click)="Sort('id')">
+              <th >
                 Image<i class="fa fa-sort"></i>
               </th>
               <th (click)="Sort('description')">
@@ -51,10 +51,13 @@
             >
               <td style="width: 2px">{{ i + 1 }}</td>
               <td>{{ obj.name }}</td>
-              <td>{{ obj.status }}</td>
+              <td *ngIf="obj.status;else falsee "><img style="height: 20px;" src="assets/icon/check.png"/></td>
+              <ng-template #falsee>
+                <td><img style="height: 20px;" src="assets/icon/cancel.png"/></td>
+              </ng-template>
               <td *ngIf="obj.imageUrl != noimage; else nImage">
                 <img
-                  [src]="ImagebaseUrl + obj.imageUrl"
+                  [src]="ImagebaseUrl+obj.imageUrl"
                   style="height: 40px"
                 />
               </td>
@@ -73,11 +76,19 @@
                     ></i>
                   </div> -->
                   <div style="padding: 4px">
-                    <i
+                    <div *ngIf="obj.status;else deact ">  <i
                       class="fa fa-edit"
-                      style="font-size: 18px; color: rgb(0, 195, 255)"
+                      style="font-size: 18px;margin-right: 5px; color: rgb(0, 195, 255)"
                       (click)="UpdateView(categoryModal, obj.id)"
-                    ></i>
+                    ></i> | <img src="assets/images/on.png" title="Active Supplier" (click)="changestatus(obj)"  >  </div>
+                    <ng-template #deact>    <i
+                      class="fa fa-edit"
+                      style="font-size: 18px;margin-right: 5px; color: rgb(0, 195, 255)"
+                      (click)="UpdateView(categoryModal, obj.id)"
+                    ></i>  | 
+                     <img src="assets/images/off.png" title="DeActive Product"(click)="changestatus(obj)" >                 
+                    </ng-template>
+                  
                   </div>
                 </div>
               </td>

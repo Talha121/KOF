@@ -18,7 +18,7 @@ GetSalemans(){
   return this.http.get<any>(this.baseUrl2+'AllSalesmans')
 };
 Updatestatus(Id:number):Observable<any>{
-debugger;
+
   return this.http.post<any>(this.baseUrl2+'StatusChangesalesman', Id)}
 
 

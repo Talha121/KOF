@@ -78,7 +78,7 @@ this.uploadfileservice.uploadbannerimage(this.fileData,apipath).subscribe(res =>
   GetBanners(){
     this.SpinnerService.show();
     this.bannerservice.GetBannerData().subscribe((next:any) => {
-      debugger;
+      
       this.bannerslist=[];
   
       this.bannerslist=next.res;

@@ -1,0 +1,98 @@
+
+
+<div class="row">
+<div class="col-md-4"> 
+  <label>Select Supplier</label>
+  <select class="custom-select"  [(ngModel)]="supplierid" >
+    <option *ngFor="let option of supplier" [ngValue]="option.id">
+      {{option.name}}
+    </option>
+  
+  </select>
+
+</div>
+</div>
+<div class="row">
+ <div class="col-md-12">
+  <br>
+  <table class="table table-hover">
+    <thead>
+      <tr>
+        <th>Product Name</th>    
+        <th>Unit(kg)</th>
+        <th>Quntity</th>
+        <th>Cost Per Unit</th>
+        <th>Total Cost</th>
+        <th>Price Per Unit</th>
+        <th>Total Price</th>
+        <th>Action</th>
+      </tr>
+      <tr>
+        <th>
+          <select  class="form-control" [(ngModel)]="productid"class="custom-select"  >
+            <option *ngFor="let option of productlist" [ngValue]="option.product.id" >
+              {{option.product.name}}
+            </option>
+          
+          </select>
+        </th>
+        <th>    <select  class="form-control" [(ngModel)]="unit" class="custom-select"  >
+          <option Value="1/2 Kg"> 1/2 Kg.</option>
+          <option Value="1 Kg"> 1 Kg.</option>
+            
+        
+          <!-- <option [ngValue]="1 Kg" >
+            1 Kg.
+          </option> -->
+        </select>
+      </th>
+        <th   ><input class="form-control" type="number" [(ngModel)]="quantity" placeholder="qty"></th>
+      
+        <th>        
+               
+          <input class="form-control" type="number"  id="milliseconds"[(ngModel)]="costPerUnit" placeholder="Per unit Price">
+        
+        </th>
+        <th style="margin-bottom: 5px;"> {{costPerUnit*quantity}}</th>
+        <th>
+      
+          <input class="form-control" type="number"  [(ngModel)]="pricePerUnit" placeholder="Per Unit Price">
+        
+        </th>
+        <th style="margin-bottom: 5px;">{{pricePerUnit*quantity}}</th>
+        <th ><button class="btn btn-success btn-sm" (click)="Add()" style="padding: 7px;">Add</button> </th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let item of Addtocart">
+        <td>{{item.productname}}</td>        
+        <td>{{item.unit}}</td>
+        <td>{{item.quantity}}</td>
+        <td>{{item.costPerUnit}}</td>
+        <td>{{item.totalCost}}</td>
+        <td>{{item.pricePerUnit}}</td>
+        <td>{{item.totalPrice}}</td>
+        <td><button class="btn btn-danger btn-sm"(click)="remove(item.productid)" style="padding: 7px;">Remove</button> </td>
+      </tr>
+  <tr>
+    <hr>
+  </tr>
+  
+     <tr>
+      <th>TOTAL</th>
+      <th> </th>
+      <th style="color: green;">{{TotalQty}}</th>
+ 
+      <th></th>
+      <th style="color: green;">{{TotalcostPrice}}</th>
+      <th></th>
+      <th style="color: green;">{{TotalSalePrice}}</th>
+      <th><button class="btn btn-success" (click)="SaveInventory()" style="padding: 7px;"  *ngIf="TotalQty!=0&&TotalcostPrice!=0&&TotalSalePrice!=0">Save </button></th>
+      <tr>
+
+      </tr>
+     
+    </tbody>
+  </table>
+ </div>
+</div>

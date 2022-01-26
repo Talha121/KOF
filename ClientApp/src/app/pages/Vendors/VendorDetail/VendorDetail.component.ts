@@ -61,7 +61,7 @@ Checker:boolean;
     this.SpinnerService.show();
     this.vendorservice.Vendordetail(Id).subscribe((next:any)=>{
       this.vendorInfo=next.resp;
-      debugger;
+      
       this.SpinnerService.hide();
     }, error => {
       console.log(error);
@@ -71,7 +71,7 @@ Checker:boolean;
   {
     this.vendorservice.VendorOrders(Id).subscribe((next:any)=>{
       this.VendorOrder=next.resp;
-      debugger;
+      
     
  
     }, error => {
@@ -82,7 +82,7 @@ Checker:boolean;
   {
     this.vendorservice.Vendorladger(Id).subscribe((next:any)=>{
       this.vendorLadger=next.res;
-      debugger;
+      
     
       console.log(this.vendorLadger)
     }, error => {
@@ -90,7 +90,7 @@ Checker:boolean;
     });
   }
   openLg(Showdetail,id:number) {
-    debugger;
+    
   
    this.data=this.VendorOrder.find(x=>x.orderId==id);
    

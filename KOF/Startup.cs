@@ -1,8 +1,11 @@
 using KOF.Context;
 using KOF.Services.CategoryService;
 using KOF.Services.GenericService;
+using KOF.Services.InventoryService;
+using KOF.Services.OrderService;
 using KOF.Services.ProductImageService;
 using KOF.Services.ProductService;
+using KOF.Services.SupplierService;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -38,6 +41,9 @@ namespace KOF
             services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
             services.AddScoped<ICategoryService, CategoryService>();
             services.AddScoped<IProductService, ProductService>();
+            services.AddScoped<IInventoryService, InventoryService>();
+            services.AddScoped<IOrderService, OrderService>();
+            services.AddScoped<ISupplierService, SupplierService>();
             services.AddScoped<IProductImageService, ProductImageService>();
             services.AddSwaggerGen(options =>
             {

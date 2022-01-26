@@ -12,7 +12,7 @@
 		</CustomData>
 		<CustomData Category="Reference" Type="Assembly">
 			<Metadata Name="LogicalName" Value="KOFDB.dll" />
-			<Metadata Name="FileName" Value="G:\PROJECTS\KOF-UPDATED\KOFDB\OBJ\DEBUG\KOFDB.DLL" />
+			<Metadata Name="FileName" Value="D:\KOF\KOF\KOFDB\OBJ\DEBUG\KOFDB.DLL" />
 			<Metadata Name="AssemblyName" Value="KOFDB" />
 			<Metadata Name="PermissionSet" Value="SAFE" />
 			<Metadata Name="Owner" Value="" />
@@ -20,7 +20,7 @@
 			<Metadata Name="IsVisible" Value="True" />
 			<Metadata Name="IsModelAware" Value="True" />
 			<Metadata Name="SkipCreationIfEmpty" Value="True" />
-			<Metadata Name="AssemblySymbolsName" Value="G:\Projects\KOF-Updated\KOFDB\obj\Debug\KOFDB.pdb" />
+			<Metadata Name="AssemblySymbolsName" Value="D:\KOF\KOF\KOFDB\obj\Debug\KOFDB.pdb" />
 		</CustomData>
 		<CustomData Category="SqlCmdVariables" Type="SqlCmdVariable" />
 	</Header>

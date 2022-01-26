@@ -34,14 +34,14 @@ export class PosOrderComponent implements OnInit {
   
   }
   openOrderDetailLg(content,id:number) {
-    debugger;
+    
     var data=this.OrdersList.find(res=>res.orderId==id);
     this.orderitemns=data.items;
     
     this.modalService.open(content, { size: 'lg' });
   }
   openOrderUpdateLg(content,id:number) {
-    debugger;
+    
    this.statusorderid=id;
     
     this.modalService.open(content, { size: 'lg' });
@@ -49,7 +49,7 @@ export class PosOrderComponent implements OnInit {
  
  
   SearchRider(){
-    debugger;
+    
     if(this.ordercode==""){
       this.SearchOrdersList=this.OrdersList
      }

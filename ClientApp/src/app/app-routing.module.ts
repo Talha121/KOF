@@ -45,9 +45,15 @@ const routes: Routes = [
       //   canActivate: [AuthGuard]
       // }, 
       {
+        path: 'supplier',
+        loadChildren: () => import('./pages/supplier/supplier.module').then(m => m.SupplierModule),
+       // canActivate: [AuthGuard]
+        
+       },
+      {
         path: 'user',
         loadChildren: () => import('./pages/user/profile/profile.module').then(m => m.ProfileModule),
-        canActivate: [AuthGuard]
+       // canActivate: [AuthGuard]
         
        },
        // {
@@ -58,12 +64,12 @@ const routes: Routes = [
       {
         path: 'products',
         loadChildren: () => import('./pages/Products/Products.module').then(m => m.ProductsModule),
-        canActivate: [AuthGuard]
+       // canActivate: [AuthGuard]
      
       },
       {
         path: 'allproducts', redirectTo: 'products/allproducts', pathMatch: 'full',
-        canActivate: [AuthGuard]
+       // canActivate: [AuthGuard]
       },
       {
         path: 'allCategories',
@@ -71,43 +77,52 @@ const routes: Routes = [
         // ,canActivate: [AuthGuard]
      
       },
-      {
-        path: 'allBrands',
-        loadChildren: () => import('./pages/Brands/Brands.module').then(m => m.BrandsModule),canActivate: [AuthGuard]
+
+      // {
+      //   path: 'allBrands',
+      //   loadChildren: () => import('./pages/Brands/Brands.module').then(m => m.BrandsModule)
      
-      },
+      // },
+
       {
         path: 'allorders',
-        loadChildren: () => import('./pages/Orders/Orders.module').then(m => m.OrdersModule),canActivate: [AuthGuard]
+        loadChildren: () => import('./pages/Orders/Orders.module').then(m => m.OrdersModule)
      
-      },{  path: 'posorders', redirectTo: '/allorders/posorders', pathMatch: 'full'},
+      },
+      {  path: 'posorders', redirectTo: '/allorders/posorders', pathMatch: 'full'},
     
     {
         path: 'allvendors',
-        loadChildren: () => import('./pages/Vendors/Vendors.module').then(m => m.VendorsModule),canActivate: [AuthGuard]
+        loadChildren: () => import('./pages/Vendors/Vendors.module').then(m => m.VendorsModule)
      
       },
-      {
-        path: 'venderDetails', redirectTo: '/allvendors/venderDetails/11', pathMatch: 'full',canActivate: [AuthGuard]
+      // {
+      //   path: 'venderDetails', redirectTo: '/allvendors/venderDetails/11', pathMatch: 'full'
      
-      },
+      // },
     
       {
-        path: 'inventory', redirectTo: 'products/inventory', pathMatch: 'full',canActivate: [AuthGuard]
+        path: 'inventory', redirectTo: 'products/inventory', pathMatch: 'full'
+     
+     
+      },
+       
+      {
+        path: 'addinventory', redirectTo: 'products/addinventory', pathMatch: 'full'
      
      
       }
-      , {
-        path: 'banner',
-        loadChildren: () => import('./pages/Banner/Banner.module').then(m => m.BannerModule),canActivate: [AuthGuard]
+      // , {
+      //   path: 'banner',
+      //   loadChildren: () => import('./pages/Banner/Banner.module').then(m => m.BannerModule)
      
-      },
+      // },
       
-      {
-        path: 'addsalesman',
-        loadChildren: () => import('./pages/Salesman/Salesman.module').then(m => m.SalesmanModule),canActivate: [AuthGuard]
+      // {
+      //   path: 'addsalesman',
+      //   loadChildren: () => import('./pages/Salesman/Salesman.module').then(m => m.SalesmanModule)
      
-      },
+      // },
     
    
     ]

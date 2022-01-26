@@ -28,3 +28,12 @@ G:\Projects\KOF-Updated\KOFDB\obj\Debug\postdeploy.sql
 G:\Projects\KOF-Updated\KOFDB\obj\Debug\predeploy.sql
 G:\Projects\KOF-Updated\KOFDB\obj\Debug\KOFDB.dll
 G:\Projects\KOF-Updated\KOFDB\obj\Debug\KOFDB.pdb
+D:\KOF\KOF\KOFDB\bin\Debug\KOFDB.dacpac
+D:\KOF\KOF\KOFDB\bin\Debug\KOFDB.dll
+D:\KOF\KOF\KOFDB\bin\Debug\KOFDB.pdb
+D:\KOF\KOF\KOFDB\obj\Debug\Model.xml
+D:\KOF\KOF\KOFDB\obj\Debug\refactor.xml
+D:\KOF\KOF\KOFDB\obj\Debug\postdeploy.sql
+D:\KOF\KOF\KOFDB\obj\Debug\predeploy.sql
+D:\KOF\KOF\KOFDB\obj\Debug\KOFDB.dll
+D:\KOF\KOF\KOFDB\obj\Debug\KOFDB.pdb

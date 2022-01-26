@@ -3,7 +3,6 @@ import { Component, ElementRef, EventEmitter, Input, OnInit, Output, SimpleChang
 
 import { FormArray, FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { SupplierService } from './../../../_service/supplier.service';
 //import { Supplier } from 'src/app/Models/Supplier.model';
  import { Supplier } from './../../../Models/Supplier.model';
 import { Product } from './../../../Models/Product.Model';
@@ -34,21 +33,19 @@ export class AddProductComponent implements OnInit {
   CategoryDto:{};
   newpackage(){
     return this.fb.group({
-      ProductId:new FormControl(this.productmodel.productId),
-      ProductName:new FormControl(this.productmodel.productName),
-      Barcode:new FormControl(this.productmodel.barcode),
-      Brand_Name:new FormControl(this.productmodel.brand_Name),
-      Description:new FormControl(this.productmodel.description),
-      Product_Qty:new FormControl(this.productmodel.product_Qty),
+      productId:new FormControl(this.productmodel.productId),
+      name:new FormControl(this.productmodel.name),
+      categoryId:new FormControl(this.productmodel.categoryId),
+      about:new FormControl(this.productmodel.about),
+      description:new FormControl(this.productmodel.description),
      // Product_TotalPrice:new FormControl(this.productmodel.product_TotalPrice),
-      Unit_Price:new FormControl(this.productmodel.unit_Price),
-      ProductInventory_SellingPrice:new FormControl(this.productmodel.sellingprice),
+     isActive:new FormControl(this.productmodel.isActive),
   
     });
   }
 
 
-  constructor(private modalService: NgbModal,private model:Supplier,private http:HttpClient,private supplierservice:SupplierService,private productmodel:Product, private fb:FormBuilder,private productservice:ProductService, public fileUploadService: FileuploadService,private alertify: AlertifyService)
+  constructor(private modalService: NgbModal,private model:Supplier,private http:HttpClient,private productmodel:Product, private fb:FormBuilder,private productservice:ProductService, public fileUploadService: FileuploadService,private alertify: AlertifyService)
    {
     this.productinfos=this.fb.group({ 
       products:this.fb.array([this.newpackage()])
@@ -64,17 +61,9 @@ export class AddProductComponent implements OnInit {
     
       avatar: [null]
     })
-    this.GetSuppliers()
+   
   }
- supplier:FormGroup=new FormGroup({
-  supplier_Name: new FormControl(this.model.supplier_Name),
-  supplier_CompanyName: new FormControl(this.model.supplier_CompanyName),
-  supplier_ContactNo: new FormControl(this.model.supplier_ContactNo),
-  supplier_Address: new FormControl(this.model.supplier_Address),
-  supplier_CityName: new FormControl(this.model.supplier_CityName),
-  supplier_Email: new FormControl(this.model.supplier_Email),
-
- });
+ s
  categorey:FormGroup=new FormGroup({
  
   category_Name: new FormControl('')
@@ -84,9 +73,7 @@ export class AddProductComponent implements OnInit {
 
 
 
- supplierinfo:FormGroup=new FormGroup({
-   supplier_Id:new FormControl(this.model.supplier_Id)
- });
+ 
  categoreyinfo:FormGroup=new FormGroup({
   categorey_Id:new FormControl('')
 });
@@ -145,21 +132,7 @@ addNewRow() {
       console.log(error);
     });
   }
-  savesupplier(){
-    
-    
-    this.supplierservice.postsupplier(this.supplier.value).subscribe(next => {
-      console.log(next);
-      this.GetSuppliers();
-      this.supplier.reset();
-     
-      this.modalService.dismissAll();
 
-      
-    }, error => {
-      console.log(error);
-    });
-  }
   removeQuantity(i:number) {
     if(this.formArr.length == 1){
       return false
@@ -169,17 +142,7 @@ addNewRow() {
     //this.hidden = true;
     }
   }
-  GetSuppliers(){
-    
-    this.supplierservice.Getsupplier().subscribe((next:any) => {
-      this.supplierlist=[];
-    
-      this.supplierlist=next;
-      console.log(this.supplierlist);
-    }, error => {
-      console.log(error);
-    });
-  }
+
   Getcategorey(){
     
     this.productservice.GetCategorey().subscribe((next:any) => {
@@ -209,7 +172,6 @@ addNewRow() {
   onOptionsSelected(id){
 console.log(id);
 
-this.selectedsupplier=this.supplierlist.find(x=> x.supplier_Id == id);
 this.showcategoreysection=true;
 this.Getcategorey();
 console.log(this.selectedsupplier);
@@ -232,25 +194,25 @@ this.singlecategorey=this.categoreylist.find(x=>x.category_Id==id)
   }
   onBarcodechange(Barcode,id){
     
-    var productdetails=this.categoreyproducts.find(x=>x.barcode==Barcode);
+    var productdetails=this.categoreyproducts.find(x=>x.name==Barcode);
 
 if(productdetails!=null&&productdetails!=undefined){
 
   this.selectedbarcodeproduct=productdetails;
-  ((this.productinfos.get('products') as FormArray).at(id) as FormGroup).get('ProductId').patchValue(this.selectedbarcodeproduct.productId);
-  ((this.productinfos.get('products') as FormArray).at(id) as FormGroup).get('ProductName').patchValue(this.selectedbarcodeproduct.productName);
-  ((this.productinfos.get('products') as FormArray).at(id) as FormGroup).get('Brand_Name').patchValue(this.selectedbarcodeproduct.brand_Name);
-  ((this.productinfos.get('products') as FormArray).at(id) as FormGroup).get('Product_Qty').patchValue(this.selectedbarcodeproduct.product_Qty);
-  ((this.productinfos.get('products') as FormArray).at(id) as FormGroup).get('Description').patchValue(this.selectedbarcodeproduct.description);
-  ((this.productinfos.get('products') as FormArray).at(id) as FormGroup).get('Unit_Price').patchValue(this.selectedbarcodeproduct.unit_Price);
+  ((this.productinfos.get('products') as FormArray).at(id) as FormGroup).get('productId').patchValue(this.selectedbarcodeproduct.productId);
+  ((this.productinfos.get('products') as FormArray).at(id) as FormGroup).get('name').patchValue(this.selectedbarcodeproduct.name);
+  ((this.productinfos.get('products') as FormArray).at(id) as FormGroup).get('about').patchValue(this.selectedbarcodeproduct.about);
+  ((this.productinfos.get('products') as FormArray).at(id) as FormGroup).get('description').patchValue(this.selectedbarcodeproduct.description);
+  ((this.productinfos.get('products') as FormArray).at(id) as FormGroup).get('categoryId').patchValue(this.selectedbarcodeproduct.categoryId);
+  ((this.productinfos.get('products') as FormArray).at(id) as FormGroup).get('isActive').patchValue(this.selectedbarcodeproduct.isActive);
 }
 else{
-  ((this.productinfos.get('products') as FormArray).at(id) as FormGroup).get('ProductId').patchValue(0);
-  ((this.productinfos.get('products') as FormArray).at(id) as FormGroup).get('ProductName').patchValue("");
-  ((this.productinfos.get('products') as FormArray).at(id) as FormGroup).get('Brand_Name').patchValue("");
-  ((this.productinfos.get('products') as FormArray).at(id) as FormGroup).get('Product_Qty').patchValue("");
-  ((this.productinfos.get('products') as FormArray).at(id) as FormGroup).get('Description').patchValue("");
-  ((this.productinfos.get('products') as FormArray).at(id) as FormGroup).get('Unit_Price').patchValue("");
+  ((this.productinfos.get('products') as FormArray).at(id) as FormGroup).get('productId').patchValue(0);
+  ((this.productinfos.get('products') as FormArray).at(id) as FormGroup).get('name').patchValue("");
+  ((this.productinfos.get('products') as FormArray).at(id) as FormGroup).get('about').patchValue("");
+  ((this.productinfos.get('products') as FormArray).at(id) as FormGroup).get('description').patchValue("");
+  ((this.productinfos.get('products') as FormArray).at(id) as FormGroup).get('categoryId').patchValue(0);
+  ((this.productinfos.get('products') as FormArray).at(id) as FormGroup).get('isActive').patchValue(0);
 }
 
 

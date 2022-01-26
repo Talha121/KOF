@@ -1,0 +1,156 @@
+
+
+    <div class="row">
+      <div class="col-sm-12">
+<!-- Hover table card start -->
+<app-card [title]="'Suppliers'" [classHeader]="true" [blockClass]="'table-border-style'">
+  <span class="code-header">All Suppliers Detail</span>
+<div [formGroup]="AddSuppluerForm" *ngIf="trigger" >
+  <div class="row" >
+    <div class="col-md-1">
+
+    </div>
+    <div class="col-sm-11 fa-pull-right" >
+ 
+       <div class="row">
+            
+             <div class="col-md-3">
+              <label for="usr">Name:</label>
+              <input type="text" class="form-control" formControlName="name" >
+              </div>
+               <div class="col-md-3">
+                <label for="usr">Contact No:</label>
+                <input type="text" class="form-control" formControlName="phone" >
+             </div> 
+             <div class="col-md-3">
+              <label for="usr">Email:</label>
+              <input type="text" class="form-control" formControlName="email" >
+           </div> 
+       
+      <div class="col-md-1">
+
+        </div> 
+          
+     </div>
+    </div>
+  </div>
+ <div class="row" >
+    <div class="col-md-1">
+
+    </div>
+    <div class="col-sm-11 fa-pull-right" >
+ 
+       <div class="row">
+             <div class="col-md-3">
+              <label for="usr">Company Name:</label>
+              <input type="text" placeholder="company Name" class="form-control" formControlName="company">
+                
+             </div>
+             <div class="col-md-3">
+              <label for="usr">Address:</label>
+              <input type="text" class="form-control" formControlName="address">
+      
+          </div>
+    
+      
+    <div class="col-md-1">
+
+    </div>
+         
+     </div>
+    </div>
+  </div>
+  <div class="row" >
+    <div class="col-md-1">
+
+    </div>
+  
+  </div>
+  <br>
+  <div class="row">
+<div class="col-md-8">
+  <button class="btn btn-success pull-right" (click)="AddSalesman()">Save</button> 
+</div>
+<div class="col-md-4">
+  <button class="btn btn-warning pull-left" (click)="closeform()">Cancle</button> 
+</div>
+  </div>
+
+</div>
+<div *ngIf="!trigger">
+<div class="row">
+<div class="col-md-11">
+  <button class="btn btn-info pull-right" (click)="ViewForm()">Add Supplier</button> 
+</div>
+</div>
+</div>
+<div >
+
+</div>
+<br>
+<div class="table-responsive"style="padding: 2%;">
+  <table class="table table-hover">
+    <thead>
+      <tr>
+        <th (click)="Sort('id')">#<i class="fa fa-sort"></i></th>
+          <th (click)="Sort('name')" > Name <i class="fa fa-sort"></i></th>
+          <th (click)="Sort('company')">Company <i class="fa fa-sort"></i></th>
+          <th (click)="Sort('email')">email <i class="fa fa-sort"></i></th>
+          <th (click)="Sort('phone')">Contact No <i class="fa fa-sort"></i></th>
+          <th (click)="Sort('address')">Address <i class="fa fa-sort"></i></th>
+          <th (click)="Sort('isActive')">Status <i class="fa fa-sort"></i> </th>
+          <th>Action </th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let item of supplier|orderBy:key :reverse | paginate:{itemsPerPage:10,currentPage:p}; let i=index;">
+        <td style="width: 2px;">{{i+1}}</td>
+          <th >{{item?.name}}</th>
+          <th >{{item?.company}}</th>
+          <th>{{item?.email}}</th>
+          <th>{{item?.phone}}</th>
+          <th>{{item?.address}}</th>
+          <th *ngIf="item?.isActive;else falsee "><img style="height: 20px;" src="assets/icon/check.png"/></th>
+            <ng-template #falsee>
+              <th><img style="height: 20px;" src="assets/icon/cancel.png"/></th>
+            </ng-template>
+          <th>
+          
+            <div >
+              <div *ngIf="item.isActive;else deact ">  <i
+                class="fa fa-edit"
+                style="font-size: 18px;margin-left: 5px; color: rgb(0, 195, 255)"
+                (click)="UpdateView(item.id)"
+              ></i> | <img src="assets/images/on.png" title="Active Supplier" (click)="changestatus(item)"  >      </div>
+              <ng-template #deact>     <i
+                class="fa fa-edit"
+                style="font-size: 18px;margin-left: 5px; color: rgb(0, 195, 255)"
+                (click)="UpdateView(item.id)"
+              ></i> |
+               <img src="assets/images/off.png" title="DeActive Product"(click)="changestatus(item)" >
+           
+              </ng-template>
+         
+              
+            </div>
+          </th>
+      </tr>
+    </tbody>
+   </table>
+  <div class="row">
+    <div style="right: 10%;">
+      <pagination-controls (pageChange)="p=$event"></pagination-controls>
+  </div>
+</div>
+</div>
+
+</app-card>
+      </div>
+    </div>
+
+    <ngx-spinner bdColor="rgba(51, 51, 51, 0.8)" size="default" type="ball-spin-clockwise">  
+      <p style="color: white">Please Wait. </p>  
+      </ngx-spinner> 
+
+
+  

@@ -1,8 +1,7 @@
 export class ProductInventory {
-dateTime: string
-
+supplierid:number
 productId: number
-productInventory_Qty: number
+quntity: number
 productInventory_SellingPrice: number
 productInventory_Status: boolean
 productInventory_UnitPrice: number

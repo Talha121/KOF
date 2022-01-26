@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
+import { AddInventoryComponent } from './AddInventory/AddInventory.component';
 import { AllInventoryComponent } from './AllInventory/AllInventory.component';
 import { AllProductComponent } from './AllProduct/AllProduct.component';
 
@@ -33,6 +34,16 @@ const routes: Routes = [
       breadcrumb: 'Inventory',
       icon: 'icofont-table bg-c-blue',
       breadcrumb_caption: 'Inventory With All Products And Details',
+      status: true
+    }
+  },
+  {
+    path: 'addinventory',
+    component: AddInventoryComponent,
+    data: {
+      breadcrumb: 'Add Inventory',
+      icon: 'icofont-table bg-c-blue',
+      breadcrumb_caption: 'Inventory Detail ',
       status: true
     }
   }

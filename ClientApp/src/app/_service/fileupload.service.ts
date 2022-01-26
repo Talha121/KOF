@@ -8,7 +8,7 @@ import { environment } from '../../../src/environments/environment.prod';
   providedIn: 'root'
 })
 export class FileuploadService {
-  baseUrl = environment.apiurl + 'ProductApi/';
+  baseUrl = environment.apiurl + 'Product/';
   baseurl2= environment.apiurl + 'AddDataWithExcelApi/';
   baseurl3= environment.apiurl + 'DashboardApi/';
 constructor(private http: HttpClient) { }
@@ -24,8 +24,12 @@ uploadproductfile(profileImage: File,apipath:string): Observable<any> {
     catchError(this.errorMgmt)
   )
 }
+removeimage(id:number){
+var url=this.baseUrl
+  return this.http.delete<any>(this.baseUrl+'deleteproductimage?Id='+id)
+};
 uploadbannerimage(profileImage: File,apipath:string): Observable<any> {
-  debugger;
+  
   var formData: any = new FormData();
 
   formData.append("image", profileImage);
@@ -38,13 +42,16 @@ uploadbannerimage(profileImage: File,apipath:string): Observable<any> {
     catchError(this.errorMgmt)
   )
 }
-uploadproductimage(profileImage: File,apipath:string,id:number): Observable<any> {
+uploadproductimage(profileImage: File [],apipath:string,id:number): Observable<any> {
   var formData: any = new FormData();
 
-  formData.append("ProductImage", profileImage);
+profileImage.forEach(element => {
+  formData.append("image", element);
+});
+  
   formData.append("productId",id);
 
-  return this.http.post(this.baseUrl+apipath, formData, {
+  return this.http.put(this.baseUrl+apipath, formData, {
     reportProgress: true,
     observe: 'events'
   }).pipe(
@@ -52,7 +59,7 @@ uploadproductimage(profileImage: File,apipath:string,id:number): Observable<any>
   )
 }
 uploadbrandimage(profileImage: File,apipath:string,id:number): Observable<any> {
-  debugger;
+  
   var formData: any = new FormData();
 
   formData.append("Image", profileImage);
@@ -66,7 +73,7 @@ uploadbrandimage(profileImage: File,apipath:string,id:number): Observable<any> {
   )
 }
 uploadcategoryimage(profileImage: File,apipath:string,id:number): Observable<any> {
-  debugger;
+  
   var formData: any = new FormData();
 
   formData.append("Image", profileImage);

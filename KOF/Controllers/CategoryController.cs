@@ -54,12 +54,31 @@ namespace KOF.Controllers
             }
         }
         [HttpPut("UpdateCategory")]
-        public async Task<IActionResult> Put([FromBody] CategoreyDto category)
+        public async Task<IActionResult> Put([FromForm] CategoreyDto category)
         {
             try
             {
                 var data = await _categoryService.UpdateCategory(category);
                 if (data == "success")
+                {
+                    return Ok(new { response = data });
+                }
+                return BadRequest(new { response = data });
+            }
+            catch (Exception ex)
+            {
+
+                return BadRequest(ex.Message);
+            }
+        }
+        [HttpPut("categorystatus")]
+        public async Task<IActionResult> changestatus([FromBody] Category category)
+        {
+            try
+            {
+                category.Status = !category.Status;
+                var data = await _categoryService.UpdateAsync(category);
+                if (data !=null)
                 {
                     return Ok(new { response = data });
                 }

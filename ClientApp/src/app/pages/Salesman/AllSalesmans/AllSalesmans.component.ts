@@ -28,7 +28,7 @@ export class AllSalesmansComponent implements OnInit {
     })
   }
   AddSalesman(){
-    debugger;
+    
  
    this.salemanservice.AddSalesman("pakistan").subscribe(next => {
    }, error => {

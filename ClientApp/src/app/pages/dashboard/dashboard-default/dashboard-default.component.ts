@@ -42,7 +42,7 @@ export class DashboardDefaultComponent implements OnInit {
   ngOnInit() {
     this.dashboard();
     this.GetInventory();
-    debugger;
+    
     let currentDate=new Date();
     this.Datefilterform.setValue({
       FromDate:currentDate,
@@ -324,12 +324,12 @@ export class DashboardDefaultComponent implements OnInit {
    });
  
    filterdate(){
-     debugger;
-    this.SpinnerService.show();
+     
+    // this.SpinnerService.show();
   
     console.log(this.Datefilterform.value)
    this.dashboardservice.Datefilter(this.Datefilterform.value).subscribe(next => {
-    this.SpinnerService.hide();
+    // this.SpinnerService.hide();
     this.Datewisedata=next.res;
     console.log(this.Datewisedata);
    }, error => {
@@ -360,12 +360,12 @@ export class DashboardDefaultComponent implements OnInit {
     this.reverse=!this.reverse;
   }
   dashboard(){
-    this.SpinnerService.show();
+    // this.SpinnerService.show();
     this.dashboardservice.GetDashboardData().subscribe((next:any) => {
       this.Dashboarddata=[];
  
       this.Dashboarddata=next.res;
-      this.SpinnerService.hide();
+      // this.SpinnerService.hide();
       console.log(this.Dashboarddata)
     }, error => {
       console.log(error);

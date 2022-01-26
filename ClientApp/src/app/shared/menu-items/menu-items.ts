@@ -41,13 +41,13 @@ const MENUITEMS = [
         type: 'link',
         icon: 'ti-home'
       },  
-      {
-        state: 'pos',
-        short_label: 'P',
-        name: 'POS',
-        type: 'link',
-        icon: 'ti-home'
-      },       
+      // {
+      //   state: 'pos',
+      //   short_label: 'P',
+      //   name: 'POS',
+      //   type: 'link',
+      //   icon: 'ti-home'
+      // },       
     ],
   },
   {
@@ -61,29 +61,29 @@ const MENUITEMS = [
         type: 'link',
         icon: 'ti-map-alt'
       },
-      {
-        state:'posorders',
-        short_label: '0',
-        name: 'Pos Orders',
-        type: 'link',
-        icon: 'ti-map-alt'
-      },
+      // {
+      //   state:'posorders',
+      //   short_label: '0',
+      //   name: 'Pos Orders',
+      //   type: 'link',
+      //   icon: 'ti-map-alt'
+      // },
      
     ]
   },
-  {
-    label: 'Customers',
-    main: [
-      {
-        state: 'allvendors',
-        short_label: 'V',
-        name: 'All Customers',
-        type: 'link',
-        icon: 'ti-map-alt'
-      }
+  // {
+  //   label: 'Customers',
+  //   main: [
+  //     {
+  //       state: 'allvendors',
+  //       short_label: 'V',
+  //       name: 'All Customers',
+  //       type: 'link',
+  //       icon: 'ti-map-alt'
+  //     }
      
-    ]
-  },
+  //   ]
+  // },
   {
     label: 'Inventory Management',
     main: [
@@ -92,6 +92,13 @@ const MENUITEMS = [
         state: 'inventory',
         short_label: 'V',
         name: 'All Inventory',
+        type: 'link',
+        icon: 'ti-map-alt'
+      },
+      {
+        state: 'addinventory',
+        short_label: 'V',
+        name: 'Add Inventory',
         type: 'link',
         icon: 'ti-map-alt'
       },
@@ -111,30 +118,30 @@ const MENUITEMS = [
         type: 'link',
         icon: 'ti-map-alt'
       },
-      {
-        state: 'products',
-        short_label: 'P',
-        name: ' Add Products',
-        type: 'link',
-        icon: 'ti-map-alt'
-      }
+      // {
+      //   state: 'products',
+      //   short_label: 'P',
+      //   name: ' Add Products',
+      //   type: 'link',
+      //   icon: 'ti-map-alt'
+      // }
      
     ]
   }, 
-  {
-    label: 'Brands',
-    main: [
+  // {
+  //   label: 'Brands',
+  //   main: [
       
-      {
-        state: 'allBrands',
-        short_label: 'B',
-        name: 'All Brands',
-        type: 'link',
-        icon: 'ti-map-alt'
-      },
+  //     {
+  //       state: 'allBrands',
+  //       short_label: 'B',
+  //       name: 'All Brands',
+  //       type: 'link',
+  //       icon: 'ti-map-alt'
+  //     },
      
-    ]
-  },
+  //   ]
+  // },
   {
     label: 'Categories',
     main: [
@@ -150,33 +157,47 @@ const MENUITEMS = [
     ]
   },
   {
-    label: 'Sales Man',
+    label: 'Suppliers',
     main: [
       
       {
-        state: 'addsalesman',
+        state: 'supplier',
         short_label: 'B',
-        name: 'Sales Man',
+        name: 'All Suppliers',
         type: 'link',
         icon: 'ti-map-alt'
       },
      
     ]
   },
-  {
-    label: 'Banners',
-    main: [
+  // {
+  //   label: 'Sales Man',
+  //   main: [
       
-      {
-        state: 'banner',
-        short_label: 'C',
-        name: 'Banner',
-        type: 'link',
-        icon: 'ti-map-alt'
-      },
+  //     {
+  //       state: 'addsalesman',
+  //       short_label: 'B',
+  //       name: 'Sales Man',
+  //       type: 'link',
+  //       icon: 'ti-map-alt'
+  //     },
      
-    ]
-  },
+  //   ]
+  // },
+  // {
+  //   label: 'Banners',
+  //   main: [
+      
+  //     {
+  //       state: 'banner',
+  //       short_label: 'C',
+  //       name: 'Banner',
+  //       type: 'link',
+  //       icon: 'ti-map-alt'
+  //     },
+     
+  //   ]
+  // },
 
   
  

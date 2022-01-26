@@ -27,7 +27,7 @@ login(form: any){
   }));
 }
 loggedIn() {
-  debugger;
+  
   const token = localStorage.getItem('token');
   if(token!=null){
     return !this.jwtHelper.isTokenExpired(token);

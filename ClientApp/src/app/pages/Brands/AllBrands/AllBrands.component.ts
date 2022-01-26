@@ -53,7 +53,7 @@ export class AllBrandsComponent implements OnInit {
   }
   UpdateView(content,id:number) {
     var data=this.brandsList.find(res=>res.brandId==id);
-    debugger;
+    
     this.singlebrand=data;
     this.brandform.setValue({
       brandImagePath:this.singlebrand.brandImagePath,
@@ -66,7 +66,7 @@ export class AllBrandsComponent implements OnInit {
       this.modalService.open(content, { size: 'lg' });
     }
     UpdateBrand(){
-      debugger;
+      
      this.productservice.UpdateBrand(this.brandform.value).subscribe(next => {
     
       this.modalService.dismissAll();
@@ -81,7 +81,7 @@ export class AllBrandsComponent implements OnInit {
       console.log(this.brandform.value)
     }
     AddBrand(){
-      debugger;
+      
      this.brandservice.AddBrand(this.brandform.value).subscribe(next => {
     
       this.modalService.dismissAll();
@@ -113,7 +113,7 @@ export class AllBrandsComponent implements OnInit {
     this.reverse=!this.reverse;
   }
   openLg(content,id:number) {
-    debugger;
+    
     this.brandId=id;
  
     this.modalService.open(content, { size: 'lg' });

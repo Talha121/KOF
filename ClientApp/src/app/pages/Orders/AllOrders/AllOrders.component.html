@@ -23,8 +23,8 @@
         </select>
         </div>
       <div class="col-sm-2" style="float: right;">
-        <input type="text" class="form-control" [(ngModel)]="vendorname" (ngModelChange)="SearchRider()" placeholder="Enter Name to search" >
-           
+        <!-- <input type="text" class="form-control" [(ngModel)]="vendorname" (ngModelChange)="SearchRider()" placeholder="Enter Name to search" >
+            -->
          
      </div>
     </div>
@@ -35,40 +35,38 @@
       <tr>
         <th (click)="Sort('id')">#<i class="fa fa-sort"></i></th>
         <th (click)="Sort('code')">Order No.<i class="fa fa-sort"></i></th>
-        <th (click)="Sort('storename')">Vendor<i class="fa fa-sort"></i></th>
-        <th (click)="Sort('createDate')">Date<i class="fa fa-sort"></i></th>
+        <th (click)="Sort('storename')">User Name<i class="fa fa-sort"></i></th>
+        <th (click)="Sort('storename')">Contact No<i class="fa fa-sort"></i></th>
+        <th (click)="Sort('storename')">Email<i class="fa fa-sort"></i></th>
+        <th (click)="Sort('createDate')">Order Type<i class="fa fa-sort"></i></th>
+        <th (click)="Sort('createDate')">Order From<i class="fa fa-sort"></i></th>
+        <th (click)="Sort('createDate')">Total Amount<i class="fa fa-sort"></i></th>
         <th (click)="Sort('status')">Status<i class="fa fa-sort"></i></th>
-        <th (click)="Sort('delivertDate')">Delivering Date<i class="fa fa-sort"></i></th>
-        <th (click)="Sort('billinginfo.subtotal')">Sub Total<i class="fa fa-sort"></i></th>
-        <th (click)="Sort('billinginfo.discounted_Amount')">Discount<i class="fa fa-sort"></i></th>
-
-      <th (click)="Sort('billinginfo.grandTotal')">Grand Total<i class="fa fa-sort"></i></th>
       <th (click)="Sort('Action')">Action<i class="fa fa-sort"></i></th>
       <!-- <th>Image</th> -->
       </tr>
       </thead>
       <tbody>
-      <tr *ngFor="let obj of SearchOrdersList | paginate:{itemsPerPage:10,currentPage:p}; let i=index;" >
-        <td style="width: 2px;">{{i+1}}</td>
-        <td>{{obj.code}}</td>
-        <td>{{obj.storename}}</td>
-        <td>{{obj.createDate| date:'medium'}}</td>
-        <td>{{obj.status}}</td>
       
-        <td>{{obj.delivertDate | date:'medium'}}</td>
-        <td>{{obj.billinginfo?.subtotal}}</td>
-        <td>{{obj.billinginfo?.discounted_Amount}}</td>
-        <td>{{obj.billinginfo?.grandTotal}}</td>
+      <tr *ngFor="let obj of OrdersList2 | paginate:{itemsPerPage:10,currentPage:p}; let i=index;" >
+        <td style="width: 2px;">{{i+1}}</td>
+        <td>{{obj.order.orderNumber}}</td>
+        <td>{{obj.userinfo?.name}}</td>
+        <td>{{obj.userinfo?.contactno}}</td>
+       <td>{{obj.userinfo?.email}}</td> 
+        <td>{{obj.order?.orderType}}</td>
+        <td>{{obj.order?.orderFrom}}</td>
+        <td>{{obj.order?.totalAmount}}</td>
+        <td>{{obj.order?.orderStatus}}</td>
     
-       <td>  <div class="row">
+       <td>  
 
-        <div style="padding: 4px;">
-          <i class="fa fa-desktop" aria-hidden="true" style="font-size:18px;color:rgb(255, 0, 0)"  (click)="openOrderDetailLg(OrderDetailcontent,obj.orderId)" ></i> 
+          <i class="fa fa-desktop" aria-hidden="true" style="font-size:18px;color:rgb(255, 0, 0)"  (click)="openOrderDetailLg(OrderDetailcontent,obj)" ></i> 
+       
+        <div style="padding: 4px;"*ngIf="obj.order.orderStatus!='Completed'">
+          <i class="fa fa-edit" aria-hidden="true" style="font-size:18px;color:rgb(113, 147, 240)"  (click)="openOrderUpdateLg(EditStatuscontent,obj.order)" ></i> 
         </div>
-        <div style="padding: 4px;"*ngIf="obj.status!='Completed'">
-          <i class="fa fa-edit" aria-hidden="true" style="font-size:18px;color:rgb(113, 147, 240)"  (click)="openOrderUpdateLg(EditStatuscontent,obj.orderId)" ></i> 
-        </div>
-    </div></td>
+   </td>
       </tr>
      
       </tbody>
@@ -97,19 +95,20 @@
       <thead>
            <tr>
              <th>Product Name</th>
-             <th>Barcode</th>
+             <th>Unit</th>
+           
              <th>Qty</th>
              <th>Unit Price</th>
              <th>Total price</th>
            </tr>
       </thead>
-      <tbody *ngFor="let obj of orderitemns">
+      <tbody *ngFor="let obj of orderitemns.orderitems">
         <tr>
-          <th>{{obj?.productName}}</th>
-          <th>{{obj?.barcode}}</th>
-          <th>{{obj?.qty}}</th>
-          <th>{{obj?.price}}</th>
-          <th>{{obj?.totalprice}}</th>
+          <th>{{obj?.product}}</th>
+          <th>{{obj?.unit}}</th>
+          <th>{{obj?.item.quantity}}</th>
+          <th>{{obj?.item.perUnitPrice}}</th>
+          <th>{{obj?.item.totalPrice}}</th>
         </tr>
       </tbody>
     </table>

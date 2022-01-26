@@ -17,9 +17,11 @@ namespace KOF.Services.CategoryService
     {
 
         private readonly IWebHostEnvironment _webHostEnvironment;
+        private readonly ApplicationDbContext _context;
         public CategoryService(ApplicationDbContext context,IWebHostEnvironment webHostEnvironment) : base(context)
         {
             _webHostEnvironment = webHostEnvironment;
+            _context = context;
         }
 
         public async Task<string> UploadCategory(CategoreyDto dto)
@@ -51,18 +53,19 @@ namespace KOF.Services.CategoryService
         {
             try
             {
-               
-                Category cat = new Category()
+                var categoryData = await GetByIdAsync((int)dto.Id);
+                categoryData.Name = dto.Name;
+              
+                string fileName = null;
+                if (dto.image != null)
                 {
-                    Id= (int)dto.Id,
-                    Name = dto.Name,
-                    Status = dto.Status
-                };
-                var categoryData = await GetByIdAsync(cat.Id);
-                cat.ImageUrl = categoryData.ImageUrl;
-                cat.CreatedOn = categoryData.CreatedOn;
-                cat.CreatedBy = categoryData.CreatedBy;
-                await UpdateAsync(cat);
+                    fileName = UploadedFile(dto.image);
+                    categoryData.ImageUrl = fileName;
+                }
+                _context.Categories.Update(categoryData);
+                _context.SaveChanges();
+
+                //await UpdateAsync(cat);
                 return "success";
             }
             catch (Exception ex)

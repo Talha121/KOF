@@ -18,7 +18,7 @@ postcategorey(form: any){
   return this.http.post<any>(this.baseUrl+'AddCategory', form)
 };
 Addcateogry(form: any){
-  debugger;
+  
   return this.http.post<any>(this.baseUrl+'postcategory', form)
 };
 GetCategorey(){
@@ -27,27 +27,52 @@ GetCategorey(){
 GetInventory(){
   return this.http.get<any>(this.baseUrl+'AllInventory')
 };
+GetSupplier(){
+  return this.http.get<any>(environment.apiurl+'Supplier/getall')
+};
+Updatesupplier(form: any){
+  return this.http.put<any>(environment.apiurl+'Supplier/updatesupplier', form)
+};
+postsupplier(form: any){
+  
+  return this.http.post<any>(environment.apiurl+'Supplier/postsupplier', form)
+};
+supplierstatus(form: any){
+  
+  return this.http.put<any>(environment.apiurl+'Supplier/supplierstatus', form)
+};
+productstatus(form: any){
+  
+  return this.http.put<any>(environment.apiurl+'Product/productstatus', form)
+};
+categorystatus(form: any){
+  
+  return this.http.put<any>(this.baseUrl+'categorystatus', form)
+};
+
 GetAllProducts(){
-  return this.http.get<any>(this.baseUrl+'AllProducts')
+  return this.http.get<any>(environment.apiurl+'Product/getproducts')
 };
 UpdateProduct(form: any){
-  return this.http.post<any>(this.baseUrl+'UpdateProduct', form)
+  return this.http.put<any>(environment.apiurl+'Product/UpdateProduct', form)
+};
+Postproduct(form: any){
+  
+  return this.http.post<any>(environment.apiurl+'Product/Postproducts', form)
 };
 UpdateCategory(form: any){
+  
   return this.http.put<any>(this.baseUrl+'UpdateCategory', form)
 };
 UpdateBrand(form: any){
   return this.http.post<any>(this.baseUrl+'UpdateBrand', form)
-};
-ChangeStatus(id:any){
-  return this.http.post<any>(this.baseUrl+'ProductChangestatus',id)
 };
 
 
 
 
 upload(formData) {
-  debugger;
+  
   return this.http.post<any>(this.baseUrl+"AddproductExcel", formData, {
     reportProgress: true,
     observe: 'events'

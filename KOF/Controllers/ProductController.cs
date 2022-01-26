@@ -1,4 +1,5 @@
 ﻿using KOF.DTO_S;
+using KOF.Models;
 using KOF.Services.ProductImageService;
 using KOF.Services.ProductService;
 using Microsoft.AspNetCore.Http;
@@ -27,7 +28,23 @@ namespace KOF.Controllers
         {
             try
             {
-                var data = await _productService.GetAllAsync();
+                var data = await _productService.GetProducts();
+                return Ok(data);
+            }
+            catch (Exception ex)
+            {
+
+                return BadRequest(ex.Message);
+            }
+        }
+
+        [HttpDelete("deleteproductimage")]
+        public async Task<IActionResult> remove(int Id)
+        {
+            try
+            {
+            
+                var data = await _productImageService.RemoveProductImage(Id);
                 return Ok(data);
             }
             catch (Exception ex)
@@ -37,7 +54,7 @@ namespace KOF.Controllers
             }
         }
         [HttpPost("Postproducts")]
-        public async Task<IActionResult> Post([FromForm] ProductDto dto)
+        public async Task<IActionResult> Post([FromBody] ProductDto dto)
         {
             try
             {
@@ -59,8 +76,36 @@ namespace KOF.Controllers
         {
             try
             {
-                var data = await _productService.UpdateProduct(product);
-                if (data == "success")
+                var dat = await _productService.GetByIdAsync(product.Id);
+                Product obj = new Product();
+                obj = dat;
+                obj.Name = product.Name;
+                obj.CategoryId = product.CategoryId;
+                obj.About = product.About;
+                obj.Description = product.Description;
+                obj.IsActive = product.IsActive;
+                var data = await _productService.UpdateAsync(obj);
+                if (data !=null)
+                {
+                    return Ok(new { response = data });
+                }
+                return BadRequest(new { response = data });
+            }
+            catch (Exception ex)
+            {
+
+                return BadRequest(ex.Message);
+            }
+        }
+
+        [HttpPut("productstatus")]
+        public async Task<IActionResult> productstatus([FromBody] Product product)
+        {
+            try
+            {
+                product.IsActive = !product.IsActive;
+                var data = await _productService.UpdateAsync(product);
+                if (data !=null)
                 {
                     return Ok(new { response = data });
                 }
@@ -73,7 +118,7 @@ namespace KOF.Controllers
             }
         }
         [HttpPut("UpdateProductImage")]
-        public async Task<IActionResult> updateImage([FromForm] ProductDto dto)
+        public async Task<IActionResult> updateImage([FromForm] Productimagedto dto)
         {
             try
             {

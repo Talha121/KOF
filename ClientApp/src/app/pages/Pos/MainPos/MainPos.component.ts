@@ -75,17 +75,17 @@ export class MainPosComponent implements OnInit {
     this.router.navigate(['/authentication/login']);
   }
   onBarcodechange(barcode:string){
-    debugger;
+    
     var pro=this.productlis.filter(x=>x.barcode==barcode);
 if(pro.length>0){
 
  var i=this.cart.findIndex(x=>x.barcode==barcode);
- if(pro[0].productInventory_Qty>=this.cart[i].Quantity+1){
+ if(pro[0].quntity>=this.cart[i].Quantity+1){
   this.cart[i].Quantity++;
   this.cart[i].TotalPrice=this.cart[i].singleQuantityprice*this.cart[i].Quantity;
   this.inputName.nativeElement.value = '';
   this.grossamount=0;
- debugger;
+ 
  this.TotalQty=0;
  for(i=0;i<this.cart.length;i++){
    this.grossamount+=this.cart[i].TotalPrice;
@@ -160,7 +160,7 @@ else{
  }
   
  saveorder(){
-   debugger;
+   
    this.walkinbilling.Discounted_Amount=0;
    this.walkinbilling.Delivery_Charges=0;
    this.walkinbilling.GrandTotal=this.grossamount;
@@ -202,7 +202,7 @@ this.amountr.nativeElement.value = '';
  Remove(i){
 if(i!=-1){
   
- debugger;
+ 
 
  this.grossamount=this.grossamount-this.cart[i].TotalPrice
 
@@ -222,7 +222,7 @@ this.productlis.splice(pro,1);
   if(pro.length>0){
   
    
-   if(pro[0].productInventory_Qty>=this.cart[index].Quantity+1){
+   if(pro[0].quntity>=this.cart[index].Quantity+1){
     this.cart[index].Quantity++;
     this.cart[index].TotalPrice=this.cart[index].singleQuantityprice*this.cart[index].Quantity;
     this.inputName.nativeElement.value = '';

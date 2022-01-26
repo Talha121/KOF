@@ -6,12 +6,19 @@ import { environment } from '../../../src/environments/environment.prod';
   providedIn: 'root'
 })
 export class StockinService {
-  baseUrl = environment.apiurl + 'ProductApi/';
+  baseUrl = environment.apiurl + 'Inventory/';
 constructor(private http: HttpClient) { }
 GetstockIn(){
-  return this.http.get<any>(this.baseUrl+'AllInventory')
+  return this.http.get<any>(this.baseUrl+'getinventory')
 };
-ChangeStatus(id:any){
-  return this.http.post<any>(this.baseUrl+'Changestatus',id)
+ChangeStatus(data:any){
+  return this.http.post<any>(this.baseUrl+'Changestatus',data)
+};
+RemoveInventory(data:any){
+  return this.http.post<any>(this.baseUrl+'RemoveInventory',data)
+};
+PostInventory(data:any){
+  
+  return this.http.post<any>(this.baseUrl+'postinventory',data)
 };
 }

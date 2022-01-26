@@ -26,12 +26,12 @@ export class AllInventoryComponent implements OnInit {
     this.reverse=!this.reverse;
   }
   GetInventory(){
-    this.SpinnerService.show();
+
     this.service.GetstockIn().subscribe((next:any) => {
       this.invertorylist=[];
-      this.invertorylist=next.resp;
-      this.Searchinvertorylist=next.resp;
-      this.SpinnerService.hide();
+      
+      this.invertorylist=next;
+      this.Searchinvertorylist=next;     
       console.log(this.invertorylist)
     }, error => {
       console.log(error);
@@ -53,7 +53,7 @@ export class AllInventoryComponent implements OnInit {
     }
   }
   onOptionsSelected(num){
-    debugger;
+    
     if(num=="0"){
       this.Searchinvertorylist=this.invertorylist;
     }
@@ -68,9 +68,19 @@ export class AllInventoryComponent implements OnInit {
     }
 
   }
-  changestatus(id:number){
-this.service.ChangeStatus(id).subscribe((next:any)=>{
-  this.invertorylist.forEach(x=>{if(x.productInvertory_Id==id){x.productInventory_Status=!x.productInventory_Status}});
+  RemoveInventory(data:number){
+this.service.RemoveInventory(data).subscribe((next:any)=>{
+  this.GetInventory();
+  //  this.invertorylist.forEach(x=>{if(x.data.inventory.id==data.id){x.productInventory_Status=!x.productInventory_Status}});
+}, error => {
+      console.log(error);
+    })
+  }
+  changestatus(data:number){
+this.service.ChangeStatus(data).subscribe((next:any)=>{
+  this.GetInventory();
+  
+  //  this.invertorylist.forEach(x=>{if(x.data.inventory.id==data.id){x.productInventory_Status=!x.productInventory_Status}});
 }, error => {
       console.log(error);
     })

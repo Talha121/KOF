@@ -10,7 +10,7 @@ namespace KOF.Services.ProductImageService
 {
     public interface IProductImageService:IGenericRepository<ProductImage>
     {
-        Task<string> UpdateProductImages(ProductDto dto);
+        Task<string> UpdateProductImages(Productimagedto dto);
         Task<string> RemoveProductImage(int id);
     }
 }

@@ -70,7 +70,7 @@ export class AddSalesmanComponent implements OnInit {
     });
   }
   openLg(Showdetail,id:number) {
-    debugger;
+    
     this.salesmanId=id;
    this.vendorsdetail=this.salesmans.find(x=>x.salesmanInfo.salesMan_id==id);
    

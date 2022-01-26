@@ -16,9 +16,11 @@ namespace KOF.Services.ProductService
     public class ProductService:GenericRepository<Product>,IProductService
     {
         private readonly IWebHostEnvironment _webHostEnvironment;
+        private readonly ApplicationDbContext _context;
         public ProductService(ApplicationDbContext context, IWebHostEnvironment webHostEnvironment) : base(context)
         {
             _webHostEnvironment = webHostEnvironment;
+            _context = context;
         }
 
         public async Task<string> CreateProduct(ProductDto dto)
@@ -48,7 +50,11 @@ namespace KOF.Services.ProductService
         {
             try
             {
-                var data = await this.DataContext.Set<Product>().Include(x => x.ProductImages).ToListAsync();
+                var data = await _context.Products.Include(x => x.ProductImages).Select(x => new {
+                       product=x,
+                       category=_context.Categories.Where(y=>y.Id==x.CategoryId).Select(y=>y.Name).SingleOrDefault()
+                }).ToListAsync();
+                
                 return data;
             }
             catch (Exception ex)

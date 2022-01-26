@@ -16,7 +16,7 @@ import { AlertifyService } from "../../../../../src/app/_service/alertify.servic
 })
 export class AllcategoriesComponent implements OnInit {
   form: FormGroup;
-  ImagebaseUrl = environment.Imagebaseurl + "CategoryImages/";
+  ImagebaseUrl = environment.Imagebaseurl + "Images/CategoryImages/";
   CategoriesList: any;
   key: string = "rowid";
   reverse: boolean = false;
@@ -55,7 +55,7 @@ export class AllcategoriesComponent implements OnInit {
     image: new FormControl(null),
   });
   AddCategory() {
-    debugger;
+    
     let data= this.CategoryForm.value;
     var formData: any = new FormData();
     formData.append("Name", data.name);
@@ -75,7 +75,7 @@ export class AllcategoriesComponent implements OnInit {
     console.log(this.CategoryForm.value);
   }
   UpdateCategory() {
-    debugger;
+    
     let data= this.CategoryForm.value;
     var formData: any = new FormData();
     formData.append("Id",data.id);
@@ -91,7 +91,7 @@ export class AllcategoriesComponent implements OnInit {
       (error) => {
         this.modalService.dismissAll();
         this.CategoryForm.reset();
-        this.alertify.success("Category Updated seccussfully");
+     
         console.log(error);
       }
     );
@@ -102,7 +102,7 @@ export class AllcategoriesComponent implements OnInit {
     this.SpinnerService.show();
     this.productservice.GetCategorey().subscribe(
       (response: any) => {
-        debugger;
+        
         this.CategoriesList = [];
         this.CategoriesList = response;
 
@@ -123,12 +123,23 @@ export class AllcategoriesComponent implements OnInit {
 
     this.modalService.open(content, { size: "lg" });
   }
+  changestatus(data:any){
+ 
+    
+    
 
+      this.productservice.categorystatus(data).subscribe(next => {
+        this.Getcategorey();
+       }, error => {
+         console.log(error);
+       });
+    
+ 
+  }
   UpdateView(content, id: number) {
-    debugger
     this.modalContent = "Update";
     var data = this.CategoriesList.find((res) => res.id == id);
-    debugger;
+    
     this.Singlecategory = data;
     this.CategoryForm.patchValue({
       id: this.Singlecategory.id,
@@ -144,14 +155,14 @@ export class AllcategoriesComponent implements OnInit {
     this.modalService.open(content, { size: "lg" });
   }
   uploadFile(event) {
-    debugger;
+    
     const file = (event.target as HTMLInputElement).files[0];
     this.CategoryForm.get("image").patchValue(file);
     this.CategoryForm.get("image").updateValueAndValidity();
   }
 
   SubmitImage() {
-    debugger;
+    
     if (this.form.value.avatar != null) {
       var apipath = "UploadImageCategory";
 
@@ -183,7 +194,6 @@ export class AllcategoriesComponent implements OnInit {
     }
   }
   submit() {
-    debugger
     let id = this.CategoryForm.get("id").value;
     if (id == null || id == "") {
       this.AddCategory();

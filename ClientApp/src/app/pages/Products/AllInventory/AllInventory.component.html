@@ -18,8 +18,8 @@
         </select>
         </div>
       <div class="col-sm-2" style="float: right;padding-bottom: 8px;">
-        <input type="text" class="form-control" [(ngModel)]="Barcode" (ngModelChange)="SearchProduct()"placeholder="Enter Barcode to search" >
-           
+        <!-- <input type="text" class="form-control" [(ngModel)]="Barcode" (ngModelChange)="SearchProduct()"placeholder="Enter Barcode to search" >
+            -->
          
      </div>
     </div>
@@ -29,18 +29,17 @@
       <thead>
       <tr>
         <th (click)="Sort('id')">#<i class="fa fa-sort"></i></th>
-        <th (click)="Sort('productName')">Product Name<i class="fa fa-sort"></i></th>
-        <th (click)="Sort('barcode')">Barcode<i class="fa fa-sort"></i></th>
-        <th (click)="Sort('categorey_Name')">Categorey<i class="fa fa-sort"></i></th>
-        <th (click)="Sort('brand_Name')">Brand<i class="fa fa-sort"></i></th>
+        <th (click)="Sort('productName')">Supplier Name<i class="fa fa-sort"></i></th>
+        <th (click)="Sort('productName')">Category Name<i class="fa fa-sort"></i></th> 
+        <th (click)="Sort('productName')">Product Name<i class="fa fa-sort"></i></th> 
+        <th (click)="Sort('barcode')">Unit<i class="fa fa-sort"></i></th>
         <th (click)="Sort('purchasedQty')">Purchase Qty<i class="fa fa-sort"></i></th>
-        <th (click)="Sort('totalsaleQty')">Sold Qty<i class="fa fa-sort"></i></th>
         <th (click)="Sort('productInventory_Qty')">Remaining Qty<i class="fa fa-sort"></i></th>
-        <th (click)="Sort('purchaseDate')">Purchase Date<i class="fa fa-sort"></i></th>
-
-        <th (click)="Sort('productInventory_UnitPrice')">Unit Price(Purchase)<i class="fa fa-sort"></i></th>
-        <th (click)="Sort('productInventory_SellingPrice')">Selling Price<i class="fa fa-sort"></i></th>
-        <th (click)="Sort('product_TotalPrice')">Total Price<i class="fa fa-sort"></i></th>
+        <th (click)="Sort('product_TotalPrice')">Unit  Cost<i class="fa fa-sort"></i></th>
+        <th (click)="Sort('product_TotalPrice')">Total  Cost<i class="fa fa-sort"></i></th>
+        <th (click)="Sort('productInventory_UnitPrice')">Unit Price<i class="fa fa-sort"></i></th>
+        <th (click)="Sort('productInventory_SellingPrice')">Total Price<i class="fa fa-sort"></i></th>
+        
         <th (click)="Sort('productInventory_Status')">Status<i class="fa fa-sort"></i></th>
         <th >Action</th>
         <!-- <th>Image</th> -->
@@ -50,26 +49,28 @@
      
         <tr *ngFor="let products of Searchinvertorylist |orderBy:key :reverse | paginate:{itemsPerPage:10,currentPage:p}; let i=index;" >
           <td style="width: 2px;">{{i+1}}</td>
-          <td>{{products.productName}}</td>
-          <td>{{products.barcode}}</td>
-          <td>{{products.category_Name}}</td>
-          <td>{{products?.brandNameEng}}</td>
-          <td>{{products.purchasedQty}}</td>
-          <td>{{products.totalsaleQty}}</td>
-          <td>{{products.productInventory_Qty}}</td>
-          <td>{{products.purchaseDate |date:'medium'}}</td>
-          <td>{{products.productInventory_UnitPrice}}</td>
-          <td>{{products.productInventory_SellingPrice}}</td>
-          <td>{{products.product_TotalPrice}}</td>
+          <td>{{products.suppliername}}</td>
+          
+          <td>{{products.productinfo.categoryname}}</td> 
+          <td>{{products.productinfo.name}}</td>       
+          <td>{{products.inventory.unit}}</td>
+          <td>{{products.inventory.quantity}}</td>
+          <td>{{products.inventory.remainingQuantity}}</td>
+          <td>{{products.inventory.costPerUnit}}</td>
+          <td>{{products.inventory.totalCost}}</td>
+          <td>{{products.inventory.pricePerUnit}}</td>
+          <td>{{products.inventory.totalPrice}}</td>
         
-        <td *ngIf="products.productInventory_Status;else falsee "><img style="height: 20px;" src="assets/icon/check.png"/></td>
+        <td *ngIf="products.inventory.status;else falsee "><img style="height: 20px;" src="assets/icon/check.png"/></td>
         <ng-template #falsee>
           <td><img style="height: 20px;" src="assets/icon/cancel.png"/></td>
         </ng-template>
 
-          <td *ngIf="products.productInventory_Status;else deact "><button (click)="changestatus(products.productInvertory_Id)" class="btn btn-danger">Deactive</button> </td>
+          <td *ngIf="products.inventory.status;else deact "> <img src="assets/images/on.png" title="Active Supplier" (click)="changestatus(products.inventory)"  >  </td>
           <ng-template #deact>
-            <td><button (click)="changestatus(products.productInvertory_Id)" class="btn btn-success">Active</button></td>
+            <td>   <img src="assets/images/off.png" title="DeActive Product"(click)="changestatus(products.inventory)" > | <i class="fa fa-trash-o" (click)="RemoveInventory(products.inventory)" style="font-size:21px;color:red"></i>
+
+            </td>
           </ng-template>
         </tr>
       </tbody>
