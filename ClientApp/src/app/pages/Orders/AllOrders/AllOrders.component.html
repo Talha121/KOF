@@ -56,7 +56,7 @@
        <td>{{obj.userinfo?.email}}</td> 
         <td>{{obj.order?.orderType}}</td>
         <td>{{obj.order?.orderFrom}}</td>
-        <td>{{obj.order?.totalAmount}}</td>
+        <td>{{obj.total}}</td>
         <td>{{obj.order?.orderStatus}}</td>
     
        <td>  
@@ -111,6 +111,47 @@
           <th>{{obj?.item.totalPrice}}</th>
         </tr>
       </tbody>
+      <br>
+      <div class="row">
+         <div class="col-md-4">
+             Phone No
+         </div>
+         <div class="col-md-4">
+           :{{orderitemns.order.order_phoneno}}
+         </div>
+      </div>
+      <div class="row">
+        <div class="col-md-4">
+            Email
+        </div>
+        <div class="col-md-4">
+           :{{orderitemns.order.order_phoneno}}
+        </div>
+     </div>
+     <div class="row">
+      <div class="col-md-4">
+          City
+      </div>
+      <div class="col-md-4">
+      :{{orderitemns.order.order_city}}
+      </div>
+   </div>
+   <div class="row">
+    <div class="col-md-4">
+        Home No
+    </div>
+    <div class="col-md-4">
+      :{{orderitemns.order.houseNo}}
+    </div>
+ </div>
+ <div class="row">
+
+<div class="col-md-8">
+  <br>
+  <p>Description:</p>
+  {{orderitemns.order.order_Notes}}
+</div>
+ </div>
     </table>
            </div>
     

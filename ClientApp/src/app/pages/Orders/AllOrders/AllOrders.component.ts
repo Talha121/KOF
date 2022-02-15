@@ -41,7 +41,7 @@ export class AllOrdersComponent implements OnInit {
   
   }
   openOrderDetailLg(content,data:any) {
-    
+    debugger
 
     this.orderitemns=data;
     console.log(data)

@@ -19,7 +19,7 @@ namespace KOF.EntityConfigurations
             builder.HasOne<Product>(sc => sc.Product)
                .WithMany(s => s.Carts)
                .HasForeignKey(sc => sc.ProductId);
-            builder.HasOne<User>(sc => sc.User)
+            builder.HasOne<AllUser>(sc => sc.User)
                 .WithMany(s => s.Carts)
                 .HasForeignKey(sc => sc.UserId);
         }

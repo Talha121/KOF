@@ -1,0 +1,146 @@
+﻿@page
+@model RegisterModel
+@{ ViewData["Title"] = "Register"; }
+@{ 
+                Layout = "~/Views/Shared/_LayoutWebsite.cshtml"; }
+<div class="page-heading">
+    <div class="page-title">
+        <h2>My account</h2>
+    </div>
+</div>
+
+
+
+<section class="main-container col2-right-layout">
+    <div class="main container">
+        <div class="row">
+            <div class="woocommerce">
+                <div class="woocommerce-notices-wrapper"></div>
+                <div class="account-login container register-enable">
+
+
+                    <div class="u-columns col2-set" id="customer_login">
+
+                      
+                        <div class="u-column1 ">
+                            <div class="container">
+                                <h2>Register</h2>
+
+                                <form method="post" class="woocommerce-form woocommerce-form-register register">
+
+                                    <div class="row">
+                                        <div class="col-md-6">
+
+                                            <p class="woocommerce-form-row woocommerce-form-row--wide form-row form-row-wide">
+                                                <label for="reg_username">Full Name&nbsp;<span class="required">*</span></label>
+                                                <input type="text" class="woocommerce-Input woocommerce-Input--text input-text" asp-for="Input.Name" id="reg_username" placeholder=" Name" autocomplete="username" value="">
+                                                <span asp-validation-for="Input.Name" class="text-danger"></span>
+                                            </p>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <p class="woocommerce-form-row woocommerce-form-row--wide form-row form-row-wide">
+                                                <label for="reg_username">Cell No&nbsp;<span class="required">*</span></label>
+                                                <input type="text" class="woocommerce-Input woocommerce-Input--text input-text" asp-for="Input.Phone" id="reg_username" placeholder="Cell No" autocomplete="username" value="">
+                                                <span asp-validation-for="Input.Phone" class="text-danger"></span>
+                                            </p>
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col-md-6">
+
+                                            <p class="woocommerce-form-row woocommerce-form-row--wide form-row form-row-wide">
+                                                <label for="reg_email">Email address&nbsp;<span class="required">*</span></label>
+                                                <input type="email" placeholder="Email Address" class="woocommerce-Input woocommerce-Input--text input-text" asp-for="Input.Email" id="reg_email" autocomplete="email" value="">
+                                                <span asp-validation-for="Input.Email" class="text-danger"></span>
+                                            </p>
+                                        </div>
+                                        <div class="col-md-6">
+
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <p class="woocommerce-form-row woocommerce-form-row--wide form-row form-row-wide">
+                                                <label for="reg_password">Password&nbsp;<span class="required">*</span></label>
+                                                <span class="password-input">
+                                                    <input type="password" placeholder="Password" class="woocommerce-Input woocommerce-Input--text input-text" asp-for="Input.Password" id="reg_password" autocomplete="new-password">
+                                                    <span asp-validation-for="Input.Password" class="text-danger"></span>
+                                                    <span class="show-password-input"></span>
+                                                </span>
+                                            </p>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <p class="woocommerce-form-row woocommerce-form-row--wide form-row form-row-wide">
+                                                <label for="reg_password">Confirm Password&nbsp;<span class="required">*</span></label>
+                                                <span class="password-input">
+                                                    <input type="password" placeholder="Confirm Password" class="woocommerce-Input woocommerce-Input--text input-text" asp-for="Input.ConfirmPassword" id="reg_password" autocomplete="new-password">
+                                                    <span asp-validation-for="Input.ConfirmPassword" class="text-danger"></span>
+                                                    <span class="show-password-input"></span>
+                                                </span>
+                                            </p>
+                                        </div>
+                                    </div>
+
+
+
+
+
+
+                                    <div class="woocommerce-privacy-policy-text">
+                                        <p>Your personal data will be used to support your experience throughout this website, to manage access to your account, and for other purposes described in our <a href="https://klbtheme.com/qualis/?page_id=3" class="woocommerce-privacy-policy-link" target="_blank">privacy policy</a>.</p>
+                                    </div>
+                                    <p class="woocommerce-form-row form-row">
+                                        <input type="hidden" id="woocommerce-register-nonce" name="woocommerce-register-nonce" value="91721c0837"><input type="hidden" name="_wp_http_referer" value="/qualis/my-account/">				<button type="submit" class="woocommerce-Button woocommerce-button button woocommerce-form-register__submit" name="register" value="Register">Register</button>
+                                    </p>
+
+
+                                </form>
+
+                            </div>
+                           
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<div class="container">
+    <div class="row our-features-box">
+        <ul>
+            <li>
+                <div class="feature-box klb-footer-box">
+                    <i class="fa fa-truck"></i>
+                    <div class="content">FREE SHIPPING on order over $99</div>
+                </div>
+            </li>
+            <li>
+                <div class="feature-box klb-footer-box">
+                    <i class="fa fa-phone"></i>
+                    <div class="content">HAVE A QUESTIONS? <a href="10800 7890000">+10800 789 0000</a></div>
+                </div>
+            </li>
+            <li>
+                <div class="feature-box klb-footer-box">
+                    <i class="fa fa-usd"></i>
+                    <div class="content">100% MONEY BACK GUARANTEE</div>
+                </div>
+            </li>
+            <li>
+                <div class="feature-box klb-footer-box">
+                    <i class="fa fa-briefcase"></i>
+                    <div class="content">30 DAYS RETURN SERVICE</div>
+                </div>
+            </li>
+            <li class="last">
+                <div class="feature-box">
+                    <a href="#"><i class="fa fa-apple"></i> Download</a>
+                    <a href="#"><i class="fa fa-android"></i> Download</a>
+                </div>
+            </li>
+        </ul>
+    </div>
+</div>

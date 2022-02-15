@@ -39,7 +39,7 @@
         <td style="width: 2px;">{{i+1}}</td>
         <td>{{products.category}}</td>
         <td>{{products.product.name}}</td>
-        <td>{{products.product.about}}</td>
+        <td class="large-text"><div class="">{{products.product.about}}</div></td>
         <td>{{products.product.description}}</td>
 
        
@@ -88,9 +88,10 @@
       <div class="modal-body" >
       
           <div class="form-row">
-            <div class="col-md-4 mb-3">
+            <div class="col-md-6 mb-3">
               <label for="validationCustom01">Select Category</label>
               <select class="custom-select" formControlName="categoryId" >
+                <option>Select Categorey</option>
                 <option *ngFor="let option of categoreylist" [ngValue]="option.id">
                   {{option.name}}
                 </option>
@@ -98,7 +99,7 @@
               </select>
             
             </div>
-            <div class="col-md-4 mb-3">
+            <div class="col-md-6 mb-3">
               <label for="validationCustom01"> Product Name</label>
               <input type="text" class="form-control" id="validationCustom01" placeholder="Please Enter Product Name" formControlName="name"  required>
               
@@ -108,30 +109,30 @@
            
           </div>
           <div class="form-row">
-            <div class="col-md-8 mb-3">
+            <div class="col-md-6 mb-3">
               <label  for="validationCustom05">About</label>
               <textarea class="form-control" id="validationCustom05" formControlName="about"  placeholder="About Product" required></textarea>
               <!-- <input type="text" class="form-control" id="validationCustom05" formControlName="about"  placeholder="About" required> -->
               
             </div>
-  
-            
-          </div>
-          <div class="form-row">
-            <div class="col-md-10 mb-3">
+            <div class="col-md-6 mb-3">
               <label for="validationCustom04">Description</label>
               <textarea class="form-control" id="validationCustom04"formControlName="description"  placeholder="Product Description" required></textarea>
               <!-- <input type="text" class="form-control" id="validationCustom04"formControlName="description"  placeholder="Address" required>
               -->
             </div>
   
+            
+          </div>
+          <div class="form-row">
+         
             <div class="col-md-10 mb-3">
               <div class="row">
                 <div class="col-md-2">
                   <label for="validationCustom04" >IsActive </label>
                 </div>
                 <div class="col=md-2">
-                  <input type="checkbox"  formControlName="isActive"  />
+                  <input type="checkbox"   formControlName="isActive"  />
                 </div>
               </div>
      

@@ -32,6 +32,20 @@ namespace KOF.Controllers
                 return BadRequest(ex.Message);
             }
         }
+        [HttpGet("contactus")]
+        public async Task<IActionResult> contactus()
+        {
+            try
+            {
+                var data = await _OrderService.contactus();
+                return Ok(data);
+            }
+            catch (Exception ex)
+            {
+
+                return BadRequest(ex.Message);
+            }
+        }
         [HttpPut("ChangeStatus")]
         public async Task<IActionResult> ChangeStatus(Order dto)
         {

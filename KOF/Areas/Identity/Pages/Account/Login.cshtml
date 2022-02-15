@@ -1,0 +1,180 @@
+﻿@page
+@model LoginModel
+
+@{
+    ViewData["Title"] = "Log in";
+    Layout = "~/Views/Shared/_LayoutWebsite.cshtml";
+}
+<div class="page-heading">
+    <div class="page-title">
+        <h2>Login</h2>
+    </div>
+</div>
+@*<h1>@ViewData["Title"]</h1>
+<div class="row">
+    <div class="col-md-4">
+        <section>
+            <form id="account" method="post">
+                <h4>Use a local account to log in.</h4>
+                <hr />
+                <div asp-validation-summary="All" class="text-danger"></div>
+                <div class="form-group">
+                    <label asp-for="Input.Email"></label>
+                    <input asp-for="Input.Email" class="form-control" />
+                    <span asp-validation-for="Input.Email" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Input.Password"></label>
+                    <input asp-for="Input.Password" class="form-control" />
+                    <span asp-validation-for="Input.Password" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <div class="checkbox">
+                        <label asp-for="Input.RememberMe">
+                            <input asp-for="Input.RememberMe" />
+                            @Html.DisplayNameFor(m => m.Input.RememberMe)
+                        </label>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <button type="submit" class="btn btn-primary">Log in</button>
+                </div>
+                <div class="form-group">
+                    <p>
+                        <a id="forgot-password" asp-page="./ForgotPassword">Forgot your password?</a>
+                    </p>
+                    <p>
+                        <a asp-page="./Register" asp-route-returnUrl="@Model.ReturnUrl">Register as a new user</a>
+                    </p>
+                </div>
+            </form>
+        </section>
+    </div>
+    <div class="col-md-6 col-md-offset-2">
+        <section>
+            <h4>Use another service to log in.</h4>
+            <hr />
+            @{
+                if ((Model.ExternalLogins?.Count ?? 0) == 0)
+                {
+                    <div>
+                        <p>
+                            There are no external authentication services configured. See <a href="https://go.microsoft.com/fwlink/?LinkID=532715">this article</a>
+                            for details on setting up this ASP.NET application to support logging in via external services.
+                        </p>
+                    </div>
+                }
+                else
+                {
+                    <form id="external-account" asp-page="./ExternalLogin" asp-route-returnUrl="@Model.ReturnUrl" method="post" class="form-horizontal">
+                        <div>
+                            <p>
+                                @foreach (var provider in Model.ExternalLogins)
+                                {
+                                    <button type="submit" class="btn btn-primary" name="provider" value="@provider.Name" title="Log in using your @provider.DisplayName account">@provider.DisplayName</button>
+                                }
+                            </p>
+                        </div>
+                    </form>
+                }
+            }
+        </section>
+    </div>
+</div>*@
+
+@*@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}*@
+<section class="main-container col2-right-layout">
+    <div class="main container">
+        <div class="row">
+            <div class="woocommerce">
+                <div class="woocommerce-notices-wrapper"></div>
+                <div class="account-login container register-enable">
+
+
+                    <div class="u-columns col2-set" id="customer_login">
+
+                        <div class="u-column1 col-1">
+
+
+                            <h2>Login</h2>
+
+                            <form class="woocommerce-form woocommerce-form-login login" method="post">
+
+
+                                <p class="woocommerce-form-row woocommerce-form-row--wide form-row form-row-wide">
+                                    <label for="username">Username or email address&nbsp;<span class="required">*</span></label>
+                                    <input type="text" class="woocommerce-Input woocommerce-Input--text input-text" asp-for="Input.Email" id="username" autocomplete="username" value="">
+                                    <span asp-validation-for="Input.Email" class="text-danger"></span>
+                                </p>
+                                <p class="woocommerce-form-row woocommerce-form-row--wide form-row form-row-wide">
+                                    <label for="password">Password&nbsp;<span class="required">*</span></label>
+                                    <span class="password-input">
+                                        <input class="woocommerce-Input woocommerce-Input--text input-text" type="password" asp-for="Input.Password" id="password" autocomplete="current-password">
+                                        <span asp-validation-for="Input.Password" class="text-danger"></span>
+                                        <span class="show-password-input"></span>
+                                    </span>
+                                </p>
+
+
+                                <p class="form-row">
+                                    <input type="hidden" id="woocommerce-login-nonce" name="woocommerce-login-nonce" value="3653e6c70d"><input type="hidden" name="_wp_http_referer" value="/qualis/my-account/">				<button type="submit" class="woocommerce-Button woocommerce-button button woocommerce-form-login__submit" name="login" value="Log in">Log in</button>
+                                    <label class="woocommerce-form__label woocommerce-form__label-for-checkbox woocommerce-form-login__rememberme">
+                                        <input class="woocommerce-form__input woocommerce-form__input-checkbox" name="rememberme" type="checkbox" id="rememberme" value="forever"> <span>Remember me</span>
+                                    </label>
+
+                                </p>
+                                <p class="woocommerce-LostPassword lost_password">
+                                    <a href="https://klbtheme.com/qualis/my-account/lost-password/">Lost your password?</a>
+                                </p>
+
+
+                            </form>
+
+
+                        </div>
+
+                   
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<div class="container">
+    <div class="row our-features-box">
+        <ul>
+            <li>
+                <div class="feature-box klb-footer-box">
+                    <i class="fa fa-truck"></i>
+                    <div class="content">FREE SHIPPING on order over $99</div>
+                </div>
+            </li>
+            <li>
+                <div class="feature-box klb-footer-box">
+                    <i class="fa fa-phone"></i>
+                    <div class="content">HAVE A QUESTIONS? <a href="10800 7890000">+10800 789 0000</a></div>
+                </div>
+            </li>
+            <li>
+                <div class="feature-box klb-footer-box">
+                    <i class="fa fa-usd"></i>
+                    <div class="content">100% MONEY BACK GUARANTEE</div>
+                </div>
+            </li>
+            <li>
+                <div class="feature-box klb-footer-box">
+                    <i class="fa fa-briefcase"></i>
+                    <div class="content">30 DAYS RETURN SERVICE</div>
+                </div>
+            </li>
+            <li class="last">
+                <div class="feature-box">
+                    <a href="#"><i class="fa fa-apple"></i> Download</a>
+                    <a href="#"><i class="fa fa-android"></i> Download</a>
+                </div>
+            </li>
+        </ul>
+    </div>
+</div>

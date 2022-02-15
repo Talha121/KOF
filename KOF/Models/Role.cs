@@ -9,6 +9,6 @@ namespace KOF.Models
     {
         public string Name { get; set; }
         public string Description { get; set; }
-        public IList<User> User { get; set; }
+        public IList<AllUser> User { get; set; }
     }
 }

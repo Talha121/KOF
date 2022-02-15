@@ -15,6 +15,9 @@ constructor(private http: HttpClient) { }
 GetOrders(){
   return this.http.get<any>(this.baseUrl+'getorders',httpOptions)
 };
+Messages(){
+  return this.http.get<any>(this.baseUrl+'contactus',httpOptions)
+};
 GetPosOrders(){
   return this.http.get<any>(this.baseUrl2+'GetPosOrders',httpOptions)
 };

@@ -11,11 +11,6 @@ C:\Users\ASUS\source\repos\KOFDB\obj\Debug\predeploy.sql
 G:\Projects\KOF\KOFDB\bin\Debug\KOFDB.dacpac
 G:\Projects\KOF\KOFDB\bin\Debug\KOFDB.dll
 G:\Projects\KOF\KOFDB\bin\Debug\KOFDB.pdb
-G:\Projects\KOF\KOFDB\obj\Debug\KOFDB.sqlproj.AssemblyReference.cache
-G:\Projects\KOF\KOFDB\obj\Debug\Model.xml
-G:\Projects\KOF\KOFDB\obj\Debug\refactor.xml
-G:\Projects\KOF\KOFDB\obj\Debug\postdeploy.sql
-G:\Projects\KOF\KOFDB\obj\Debug\predeploy.sql
 G:\Projects\KOF\KOFDB\obj\Debug\KOFDB.dll
 G:\Projects\KOF\KOFDB\obj\Debug\KOFDB.pdb
 G:\Projects\KOF-Updated\KOFDB\bin\Debug\KOFDB.dacpac
@@ -37,3 +32,13 @@ D:\KOF\KOF\KOFDB\obj\Debug\postdeploy.sql
 D:\KOF\KOF\KOFDB\obj\Debug\predeploy.sql
 D:\KOF\KOF\KOFDB\obj\Debug\KOFDB.dll
 D:\KOF\KOF\KOFDB\obj\Debug\KOFDB.pdb
+D:\KOF\Updated KOF\KOF\KOFDB\bin\Debug\KOFDB.dacpac
+D:\KOF\Updated KOF\KOF\KOFDB\bin\Debug\KOFDB.dll
+D:\KOF\Updated KOF\KOF\KOFDB\bin\Debug\KOFDB.pdb
+D:\KOF\Updated KOF\KOF\KOFDB\obj\Debug\KOFDB.dll
+D:\KOF\Updated KOF\KOF\KOFDB\obj\Debug\KOFDB.pdb
+D:\KOF\Updated KOF\KOF\KOFDB\obj\Debug\Model.xml
+D:\KOF\Updated KOF\KOF\KOFDB\obj\Debug\refactor.xml
+D:\KOF\Updated KOF\KOF\KOFDB\obj\Debug\postdeploy.sql
+D:\KOF\Updated KOF\KOF\KOFDB\obj\Debug\predeploy.sql
+G:\Projects\KOF\KOFDB\obj\Debug\KOFDB.sqlproj.AssemblyReference.cache

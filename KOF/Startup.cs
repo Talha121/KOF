@@ -9,6 +9,7 @@ using KOF.Services.SupplierService;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -45,6 +46,9 @@ namespace KOF
             services.AddScoped<IOrderService, OrderService>();
             services.AddScoped<ISupplierService, SupplierService>();
             services.AddScoped<IProductImageService, ProductImageService>();
+            services.AddSession(options => {
+                options.IdleTimeout = TimeSpan.FromMinutes(60);
+            });
             services.AddSwaggerGen(options =>
             {
                 options.SwaggerDoc("v2", new Microsoft.OpenApi.Models.OpenApiInfo
@@ -58,6 +62,7 @@ namespace KOF
             {
                 c.AddPolicy("AllowOrigin", options => options.AllowAnyOrigin());
             });
+            services.AddIdentity<IdentityUser, IdentityRole>().AddDefaultTokenProviders().AddDefaultUI().AddEntityFrameworkStores<ApplicationDbContext>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -76,7 +81,7 @@ namespace KOF
             app.UseCors(x => x.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader());
             app.UseHttpsRedirection();
             app.UseStaticFiles();
-
+            app.UseAuthentication();
             app.UseRouting();
 
             app.UseAuthorization();
@@ -86,6 +91,7 @@ namespace KOF
                 endpoints.MapControllerRoute(
                     name: "default",
                     pattern: "{controller=Home}/{action=Index}/{id?}");
+                endpoints.MapRazorPages(); 
             });
             app.UseSwagger();
             app.UseSwaggerUI(options => options.SwaggerEndpoint("/swagger/v2/swagger.json", "KOF Services"));

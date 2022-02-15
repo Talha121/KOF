@@ -8,9 +8,9 @@ using KOF.Models;
 
 namespace KOF.EntityConfigurations
 {
-    internal class UserConfiguration : IEntityTypeConfiguration<User>
+    internal class UserConfiguration : IEntityTypeConfiguration<AllUser>
     {
-        public void Configure(EntityTypeBuilder<User> builder)
+        public void Configure(EntityTypeBuilder<AllUser> builder)
         {
             builder.ToTable("User");
             builder.Property(x => x.Id).HasColumnName("UserId");

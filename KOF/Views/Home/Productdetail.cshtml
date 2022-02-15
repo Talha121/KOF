@@ -1,0 +1,744 @@
+﻿@inject KOF.Context.ApplicationDbContext _context;
+
+
+
+@using Microsoft.AspNetCore.Identity
+
+@inject SignInManager<IdentityUser> SignInManager
+@inject UserManager<IdentityUser> UserManager
+@{
+    ViewData["Title"] = "INdex";
+    Layout = "~/Views/Shared/_LayoutWebsite.cshtml";
+    int Inventoryid = ViewBag.InventoryId;
+    var productinf = _context.Inventories.Where(x => x.Id == Inventoryid).Select(x => new
+    {
+        inv = x,
+        product = x.Product,
+        category = x.Product.Category,
+
+    }).SingleOrDefault();
+}
+<div class="page-heading">
+    <div class="breadcrumbs">
+        <div class="container">
+            <div class="row">
+                <div class="col-xs-12">
+                    <nav class="woocommerce-breadcrumb">
+                        <ul>
+                            <li><a>Home</a></li>
+                            <span>&rsaquo; </span>
+                            <li><a>@productinf.category.Name</a></li>
+                            <span>&rsaquo; </span>
+                            <li><strong>@productinf.product.Name </strong></li>
+                        </ul>
+                    </nav>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="main-container col1-layout">
+    <div class="main">
+        <div class="col-main">
+            <div class="product-view" itemscope="" itemtype="http://schema.org/Product" itemid="#product_base">
+                <div class="woocommerce-notices-wrapper"></div>
+                <div id="product-114" class="blog_entry clearfix product type-product post-114 status-publish first instock product_cat-fruits product_cat-juices has-post-thumbnail sale shipping-taxable purchasable product-type-simple">
+                    <div class="product-essential container">
+                        <div class="row">
+                            <div class="product-img-box col-lg-5 col-sm-5 col-xs-12">
+                         
+                                <div class="product-image woocommerce-product-gallery woocommerce-product-gallery--with-images woocommerce-product-gallery--columns-4 images" data-columns="4" style="opacity: 0; transition: opacity .25s ease-in-out;">
+                                    <figure class="woocommerce-product-gallery__wrapper">
+                                        @{
+                                            var productimages = _context.ProductImages.Where(x => x.ProductId == productinf.product.Id).ToList();
+                                        }
+                                        @foreach (var item in productimages)
+                                        {
+                                            <div data-thumb="/Images/ProductImages/@Url.Content(item.ImageUrl)"  data-thumb-alt="" class="woocommerce-product-gallery__image"><a href="/Images/ProductImages/@Url.Content(item.ImageUrl)" ><img width="600" height="600" src="/Images/ProductImages/@Url.Content(item.ImageUrl)"  class="wp-post-image" alt="" loading="lazy" title="p6" data-caption="" data-src="/Images/ProductImages/@Url.Content(item.ImageUrl)"  data-large_image="/Images/ProductImages/@Url.Content(item.ImageUrl)"  data-large_image_width="800" data-large_image_height="800" srcset="/Images/ProductImages/@Url.Content(item.ImageUrl) 600w, /Images/ProductImages/@Url.Content(item.ImageUrl) 150w,/Images/ProductImages/@Url.Content(item.ImageUrl)  300w,/Images/ProductImages/@Url.Content(item.ImageUrl)  768w,/Images/ProductImages/@Url.Content(item.ImageUrl)  450w,/Images/ProductImages/@Url.Content(item.ImageUrl)  80w,/Images/ProductImages/@Url.Content(item.ImageUrl) 99w, /Images/ProductImages/@Url.Content(item.ImageUrl) 800w" sizes="(max-width: 600px) 100vw, 600px" /></a></div>
+                                        }
+                                    </figure>
+                                </div>
+                            </div>
+                            <div class="product-shop col-lg- col-sm-7 col-xs-12">
+                                <div class="product-next-prev">
+                                    @*<a rel="next" class="product-next" href="https://klbtheme.com/qualis/product/native-organic-cucumber/" title="Native Organic Cucumber"><span></span></a>
+                        <a rel="prev" href="https://klbtheme.com/qualis/product/organic-sweet-corn/" title="Organic Sweet Corn" class="product-prev"><span></span></a>*@
+                                </div>
+                                <div class="product-name">
+                                    <h1 class="product_title entry-title">
+                                        @productinf.product.Name
+                                    </h1>
+                                </div>
+                                <div class="woocommerce-product-rating">
+                                    @*<div class="star-rating" role="img" aria-label="Rated 5.00 out of 5"><span style="width:100%">Rated <strong class="rating">5.00</strong> out of 5 based on <span class="rating">1</span> customer rating</span></div>
+                        <a href="#reviews" class="woocommerce-review-link" rel="nofollow">(<span class="count">1</span> customer review)</a>*@
+                                </div>
+                                <p class="price"><span class="woocommerce-Price-amount amount"><bdi><span class="woocommerce-Price-currencySymbol">Rs.</span><span id="updatedprice">@productinf.inv.PricePerUnit</span> </bdi></span></p>
+                                <div class="add-to-box">
+                                    <form action="/Home/Addtocard" method="post">
+                                        @if (productinf.inv.Unit == "1 Kg")
+                                        {
+                                            <select class="section-lin" name="unit" onchange="report()" id="unit">
+                                                <option value="1 Kg">1 Kg</option>
+                                                <option value="1/2 Kg">1/2 Kg</option>
+                                            </select>
+                                        }
+                                        else
+                                        {
+                                            <select class="section-lin" name="unit">
+
+                                                <option value="1/2 Kg" selected>1/2 Kg</option>
+                                            </select>
+                                        }
+                                        <script>
+                                            function report() {
+
+                                                if (document.getElementById("unit").value == '1/2 Kg') {
+                                                    var price =@(productinf.inv.PricePerUnit/2)
+                                                        document.getElementById("updatedprice").innerHTML = price;
+
+                                                } else {
+                                                    document.getElementById("updatedprice").innerHTML =@productinf.inv.PricePerUnit;
+                                                }
+                                            }
+                                        </script>
+                                        <div class="add-to-cart">
+                                            <div class="cart">
+                                                <input type="hidden" name="inventoryid" value="@productinf.inv.Id" />
+                                                <input type="hidden" name="productid" value="@productinf.product.Id" />
+
+                                                <div class="pull-left">
+                                                    <div class="custom pull-left">
+                                                        <div class="quantity">
+
+                                                            <label class="screen-reader-text" for="pluss">@productinf.product.Name</label>
+                                                            <button class="minus reduced items-count" onClick="minus(-1)" type="button"><i class="fa fa-minus">&nbsp;</i></button>
+                                                            <input type="text"
+                                                                   id="pluss"
+                                                                   class="count input-text qty input-text qty text"
+                                                                   step="1"
+                                                                   min="1"
+                                                                   max=""
+                                                                   name="Qty"
+                                                                   value="1"
+                                                                   title="Qty"
+                                                                   size="4"
+                                                                   placeholder=""
+                                                                   inputmode="numeric" />
+                                                            <button class="plus increase items-count" onClick="plus(1)" cli type="button"><i class="fa fa-plus">&nbsp;</i></button>
+                                                            <script>
+                                                                var plus = function (c) {
+                                                                    var id = document.getElementById("pluss").value;
+                                                                    document.getElementById("pluss").value = (Number(id) + 1);
+                                                                    /* alert(id + 1);*/
+                                                                    /*   document.testing.quantity.value += c;*/
+                                                                };
+                                                                var minus = function (c) {
+
+                                                                    var id = document.getElementById("pluss").value;
+                                                                    if (id > 0) {
+                                                                        document.getElementById("pluss").value = (Number(id) - 1)
+                                                                    }
+
+                                                                    /*     alert(Number(document.getElementById("pluss").value)+1)*/
+                                                                    /*   document.testing.quantity.value += c;*/
+                                                                };
+                                                            </script>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                @if (SignInManager.IsSignedIn(User))
+                                                {
+                                                    var netuserid = UserManager.GetUserId(User);
+                                                    var userid = _context.AllUsers.Where(x => x.IdentityUserId == netuserid).SingleOrDefault().Id;
+                                                    <input type="hidden" name="userid" value="@userid" />
+
+
+                                                    <button type="submit" name="add-to-cart" value="94" class="button btn-cart single_add_to_cart_button button alt">Add to cart</button>
+                                                }
+                                                else
+                                                {
+
+                                                    <button type="submit" name="add-to-cart" value="94" class="button btn-cart single_add_to_cart_button button alt"><a asp-area="Identity" asp-page="/Account/Login">Login Before add to cart </a></button>
+
+                                                }
+
+
+
+
+
+
+
+
+
+
+
+                                            </div>
+                                        </div>
+                                    </form>
+
+                                </div>
+                                @*<a href="http://klbtheme.com/qualis?action=yith-woocompare-add-product&id=94" class="compare button" data-product_id="94" rel="nofollow">Compare</a>*@
+                                <div class="woocommerce-product-details__short-description">
+                                    <p>@productinf.product.About</p>
+                                </div>
+                                <div class="tinv-wraper woocommerce tinv-wishlist tinvwl-shortcode-add-to-cart"
+                                     data-product_id="94">
+                                    <div class="tinv-wishlist-clear"></div>
+                                    <a role="button" tabindex="0" aria-label="Add to Wishlist" class="tinvwl_add_to_wishlist_button tinvwl-icon-heart  tinvwl-position-shortcode" data-tinv-wl-producttype="simple" data-tinv-wl-action="add"><span class="tinvwl_add_to_wishlist-text">Add to Wishlist</span></a>
+                                    <div class="tinv-wishlist-clear"></div>
+                                    @*<div class="tinvwl-tooltip">Add to Wishlist</div>*@
+                                </div>
+                                <div class="social social-container">
+                                    <ul class="link">
+                                        <li class="fb"><a href="#" class="facebook" aria-label="Share this page with Facebook" role="button"></a></li>
+                                        <li class="tw"><a href="#" class="twitter" aria-label="Share this page with Twitter"></a></li>
+                                        <li class="googleplus"><a href="#" class="googleplus" aria-label="Share this page with Google Plus"></a></li>
+                                        <li class="pintrest"><a href="#" class="pinterest" aria-label="Share this page with Pinterest"></a></li>
+                                        <li class="linkedin"><a href="#" class="linkedin" aria-label="Share this page with Linkedin"></a></li>
+                                    </ul>
+                                </div>
+                                <ul class="shipping-pro">
+                                    <li>Free Wordwide Shipping</li>
+                                    <li>30 Days Return</li>
+                                    <li>Member Discount</li>
+                                </ul>
+                                <div class="product_meta">
+                                    @*<span class="sku_wrapper">SKU: <span class="sku">K27SA62</span></span>*@
+                                    <span class="posted_in">Category: <a href="https://klbtheme.com/qualis/product-category/vegetables/" rel="tag">@productinf.category.Name</a></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="product-collateral container">
+                        <div class="woocommerce-tabs wc-tabs-wrapper">
+                            <ul id="product-detail-tab" class="nav nav-tabs product-tabs tabs wc-tabs" role="tablist">
+                                <li class="description_tab" id="tab-title-description" role="tab" aria-controls="tab-description">
+                                    <a href="#tab-description">
+                                        Description
+                                    </a>
+                                </li>
+                                @*<li class="reviews_tab" id="tab-title-reviews" role="tab" aria-controls="tab-reviews">
+                        <a href="#tab-reviews">
+                            Reviews (1)
+                        </a>
+                    </li>*@
+                            </ul>
+                            <div id="productTabContent" class="tab-content">
+                                <div class="woocommerce-Tabs-panel woocommerce-Tabs-panel--description panel entry-content wc-tab" id="tab-description" role="tabpanel" aria-labelledby="tab-title-description">
+                                    <p>@productinf.product.Description</p>
+                                </div>
+                                <!--<div class="woocommerce-Tabs-panel woocommerce-Tabs-panel--reviews panel entry-content wc-tab" id="tab-reviews" role="tabpanel" aria-labelledby="tab-title-reviews">
+                    <div id="reviews" class="woocommerce-Reviews">
+                        <div id="comments">
+                            <h2 class="woocommerce-Reviews-title">
+                                1 review for <span>Organic Grape Tomatoes</span>
+                            </h2>
+                            <ol class="commentlist">
+                                <li class="review byuser comment-author-sinan bypostauthor even thread-even depth-1" id="li-comment-6">
+                                    <div id="comment-6" class="comment_container">
+                                        <img alt='' src='http://0.gravatar.com/avatar/3384f98a21c5dce2051e8f5a20928b05?s=60&#038;d=mm&#038;r=g' srcset='http://0.gravatar.com/avatar/3384f98a21c5dce2051e8f5a20928b05?s=120&#038;d=mm&#038;r=g 2x' class='avatar avatar-60 photo' height='60' width='60' loading='lazy' />
+                                        <div class="comment-text">
+                                            <div class="star-rating" role="img" aria-label="Rated 5 out of 5"><span style="width:100%">Rated <strong class="rating">5</strong> out of 5</span></div>
+                                            <p class="meta">
+                                                <strong class="woocommerce-review__author">admin </strong>
+                                                <span class="woocommerce-review__dash">&ndash;</span> <time class="woocommerce-review__published-date" datetime="2018-12-24T08:57:39+03:00">24 December 2018</time>
+                                            </p>
+                                            <div class="description">
+                                                <p>Donec rutrum congue leo eget malesuada. Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </li>-->
+                                <!-- #comment-## -->
+                                <!--</ol>
+                </div>
+                <div id="review_form_wrapper">
+                    <div id="review_form">
+                        <div id="respond" class="comment-respond">
+                            <span id="reply-title" class="comment-reply-title">Add a review <small><a rel="nofollow" id="cancel-comment-reply-link" href="/qualis/product/organic-grape-tomatoes/#respond" style="display:none;">Cancel reply</a></small></span>
+                            <form action="http://klbtheme.com/qualis/wp-comments-post.php" method="post" id="commentform" class="comment-form">
+                                <p class="comment-notes"><span id="email-notes">Your email address will not be published.</span> Required fields are marked <span class="required">*</span></p>
+                                <div class="comment-form-rating">
+                                    <label for="rating">Your rating&nbsp;<span class="required">*</span></label>
+                                    <select name="rating" id="rating" required>
+                                        <option value="">Rate&hellip;</option>
+                                        <option value="5">Perfect</option>
+                                        <option value="4">Good</option>
+                                        <option value="3">Average</option>
+                                        <option value="2">Not that bad</option>
+                                        <option value="1">Very poor</option>
+                                    </select>
+                                </div>
+                                <p class="comment-form-comment"><label for="comment">Your review&nbsp;<span class="required">*</span></label><textarea id="comment" name="comment" cols="45" rows="8" required></textarea></p>
+                                <p class="comment-form-author"><label for="author">Name&nbsp;<span class="required">*</span></label><input id="author" name="author" type="text" value="" size="30" required /></p>
+                                <p class="comment-form-email"><label for="email">Email&nbsp;<span class="required">*</span></label><input id="email" name="email" type="email" value="" size="30" required /></p>
+                                <p class="form-submit">
+                                    <input name="submit" type="submit" id="submit" class="submit" value="Submit" /> <input type='hidden' name='comment_post_ID' value='94' id='comment_post_ID' />
+                                    <input type='hidden' name='comment_parent' id='comment_parent' value='0' />
+                                </p>
+                            </form>
+                        </div>-->
+                                <!-- #respond -->
+                                <!--</div>
+                        </div>
+                        <div class="clear"></div>
+                    </div>
+                </div>-->
+                            </div>
+                        </div>
+                        @*<div class="box-additional">
+                <div class="related-pro container">
+                    <div class="slider-items-products">
+                        <div class="new_title center">
+                            <h2>Related products</h2>
+                        </div>
+                        <div id="related-slider" class="product-flexslider hidden-buttons">
+                            <div class="slider-items slider-width-col4 products-grid">
+                                <div class="item">
+                                    <div class="item-inner">
+                                        <div class="item-img">
+                                            <div class="item-img-info">
+                                                <a href="https://klbtheme.com/qualis/product/washed-sugar-snap-peas/" title="Washed Sugar Snap Peas" class="product-image">
+                                                    <img src="https://klbtheme.com/qualis/wp-content/uploads/2018/12/p8.jpg" alt="Washed Sugar Snap Peas">
+                                                </a>
+                                                <div class="sale-label sale-top-left">-20%</div>
+                                                <div class="item-box-hover">
+                                                    <div class="box-inner">
+                                                        <div class="product-detail-bnt"><a class="button detail-bnt" id="116"><span>Quick View</span></a></div>
+                                                        <div class="actions">
+                                                            <span class="add-to-links">
+                                                                <div class="tinv-wraper woocommerce tinv-wishlist tinvwl-shortcode-add-to-cart"
+                                                                     data-product_id="116">
+                                                                    <div class="tinv-wishlist-clear"></div>
+                                                                    <a role="button" tabindex="0" aria-label="Add to Wishlist" class="tinvwl_add_to_wishlist_button tinvwl-icon-heart  tinvwl-position-shortcode" data-tinv-wl-list="[]" data-tinv-wl-product="116" data-tinv-wl-productvariation="0" data-tinv-wl-productvariations="[0]" data-tinv-wl-producttype="simple" data-tinv-wl-action="add"><span class="tinvwl_add_to_wishlist-text">Add to Wishlist</span></a>
+                                                                    <div class="tinv-wishlist-clear"></div>
+                                                                    <div class="tinvwl-tooltip">Add to Wishlist</div>
+                                                                </div>
+                                                            </span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="add_cart"><a href="https://klbtheme.com/qualis/product/washed-sugar-snap-peas/" data-quantity="1" class="button btn-cart button product_type_simple add_to_cart_button ajax_add_to_cart" data-product_id="116" data-product_sku="K87SA62" aria-label="Read more about &ldquo;Washed Sugar Snap Peas&rdquo;" rel="nofollow"><span>Read more</span></a></div>
+                                        </div>
+                                        <div class="item-info">
+                                            <div class="info-inner">
+                                                <div class="item-title"><a href="https://klbtheme.com/qualis/product/washed-sugar-snap-peas/" title="Washed Sugar Snap Peas">Washed Sugar Snap Peas</a> </div>
+                                                <div class="item-content">
+                                                    <div class="rating">
+                                                        <div class="ratings">
+                                                            <div class="star-rating" role="img" aria-label="Rated 5.00 out of 5"><span style="width:100%">Rated <strong class="rating">5.00</strong> out of 5</span></div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="item-price">
+                                                        <div class="price-box"><span class="regular-price"><span class="price"><del aria-hidden="true"><span class="woocommerce-Price-amount amount"><bdi><span class="woocommerce-Price-currencySymbol">&pound;</span>5.00</bdi></span></del> <ins><span class="woocommerce-Price-amount amount"><bdi><span class="woocommerce-Price-currencySymbol">&pound;</span>4.00</bdi></span></ins></span> </span> </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="tinv-wraper woocommerce tinv-wishlist tinvwl-after-add-to-cart tinvwl-loop-button-wrapper"
+                                         data-product_id="116">
+                                        <div class="tinv-wishlist-clear"></div>
+                                        <a role="button" tabindex="0" aria-label="Add to Wishlist" class="tinvwl_add_to_wishlist_button tinvwl-icon-heart  tinvwl-position-after tinvwl-loop" data-tinv-wl-list="[]" data-tinv-wl-product="116" data-tinv-wl-productvariation="0" data-tinv-wl-productvariations="[0]" data-tinv-wl-producttype="simple" data-tinv-wl-action="add"><span class="tinvwl_add_to_wishlist-text">Add to Wishlist</span></a>
+                                        <div class="tinv-wishlist-clear"></div>
+                                        <div class="tinvwl-tooltip">Add to Wishlist</div>
+                                    </div>
+                                </div>
+                                <div class="item">
+                                    <div class="item-inner">
+                                        <div class="item-img">
+                                            <div class="item-img-info">
+                                                <a href="https://klbtheme.com/qualis/product/organic-sweet-corn/" title="Organic Sweet Corn" class="product-image">
+                                                    <img src="https://klbtheme.com/qualis/wp-content/uploads/2018/12/p2.jpg" alt="Organic Sweet Corn">
+                                                </a>
+                                                <div class="sale-label sale-top-left">-20%</div>
+                                                <div class="item-box-hover">
+                                                    <div class="box-inner">
+                                                        <div class="product-detail-bnt"><a class="button detail-bnt" id="90"><span>Quick View</span></a></div>
+                                                        <div class="actions">
+                                                            <span class="add-to-links">
+                                                                <div class="tinv-wraper woocommerce tinv-wishlist tinvwl-shortcode-add-to-cart"
+                                                                     data-product_id="90">
+                                                                    <div class="tinv-wishlist-clear"></div>
+                                                                    <a role="button" tabindex="0" aria-label="Add to Wishlist" class="tinvwl_add_to_wishlist_button tinvwl-icon-heart  tinvwl-position-shortcode" data-tinv-wl-list="[]" data-tinv-wl-product="90" data-tinv-wl-productvariation="0" data-tinv-wl-productvariations="[0]" data-tinv-wl-producttype="simple" data-tinv-wl-action="add"><span class="tinvwl_add_to_wishlist-text">Add to Wishlist</span></a>
+                                                                    <div class="tinv-wishlist-clear"></div>
+                                                                    <div class="tinvwl-tooltip">Add to Wishlist</div>
+                                                                </div>
+                                                            </span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="add_cart"><a href="https://klbtheme.com/qualis/product/organic-sweet-corn/" data-quantity="1" class="button btn-cart button product_type_simple ajax_add_to_cart" data-product_id="90" data-product_sku="KJ7SA62" aria-label="Read more about &ldquo;Organic Sweet Corn&rdquo;" rel="nofollow"><span>Read more</span></a></div>
+                                        </div>
+                                        <div class="item-info">
+                                            <div class="info-inner">
+                                                <div class="item-title"><a href="https://klbtheme.com/qualis/product/organic-sweet-corn/" title="Organic Sweet Corn">Organic Sweet Corn</a> </div>
+                                                <div class="item-content">
+                                                    <div class="rating">
+                                                        <div class="ratings">
+                                                            <div class="star-rating" role="img" aria-label="Rated 3.00 out of 5"><span style="width:60%">Rated <strong class="rating">3.00</strong> out of 5</span></div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="item-price">
+                                                        <div class="price-box"><span class="regular-price"><span class="price"><del aria-hidden="true"><span class="woocommerce-Price-amount amount"><bdi><span class="woocommerce-Price-currencySymbol">&pound;</span>10.00</bdi></span></del> <ins><span class="woocommerce-Price-amount amount"><bdi><span class="woocommerce-Price-currencySymbol">&pound;</span>8.00</bdi></span></ins></span> </span> </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="tinv-wraper woocommerce tinv-wishlist tinvwl-after-add-to-cart tinvwl-loop-button-wrapper"
+                                         data-product_id="90">
+                                        <div class="tinv-wishlist-clear"></div>
+                                        <a role="button" tabindex="0" aria-label="Add to Wishlist" class="tinvwl_add_to_wishlist_button tinvwl-icon-heart  tinvwl-position-after tinvwl-loop" data-tinv-wl-list="[]" data-tinv-wl-product="90" data-tinv-wl-productvariation="0" data-tinv-wl-productvariations="[0]" data-tinv-wl-producttype="simple" data-tinv-wl-action="add"><span class="tinvwl_add_to_wishlist-text">Add to Wishlist</span></a>
+                                        <div class="tinv-wishlist-clear"></div>
+                                        <div class="tinvwl-tooltip">Add to Wishlist</div>
+                                    </div>
+                                </div>
+                                <div class="item">
+                                    <div class="item-inner">
+                                        <div class="item-img">
+                                            <div class="item-img-info">
+                                                <a href="https://klbtheme.com/qualis/product/organic-green-cabbage/" title="Organic Green Cabbage" class="product-image">
+                                                    <img src="https://klbtheme.com/qualis/wp-content/uploads/2018/12/p5.jpg" alt="Organic Green Cabbage">
+                                                </a>
+                                                <div class="sale-label sale-top-left">-50%</div>
+                                                <div class="item-box-hover">
+                                                    <div class="box-inner">
+                                                        <div class="product-detail-bnt"><a class="button detail-bnt" id="113"><span>Quick View</span></a></div>
+                                                        <div class="actions">
+                                                            <span class="add-to-links">
+                                                                <div class="tinv-wraper woocommerce tinv-wishlist tinvwl-shortcode-add-to-cart"
+                                                                     data-product_id="113">
+                                                                    <div class="tinv-wishlist-clear"></div>
+                                                                    <a role="button" tabindex="0" aria-label="Add to Wishlist" class="tinvwl_add_to_wishlist_button tinvwl-icon-heart  tinvwl-position-shortcode" data-tinv-wl-list="[]" data-tinv-wl-product="113" data-tinv-wl-productvariation="0" data-tinv-wl-productvariations="[0]" data-tinv-wl-producttype="simple" data-tinv-wl-action="add"><span class="tinvwl_add_to_wishlist-text">Add to Wishlist</span></a>
+                                                                    <div class="tinv-wishlist-clear"></div>
+                                                                    <div class="tinvwl-tooltip">Add to Wishlist</div>
+                                                                </div>
+                                                            </span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="add_cart"><a href="https://klbtheme.com/qualis/product/organic-green-cabbage/" data-quantity="1" class="button btn-cart button product_type_simple add_to_cart_button ajax_add_to_cart" data-product_id="113" data-product_sku="K57SA62" aria-label="Read more about &ldquo;Organic Green Cabbage&rdquo;" rel="nofollow"><span>Read more</span></a></div>
+                                        </div>
+                                        <div class="item-info">
+                                            <div class="info-inner">
+                                                <div class="item-title"><a href="https://klbtheme.com/qualis/product/organic-green-cabbage/" title="Organic Green Cabbage">Organic Green Cabbage</a> </div>
+                                                <div class="item-content">
+                                                    <div class="rating">
+                                                        <div class="ratings">
+                                                            <div class="star-rating" role="img" aria-label="Rated 1.00 out of 5"><span style="width:20%">Rated <strong class="rating">1.00</strong> out of 5</span></div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="item-price">
+                                                        <div class="price-box"><span class="regular-price"><span class="price"><del aria-hidden="true"><span class="woocommerce-Price-amount amount"><bdi><span class="woocommerce-Price-currencySymbol">&pound;</span>10.00</bdi></span></del> <ins><span class="woocommerce-Price-amount amount"><bdi><span class="woocommerce-Price-currencySymbol">&pound;</span>5.00</bdi></span></ins></span> </span> </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="tinv-wraper woocommerce tinv-wishlist tinvwl-after-add-to-cart tinvwl-loop-button-wrapper"
+                                         data-product_id="113">
+                                        <div class="tinv-wishlist-clear"></div>
+                                        <a role="button" tabindex="0" aria-label="Add to Wishlist" class="tinvwl_add_to_wishlist_button tinvwl-icon-heart  tinvwl-position-after tinvwl-loop" data-tinv-wl-list="[]" data-tinv-wl-product="113" data-tinv-wl-productvariation="0" data-tinv-wl-productvariations="[0]" data-tinv-wl-producttype="simple" data-tinv-wl-action="add"><span class="tinvwl_add_to_wishlist-text">Add to Wishlist</span></a>
+                                        <div class="tinv-wishlist-clear"></div>
+                                        <div class="tinvwl-tooltip">Add to Wishlist</div>
+                                    </div>
+                                </div>
+                                <div class="item">
+                                    <div class="item-inner">
+                                        <div class="item-img">
+                                            <div class="item-img-info">
+                                                <a href="https://klbtheme.com/qualis/product/native-organic-cucumber/" title="Native Organic Cucumber" class="product-image">
+                                                    <img src="https://klbtheme.com/qualis/wp-content/uploads/2018/12/p4.jpg" alt="Native Organic Cucumber">
+                                                </a>
+                                                <div class="sale-label sale-top-left">-43%</div>
+                                                <div class="item-box-hover">
+                                                    <div class="box-inner">
+                                                        <div class="product-detail-bnt"><a class="button detail-bnt" id="112"><span>Quick View</span></a></div>
+                                                        <div class="actions">
+                                                            <span class="add-to-links">
+                                                                <div class="tinv-wraper woocommerce tinv-wishlist tinvwl-shortcode-add-to-cart"
+                                                                     data-product_id="112">
+                                                                    <div class="tinv-wishlist-clear"></div>
+                                                                    <a role="button" tabindex="0" aria-label="Add to Wishlist" class="tinvwl_add_to_wishlist_button tinvwl-icon-heart  tinvwl-position-shortcode" data-tinv-wl-list="[]" data-tinv-wl-product="112" data-tinv-wl-productvariation="0" data-tinv-wl-productvariations="[0]" data-tinv-wl-producttype="simple" data-tinv-wl-action="add"><span class="tinvwl_add_to_wishlist-text">Add to Wishlist</span></a>
+                                                                    <div class="tinv-wishlist-clear"></div>
+                                                                    <div class="tinvwl-tooltip">Add to Wishlist</div>
+                                                                </div>
+                                                            </span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="add_cart"><a href="https://klbtheme.com/qualis/product/native-organic-cucumber/" data-quantity="1" class="button btn-cart button product_type_simple add_to_cart_button ajax_add_to_cart" data-product_id="112" data-product_sku="K47SA62" aria-label="Read more about &ldquo;Native Organic Cucumber&rdquo;" rel="nofollow"><span>Read more</span></a></div>
+                                        </div>
+                                        <div class="item-info">
+                                            <div class="info-inner">
+                                                <div class="item-title"><a href="https://klbtheme.com/qualis/product/native-organic-cucumber/" title="Native Organic Cucumber">Native Organic Cucumber</a> </div>
+                                                <div class="item-content">
+                                                    <div class="rating">
+                                                        <div class="ratings">
+                                                            <div class="star-rating" role="img" aria-label="Rated 4.00 out of 5"><span style="width:80%">Rated <strong class="rating">4.00</strong> out of 5</span></div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="item-price">
+                                                        <div class="price-box"><span class="regular-price"><span class="price"><del aria-hidden="true"><span class="woocommerce-Price-amount amount"><bdi><span class="woocommerce-Price-currencySymbol">&pound;</span>7.00</bdi></span></del> <ins><span class="woocommerce-Price-amount amount"><bdi><span class="woocommerce-Price-currencySymbol">&pound;</span>3.99</bdi></span></ins></span> </span> </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="tinv-wraper woocommerce tinv-wishlist tinvwl-after-add-to-cart tinvwl-loop-button-wrapper"
+                                         data-product_id="112">
+                                        <div class="tinv-wishlist-clear"></div>
+                                        <a role="button" tabindex="0" aria-label="Add to Wishlist" class="tinvwl_add_to_wishlist_button tinvwl-icon-heart  tinvwl-position-after tinvwl-loop" data-tinv-wl-list="[]" data-tinv-wl-product="112" data-tinv-wl-productvariation="0" data-tinv-wl-productvariations="[0]" data-tinv-wl-producttype="simple" data-tinv-wl-action="add"><span class="tinvwl_add_to_wishlist-text">Add to Wishlist</span></a>
+                                        <div class="tinv-wishlist-clear"></div>
+                                        <div class="tinvwl-tooltip">Add to Wishlist</div>
+                                    </div>
+                                </div>
+                                <div class="item">
+                                    <div class="item-inner">
+                                        <div class="item-img">
+                                            <div class="item-img-info">
+                                                <a href="https://klbtheme.com/qualis/product/organic-green-bell-pepper/" title="Organic Green Bell Pepper" class="product-image">
+                                                    <img src="https://klbtheme.com/qualis/wp-content/uploads/2018/12/p10.jpg" alt="Organic Green Bell Pepper">
+                                                </a>
+                                                <div class="sale-label sale-top-left">-38%</div>
+                                                <div class="item-box-hover">
+                                                    <div class="box-inner">
+                                                        <div class="product-detail-bnt"><a class="button detail-bnt" id="118"><span>Quick View</span></a></div>
+                                                        <div class="actions">
+                                                            <span class="add-to-links">
+                                                                <div class="tinv-wraper woocommerce tinv-wishlist tinvwl-shortcode-add-to-cart"
+                                                                     data-product_id="118">
+                                                                    <div class="tinv-wishlist-clear"></div>
+                                                                    <a role="button" tabindex="0" aria-label="Add to Wishlist" class="tinvwl_add_to_wishlist_button tinvwl-icon-heart  tinvwl-position-shortcode" data-tinv-wl-list="[]" data-tinv-wl-product="118" data-tinv-wl-productvariation="0" data-tinv-wl-productvariations="[0]" data-tinv-wl-producttype="simple" data-tinv-wl-action="add"><span class="tinvwl_add_to_wishlist-text">Add to Wishlist</span></a>
+                                                                    <div class="tinv-wishlist-clear"></div>
+                                                                    <div class="tinvwl-tooltip">Add to Wishlist</div>
+                                                                </div>
+                                                            </span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="add_cart"><a href="https://klbtheme.com/qualis/product/organic-green-bell-pepper/" data-quantity="1" class="button btn-cart button product_type_simple add_to_cart_button ajax_add_to_cart" data-product_id="118" data-product_sku="KJ1SA62" aria-label="Read more about &ldquo;Organic Green Bell Pepper&rdquo;" rel="nofollow"><span>Read more</span></a></div>
+                                        </div>
+                                        <div class="item-info">
+                                            <div class="info-inner">
+                                                <div class="item-title"><a href="https://klbtheme.com/qualis/product/organic-green-bell-pepper/" title="Organic Green Bell Pepper">Organic Green Bell Pepper</a> </div>
+                                                <div class="item-content">
+                                                    <div class="rating">
+                                                        <div class="ratings">
+                                                            <div class="star-rating" role="img" aria-label="Rated 4.00 out of 5"><span style="width:80%">Rated <strong class="rating">4.00</strong> out of 5</span></div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="item-price">
+                                                        <div class="price-box"><span class="regular-price"><span class="price"><del aria-hidden="true"><span class="woocommerce-Price-amount amount"><bdi><span class="woocommerce-Price-currencySymbol">&pound;</span>8.00</bdi></span></del> <ins><span class="woocommerce-Price-amount amount"><bdi><span class="woocommerce-Price-currencySymbol">&pound;</span>5.00</bdi></span></ins></span> </span> </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="tinv-wraper woocommerce tinv-wishlist tinvwl-after-add-to-cart tinvwl-loop-button-wrapper"
+                                         data-product_id="118">
+                                        <div class="tinv-wishlist-clear"></div>
+                                        <a role="button" tabindex="0" aria-label="Add to Wishlist" class="tinvwl_add_to_wishlist_button tinvwl-icon-heart  tinvwl-position-after tinvwl-loop" data-tinv-wl-list="[]" data-tinv-wl-product="118" data-tinv-wl-productvariation="0" data-tinv-wl-productvariations="[0]" data-tinv-wl-producttype="simple" data-tinv-wl-action="add"><span class="tinvwl_add_to_wishlist-text">Add to Wishlist</span></a>
+                                        <div class="tinv-wishlist-clear"></div>
+                                        <div class="tinvwl-tooltip">Add to Wishlist</div>
+                                    </div>
+                                </div>
+                                <div class="item">
+                                    <div class="item-inner">
+                                        <div class="item-img">
+                                            <div class="item-img-info">
+                                                <a href="https://klbtheme.com/qualis/product/native-organic-carrot/" title="Native Organic Carrot" class="product-image">
+                                                    <img src="https://klbtheme.com/qualis/wp-content/uploads/2018/12/p9.jpg" alt="Native Organic Carrot">
+                                                </a>
+                                                <div class="sale-label sale-top-left">-23%</div>
+                                                <div class="item-box-hover">
+                                                    <div class="box-inner">
+                                                        <div class="product-detail-bnt"><a class="button detail-bnt" id="117"><span>Quick View</span></a></div>
+                                                        <div class="actions">
+                                                            <span class="add-to-links">
+                                                                <div class="tinv-wraper woocommerce tinv-wishlist tinvwl-shortcode-add-to-cart"
+                                                                     data-product_id="117">
+                                                                    <div class="tinv-wishlist-clear"></div>
+                                                                    <a role="button" tabindex="0" aria-label="Add to Wishlist" class="tinvwl_add_to_wishlist_button tinvwl-icon-heart  tinvwl-position-shortcode" data-tinv-wl-list="[]" data-tinv-wl-product="117" data-tinv-wl-productvariation="0" data-tinv-wl-productvariations="[0]" data-tinv-wl-producttype="simple" data-tinv-wl-action="add"><span class="tinvwl_add_to_wishlist-text">Add to Wishlist</span></a>
+                                                                    <div class="tinv-wishlist-clear"></div>
+                                                                    <div class="tinvwl-tooltip">Add to Wishlist</div>
+                                                                </div>
+                                                            </span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="add_cart"><a href="https://klbtheme.com/qualis/product/native-organic-carrot/" data-quantity="1" class="button btn-cart button product_type_simple add_to_cart_button ajax_add_to_cart" data-product_id="117" data-product_sku="K97SA62" aria-label="Read more about &ldquo;Native Organic Carrot&rdquo;" rel="nofollow"><span>Read more</span></a></div>
+                                        </div>
+                                        <div class="item-info">
+                                            <div class="info-inner">
+                                                <div class="item-title"><a href="https://klbtheme.com/qualis/product/native-organic-carrot/" title="Native Organic Carrot">Native Organic Carrot</a> </div>
+                                                <div class="item-content">
+                                                    <div class="rating">
+                                                        <div class="ratings">
+                                                            <div class="star-rating" role="img" aria-label="Rated 4.00 out of 5"><span style="width:80%">Rated <strong class="rating">4.00</strong> out of 5</span></div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="item-price">
+                                                        <div class="price-box"><span class="regular-price"><span class="price"><del aria-hidden="true"><span class="woocommerce-Price-amount amount"><bdi><span class="woocommerce-Price-currencySymbol">&pound;</span>9.00</bdi></span></del> <ins><span class="woocommerce-Price-amount amount"><bdi><span class="woocommerce-Price-currencySymbol">&pound;</span>7.00</bdi></span></ins></span> </span> </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="tinv-wraper woocommerce tinv-wishlist tinvwl-after-add-to-cart tinvwl-loop-button-wrapper"
+                                         data-product_id="117">
+                                        <div class="tinv-wishlist-clear"></div>
+                                        <a role="button" tabindex="0" aria-label="Add to Wishlist" class="tinvwl_add_to_wishlist_button tinvwl-icon-heart  tinvwl-position-after tinvwl-loop" data-tinv-wl-list="[]" data-tinv-wl-product="117" data-tinv-wl-productvariation="0" data-tinv-wl-productvariations="[0]" data-tinv-wl-producttype="simple" data-tinv-wl-action="add"><span class="tinvwl_add_to_wishlist-text">Add to Wishlist</span></a>
+                                        <div class="tinv-wishlist-clear"></div>
+                                        <div class="tinvwl-tooltip">Add to Wishlist</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="loader-image" style="display:none;"></div>
+            <div class="ajaxphp-results"></div>*@
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="container">
+    <div class="row our-features-box">
+        <ul>
+            <li>
+                <div class="feature-box klb-footer-box">
+                    <i class="fa fa-truck"></i>
+                    <div class="content">FREE SHIPPING on order over $99</div>
+                </div>
+            </li>
+            <li>
+                <div class="feature-box klb-footer-box">
+                    <i class="fa fa-phone"></i>
+                    <div class="content">HAVE A QUESTIONS? <a href="10800 7890000">+10800 789 0000</a></div>
+                </div>
+            </li>
+            <li>
+                <div class="feature-box klb-footer-box">
+                    <i class="fa fa-usd"></i>
+                    <div class="content">100% MONEY BACK GUARANTEE</div>
+                </div>
+            </li>
+            <li>
+                <div class="feature-box klb-footer-box">
+                    <i class="fa fa-briefcase"></i>
+                    <div class="content">30 DAYS RETURN SERVICE</div>
+                </div>
+            </li>
+            <li class="last">
+                <div class="feature-box"> <a href="#"><i class="fa fa-apple"></i> Download</a> <a href="#"><i class="fa fa-android"></i> Download</a></div>
+            </li>
+        </ul>
+    </div>
+</div>
+<script>
+    (function () {
+        var c = document.body.className;
+        c = c.replace(/woocommerce-no-js/, 'woocommerce-js');
+        document.body.className = c;
+    })();
+</script>
+<script id='contact-form-7-js-extra'>var wpcf7 = { "api": { "root": "https:\/\/klbtheme.com\/qualis\/wp-json\/", "namespace": "contact-form-7\/v1" } };</script>
+<script id='wc-single-product-js-extra'>var wc_single_product_params = { "i18n_required_rating_text": "Please select a rating", "review_rating_required": "yes", "flexslider": { "rtl": false, "animation": "slide", "smoothHeight": true, "directionNav": false, "controlNav": "thumbnails", "slideshow": false, "animationSpeed": 500, "animationLoop": false, "allowOneSlide": false }, "zoom_enabled": "", "zoom_options": [], "photoswipe_enabled": "1", "photoswipe_options": { "shareEl": false, "closeOnScroll": false, "history": false, "hideAnimationDuration": 0, "showAnimationDuration": 0 }, "flexslider_enabled": "1" };</script>
+<script id='woocommerce-js-extra'>var woocommerce_params = { "ajax_url": "\/qualis\/wp-admin\/admin-ajax.php", "wc_ajax_url": "\/qualis\/?wc-ajax=%%endpoint%%" };</script>
+<script id='wc-cart-fragments-js-extra'>var wc_cart_fragments_params = { "ajax_url": "\/qualis\/wp-admin\/admin-ajax.php", "wc_ajax_url": "\/qualis\/?wc-ajax=%%endpoint%%", "cart_hash_key": "wc_cart_hash_b82fd1e602d3929a2e8e26009ed3c00d", "fragment_name": "wc_fragments_b82fd1e602d3929a2e8e26009ed3c00d", "request_timeout": "5000" };</script>
+<script id='yith-woocompare-main-js-extra'>var yith_woocompare = { "ajaxurl": "\/qualis\/?wc-ajax=%%endpoint%%", "actionadd": "yith-woocompare-add-product", "actionremove": "yith-woocompare-remove-product", "actionview": "yith-woocompare-view-table", "actionreload": "yith-woocompare-reload-product", "added_label": "Added", "table_title": "Product Comparison", "auto_open": "yes", "loader": "https:\/\/klbtheme.com\/qualis\/wp-content\/plugins\/yith-woocommerce-compare\/assets\/images\/loader.gif", "button_text": "Compare", "cookie_name": "yith_woocompare_list", "close_label": "Close" };</script>
+<script id='tinvwl-js-extra'>var tinvwl_add_to_wishlist = { "text_create": "Create New", "text_already_in": "Product already in Wishlist", "simple_flow": "", "hide_zero_counter": "", "i18n_make_a_selection_text": "Please select some product options before adding this product to your wishlist.", "tinvwl_break_submit": "No items or actions are selected.", "tinvwl_clipboard": "Copied!", "allow_parent_variable": "", "block_ajax_wishlists_data": "", "update_wishlists_data": "", "hash_key": "ti_wishlist_data_b82fd1e602d3929a2e8e26009ed3c00d", "nonce": "ea6fcea398", "rest_root": "https:\/\/klbtheme.com\/qualis\/wp-json\/", "plugin_url": "https:\/\/klbtheme.com\/qualis\/wp-content\/plugins\/ti-woocommerce-wishlist\/" };</script>
+<script id='qualis-quick-ajax-js-extra'>var MyAjax = { "ajaxurl": "https:\/\/klbtheme.com\/qualis\/wp-admin\/admin-ajax.php", "current_page": "1", "per_page": "0" };</script>
+<script id='qualis-slidetext-js-extra'>var slidetext = { "speed": "3000" };</script>
+<script id='qualis-plus-minus-js-extra'>var quantityklb = { "maxklb": "" };</script>
+<script id='qualis-related-products-js-extra'>var related = { "displayitem": "5" };</script>
+<script src='//klbtheme.com/qualis/wp-content/cache/wpfc-minified/lktapqc1/e7cyb.js'></script>
+<script>
+    function setREVStartSize(e) {
+        try {
+            var pw = document.getElementById(e.c).parentNode.offsetWidth,
+                newh;
+            pw = pw === 0 || isNaN(pw) ? window.innerWidth : pw;
+            e.tabw = e.tabw === undefined ? 0 : parseInt(e.tabw);
+            e.thumbw = e.thumbw === undefined ? 0 : parseInt(e.thumbw);
+            e.tabh = e.tabh === undefined ? 0 : parseInt(e.tabh);
+            e.thumbh = e.thumbh === undefined ? 0 : parseInt(e.thumbh);
+            e.tabhide = e.tabhide === undefined ? 0 : parseInt(e.tabhide);
+            e.thumbhide = e.thumbhide === undefined ? 0 : parseInt(e.thumbhide);
+            e.mh = e.mh === undefined || e.mh == "" || e.mh === "auto" ? 0 : parseInt(e.mh, 0);
+            if (e.layout === "fullscreen" || e.l === "fullscreen")
+                newh = Math.max(e.mh, window.innerHeight);
+            else {
+                e.gw = Array.isArray(e.gw) ? e.gw : [e.gw];
+                for (var i in e.rl) if (e.gw[i] === undefined || e.gw[i] === 0) e.gw[i] = e.gw[i - 1];
+                e.gh = e.el === undefined || e.el === "" || (Array.isArray(e.el) && e.el.length == 0) ? e.gh : e.el;
+                e.gh = Array.isArray(e.gh) ? e.gh : [e.gh];
+                for (var i in e.rl) if (e.gh[i] === undefined || e.gh[i] === 0) e.gh[i] = e.gh[i - 1];
+                var nl = new Array(e.rl.length),
+                    ix = 0,
+                    sl;
+                e.tabw = e.tabhide >= pw ? 0 : e.tabw;
+                e.thumbw = e.thumbhide >= pw ? 0 : e.thumbw;
+                e.tabh = e.tabhide >= pw ? 0 : e.tabh;
+                e.thumbh = e.thumbhide >= pw ? 0 : e.thumbh;
+                for (var i in e.rl) nl[i] = e.rl[i] < window.innerWidth ? 0 : e.rl[i];
+                sl = nl[0];
+                for (var i in nl) if (sl > nl[i] && nl[i] > 0) { sl = nl[i]; ix = i; }
+                var m = pw > (e.gw[ix] + e.tabw + e.thumbw) ? 1 : (pw - (e.tabw + e.thumbw)) / (e.gw[ix]);
+                newh = (e.type === "carousel" && e.justify === "true" ? e.gh[ix] : (e.gh[ix] * m)) + (e.tabh + e.thumbh);
+            }
+            if (window.rs_init_css === undefined) window.rs_init_css = document.head.appendChild(document.createElement("style"));
+            document.getElementById(e.c).height = newh;
+            window.rs_init_css.innerHTML += "#" + e.c + "_wrapper { height: " + newh + "px }";
+        } catch (e) {
+            console.log("Failure at Presize of Slider:" + e)
+        }
+    };
+</script>
+<script>
+    (function () {
+        window.mc4wp = window.mc4wp || {
+            listeners: [],
+            forms: {
+                on: function (evt, cb) {
+                    window.mc4wp.listeners.push({
+                        event: evt,
+                        callback: cb
+                    }
+                    );
+                }
+            }
+        }
+    })();
+</script>
+<script>
+    (function () {
+        function maybePrefixUrlField() {
+            if (this.value.trim() !== '' && this.value.indexOf('http') !== 0) {
+                this.value = "http://" + this.value;
+            }
+        }
+        var urlFields = document.querySelectorAll('.mc4wp-form input[type="url"]');
+        if (urlFields) {
+            for (var j = 0; j < urlFields.length; j++) {
+                urlFields[j].addEventListener('blur', maybePrefixUrlField);
+            }
+        }
+    })();
+</script>
+<script defer src='//klbtheme.com/qualis/wp-content/cache/wpfc-minified/ft8kh6tj/e7doh.js'></script>
+<script defer src='//klbtheme.com/qualis/wp-content/cache/wpfc-minified/o8l0w9j/e7cyb.js' id='tinvwl-js'></script>
+<script defer src='//klbtheme.com/qualis/wp-content/cache/wpfc-minified/m8w6zd/e7doh.js'></script>
+<script>document.addEventListener('DOMContentLoaded', function () { function wpfcgl() { var wgh = document.querySelector('noscript#wpfc-google-fonts').innerText, wgha = wgh.match(/<link[^\>]+>/gi); for (i = 0; i < wgha.length; i++) { var wrpr = document.createElement('div'); wrpr.innerHTML = wgha[i]; document.body.appendChild(wrpr.firstChild); } } wpfcgl(); });</script>

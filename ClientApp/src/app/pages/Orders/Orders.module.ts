@@ -12,6 +12,7 @@ import { Ng2SearchPipeModule } from 'ng2-search-filter';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { PosOrderComponent } from './PosOrder/PosOrder.component';
 import { NgxSpinnerModule, NgxSpinnerService } from 'ngx-spinner';
+import { ContactusComponent } from './contactus/contactus.component';
 
 @NgModule({
   imports: [
@@ -26,7 +27,7 @@ import { NgxSpinnerModule, NgxSpinnerService } from 'ngx-spinner';
     NgxPaginationModule,
     NgxSpinnerModule,
   ],
-  declarations: [OrdersComponent,AllOrdersComponent,OrderStatusComponent,PosOrderComponent],
+  declarations: [ContactusComponent,OrdersComponent,AllOrdersComponent,OrderStatusComponent,PosOrderComponent],
   providers: [
     NgxSpinnerService
     ]

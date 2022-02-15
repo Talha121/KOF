@@ -15,7 +15,7 @@ namespace KOF.EntityConfigurations
             builder.ToTable("Order");
             builder.Property(x => x.Id).HasColumnName("OrderId");
             builder.HasKey(x => x.Id);
-            builder.HasOne<User>(sc => sc.User)
+            builder.HasOne<AllUser>(sc => sc.User)
                 .WithMany(s => s.Orders)
                 .HasForeignKey(sc => sc.UserId);
         }

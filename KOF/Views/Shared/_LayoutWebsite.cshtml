@@ -1,0 +1,1456 @@
+﻿@inject KOF.Context.ApplicationDbContext _dbContext
+@using Microsoft.AspNetCore.Identity
+
+@inject SignInManager<IdentityUser> SignInManager
+@inject UserManager<IdentityUser> UserManager
+
+@{
+    @inject UserManager<IdentityUser> UserManager
+    var categories = _dbContext.Categories.Where(x => x.Status == true).ToList();
+    List<Cart> mycart = new List<Cart>();
+
+    @if (SignInManager.IsSignedIn(User))
+    {
+        var netuserid = UserManager.GetUserId(User);
+        var username = _dbContext.AllUsers.Where(x => x.IdentityUserId == netuserid).SingleOrDefault().Id;
+        mycart = _dbContext.Carts.Where(x => x.UserId == username).ToList();
+
+    }
+
+    }
+
+    <!DOCTYPE html>
+    <html lang="en-US">
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>KOF - Khan Organic Food</title>
+        <meta name='robots' content='noindex, nofollow' />
+      
+        <link rel='dns-prefetch' href='//fonts.googleapis.com' />
+
+        <link rel="alternate" type="application/rss+xml" title="Qualis - Responsive eCommerce Theme &raquo; Feed" href="https://klbtheme.com//WebContent/qualis/feed/" />
+        <link rel="alternate" type="application/rss+xml" title="Qualis - Responsive eCommerce Theme &raquo; Comments Feed" href="https://klbtheme.com//WebContent/qualis/comments/feed/" />
+        <link rel="stylesheet" type="text/css" href="/WebContent/qualis/wp-content/cache/wpfc-minified/fcxf2d2s/3xnse.css" media="all" />
+        <link rel="alternate" type="application/rss+xml" title="Qualis - Responsive eCommerce Theme &raquo; Comments Feed" href="https://klbtheme.com/qualis/comments/feed/" />
+        <link rel="alternate" type="application/rss+xml" title="Qualis - Responsive eCommerce Theme &raquo; Fresh Red Seedless Comments Feed" href="https://klbtheme.com/qualis/product/fresh-red-seedless/feed/" />
+        <link rel='stylesheet' id='wp-block-library-css' href='http://klbtheme.com/qualis/wp-includes/css/dist/block-library/style.min.css?ver=5.8.2' type='text/css' media='all' />
+        <style id='wp-block-library-theme-inline-css'>
+            #start-resizable-editor-section {
+                display: none
+            }
+
+            .wp-block-audio figcaption {
+                color: #555;
+                font-size: 13px;
+                text-align: center
+            }
+
+            .is-dark-theme .wp-block-audio figcaption {
+                color: hsla(0,0%,100%,.65)
+            }
+
+            .wp-block-code {
+                font-family: Menlo,Consolas,monaco,monospace;
+                color: #1e1e1e;
+                padding: .8em 1em;
+                border: 1px solid #ddd;
+                border-radius: 4px
+            }
+
+            .wp-block-embed figcaption {
+                color: #555;
+                font-size: 13px;
+                text-align: center
+            }
+
+            .is-dark-theme .wp-block-embed figcaption {
+                color: hsla(0,0%,100%,.65)
+            }
+
+            .blocks-gallery-caption {
+                color: #555;
+                font-size: 13px;
+                text-align: center
+            }
+
+            .is-dark-theme .blocks-gallery-caption {
+                color: hsla(0,0%,100%,.65)
+            }
+
+            .wp-block-image figcaption {
+                color: #555;
+                font-size: 13px;
+                text-align: center
+            }
+
+            .is-dark-theme .wp-block-image figcaption {
+                color: hsla(0,0%,100%,.65)
+            }
+
+            .wp-block-pullquote {
+                border-top: 4px solid;
+                border-bottom: 4px solid;
+                margin-bottom: 1.75em;
+                color: currentColor
+            }
+
+                .wp-block-pullquote__citation, .wp-block-pullquote cite, .wp-block-pullquote footer {
+                    color: currentColor;
+                    text-transform: uppercase;
+                    font-size: .8125em;
+                    font-style: normal
+                }
+
+            .wp-block-quote {
+                border-left: .25em solid;
+                margin: 0 0 1.75em;
+                padding-left: 1em
+            }
+
+                .wp-block-quote cite, .wp-block-quote footer {
+                    color: currentColor;
+                    font-size: .8125em;
+                    position: relative;
+                    font-style: normal
+                }
+
+                .wp-block-quote.has-text-align-right {
+                    border-left: none;
+                    border-right: .25em solid;
+                    padding-left: 0;
+                    padding-right: 1em
+                }
+
+                .wp-block-quote.has-text-align-center {
+                    border: none;
+                    padding-left: 0
+                }
+
+                .wp-block-quote.is-large, .wp-block-quote.is-style-large {
+                    border: none
+                }
+
+            .wp-block-search .wp-block-search__label {
+                font-weight: 700
+            }
+
+            .wp-block-group.has-background {
+                padding: 1.25em 2.375em;
+                margin-top: 0;
+                margin-bottom: 0
+            }
+
+            .wp-block-separator {
+                border: none;
+                border-bottom: 2px solid;
+                margin-left: auto;
+                margin-right: auto;
+                opacity: .4
+            }
+
+                .wp-block-separator:not(.is-style-wide):not(.is-style-dots) {
+                    width: 100px
+                }
+
+                .wp-block-separator.has-background:not(.is-style-dots) {
+                    border-bottom: none;
+                    height: 1px
+                }
+
+                .wp-block-separator.has-background:not(.is-style-wide):not(.is-style-dots) {
+                    height: 2px
+                }
+
+            .wp-block-table thead {
+                border-bottom: 3px solid
+            }
+
+            .wp-block-table tfoot {
+                border-top: 3px solid
+            }
+
+            .wp-block-table td, .wp-block-table th {
+                padding: .5em;
+                border: 1px solid;
+                word-break: normal
+            }
+
+            .wp-block-table figcaption {
+                color: #555;
+                font-size: 13px;
+                text-align: center
+            }
+
+            .is-dark-theme .wp-block-table figcaption {
+                color: hsla(0,0%,100%,.65)
+            }
+
+            .wp-block-video figcaption {
+                color: #555;
+                font-size: 13px;
+                text-align: center
+            }
+
+            .is-dark-theme .wp-block-video figcaption {
+                color: hsla(0,0%,100%,.65)
+            }
+
+            .wp-block-template-part.has-background {
+                padding: 1.25em 2.375em;
+                margin-top: 0;
+                margin-bottom: 0
+            }
+
+            #end-resizable-editor-section {
+                display: none
+            }
+        </style>
+        <link rel="stylesheet" type="text/css" href="/WebContent/qualis/wp-content/cache/wpfc-minified/kbpsdhsd/3xnse.css" media="all" />
+        <style id='rs-plugin-settings-inline-css'>
+            #rs-demo-id {
+            }
+        </style>
+        <style id='woocommerce-inline-inline-css'>
+            .woocommerce form .form-row .required {
+                visibility: visible;
+            }
+        </style>
+
+        <link rel='preload' as='font' type='font/woff2' id='tinvwl-webfont-font-css' href='/WebContent/qualis/wp-content/plugins/ti-woocommerce-wishlist/assets/fonts/tinvwl-webfont.woff' media='all' />
+        <link rel="stylesheet" type="text/css" href="/WebContent/qualis/wp-content/cache/wpfc-minified/epukrzpr/3xnse.css" media="all" />
+        <style id='font-awesome-inline-css'>
+            [data-font="FontAwesome"]:before {
+                font-family: 'FontAwesome' !important;
+                content: attr(data-icon) !important;
+                speak: none !important;
+                font-weight: normal !important;
+                font-variant: normal !important;
+                text-transform: none !important;
+                line-height: 1 !important;
+                font-style: normal !important;
+                -webkit-font-smoothing: antialiased !important;
+                -moz-osx-font-smoothing: grayscale !important;
+            }
+        </style>
+        <link rel="stylesheet" type="text/css" href="/WebContent/qualis/wp-content/cache/wpfc-minified/d75kedqc/3xnse.css" media="all" />
+        <link rel="https://api.w.org/" href="https://klbtheme.com//WebContent/qualis/wp-json/" />
+        <link rel="alternate" type="application/json" href="https://klbtheme.com//WebContent/qualis/wp-json/wp/v2/pages/28" />
+        <link rel="EditURI" type="application/rsd+xml" title="RSD" href="https://klbtheme.com//WebContent/qualis/xmlrpc.php?rsd" />
+        <link rel="wlwmanifest" type="application/wlwmanifest+xml" href="https://klbtheme.com//WebContent/qualis/wp-includes/wlwmanifest.xml" />
+        <meta name="generator" content="WordPress 5.8.2" />
+        <meta name="generator" content="WooCommerce 6.0.0" />
+        <link rel="canonical" href="index.html" />
+        <link rel='shortlink' href='index.html' />
+        <link rel="alternate" type="application/json+oembed" href="https://klbtheme.com//WebContent/qualis/wp-json/oembed/1.0/embed?url=https%3A%2F%2Fklbtheme.com%2Fqualis%2F" />
+        <link rel="alternate" type="text/xml+oembed" href="https://klbtheme.com//WebContent/qualis/wp-json/oembed/1.0/embed?url=https%3A%2F%2Fklbtheme.com%2Fqualis%2F&#038;format=xml" />
+        <style>
+            .page-heading {
+                background-image: url(/WebContent/qualis/wp-content/uploads/2018/12/category-bg.jpg);
+            }
+
+            .star-rating {
+                color: #80b435;
+            }
+
+            ul#wpmega-menu-main-menu li a {
+                color: #80b435;
+            }
+
+            .buy-btn {
+                color: #80b435;
+            }
+
+            .best-pro .slider-items-products #best-seller .owl-buttons .owl-prev a:hover:before, .best-pro .slider-items-products #best-seller .owl-buttons .owl-next a:hover:before {
+                color: #80b435
+            }
+
+            *::selection {
+                background: #80b435;
+            }
+
+            .feature-box.klb-footer-box i {
+                color: #80b435;
+                border: 2px #80b435 dotted;
+            }
+
+            .products-list .product-shop a.button {
+                background-color: #80b435;
+            }
+
+            ol.products-list a.added_to_cart.wc-forward:hover {
+                background: #80b435;
+            }
+
+            .products-list a.tinvwl_add_to_wishlist_button:hover {
+                background: #80b435;
+            }
+
+            ul.products-grid a.added_to_cart.wc-forward {
+                background: #80b435;
+            }
+
+            .widget .price_slider_amount button.button {
+                background-color: #80b435;
+            }
+
+            .ui-slider .ui-slider-handle {
+                background: #80b435;
+            }
+
+            .price_slider_amount .button {
+                background-color: #80b435;
+            }
+
+            .woocommerce-notices-wrapper a.button.wc-forward:hover, .woocommerce-notices-wrapper a.button.wc-forward:focus {
+                background-color: #80b435;
+            }
+
+            .woocommerce-billing-fields h3 {
+                color: #80b435;
+            }
+
+            .woocommerce-additional-fields h3 {
+                color: #80b435;
+            }
+
+            h3#order_review_heading {
+                color: #80b435;
+            }
+
+            .dashboard h3 {
+                color: #80b435;
+            }
+
+            .wpcf7-form input[type="submit"]:hover {
+                background-color: #80b435;
+            }
+
+            div.wpcf7-validation-errors, div.wpcf7-acceptance-missing {
+                border: 2px solid #80b435;
+            }
+
+            .woocommerce-mini-cart__buttons a.button.wc-forward {
+                background: #80b435;
+            }
+
+            .fl-mini-cart-content p.woocommerce-mini-cart__empty-message {
+                border-top: 3px #80b435 solid;
+            }
+
+            .comments-wrapper a.comment-reply-link {
+                color: #80b435;
+            }
+
+            .hot-deal {
+                border-top: 5px #80b435 solid;
+            }
+
+            .post-meta li.sticky {
+                color: #80b435;
+                border: 1px solid #80b435;
+            }
+
+            .fl-nav-menu .mega_main_menu li ul.mega_dropdown li.menu-item a:hover {
+                color: #80b435;
+            }
+
+            .mega_main_menu > .menu_holder > .menu_inner > ul li > a.item_link:hover span > span {
+                color: #80b435 !important;
+            }
+
+            .block-title h2 {
+                border-left: 2px #80b435 solid;
+            }
+
+            .klb-post ul li:before {
+                color: #80b435;
+            }
+
+            .klb-post ul li:before {
+                color: #80b435;
+            }
+
+            .blog-side span.count {
+                background: #80b435;
+            }
+
+            .fl-mini-cart-content .block-subtitle {
+                border-top: 3px #80b435 solid;
+            }
+
+            .mini-cart .actions .btn-checkout {
+                background: #80b435;
+            }
+
+            .cms-index-index #nav #nav-home > a, #nav > li.active > a, .vertnav-top li.current > a {
+                color: #80b435;
+            }
+
+            #nav ul.level1 > li a:hover {
+                color: #80b435
+            }
+
+            #nav > li > a {
+                color: #80b435;
+            }
+
+            #nav li.drop-menu ul li:hover > a {
+                color: #80b435;
+            }
+
+            .sale-label {
+                background: #80b435;
+            }
+
+            .best-pro .new_title h4 {
+                background: #80b435;
+            }
+
+            .best-pro.slider-items-products .owl-buttons .owl-prev a:hover:before, .best-pro.slider-items-products .owl-buttons .owl-next a:hover:before {
+                color: #80b435
+            }
+
+            .products-grid .btn-cart {
+                background: #80b435;
+            }
+
+            .hot-deal {
+                border-top: 5px #80b435 solid;
+            }
+
+            .timer-grid .box-time-date {
+                background: #80b435;
+            }
+
+            .blog-side h2 {
+                border-left: 2px #80b435 solid;
+            }
+
+            .blog_entry .btn {
+                background: #80b435;
+            }
+
+            .post-meta li a {
+                color: #80b435;
+            }
+
+            .blog-img a.info {
+                color: #80b435;
+            }
+
+                .blog-img a.info:hover {
+                    background: #80b435;
+                }
+
+            .our-features-box li.last {
+                background: #80b435;
+            }
+
+            .icon-truck, .icon-money, .icon-support, .icon-return {
+                color: #80b435;
+                border: 2px #80b435 dotted;
+            }
+
+            .block .block-title {
+                border-left: 2px #80b435 solid;
+            }
+
+            .side-nav-categories .block-title {
+                border-left: 2px #80b435 solid;
+            }
+
+            .box-category > ul > li > a.active {
+                color: #80b435;
+            }
+
+            .one-page-checkout .active .step-title .number {
+                background: none repeat scroll 0 0 #80b435;
+                border: 1px solid #80b435;
+            }
+
+            .one-page-checkout .active .step-title h3 {
+                color: #80b435;
+            }
+
+            .sidebar .block-cart .button-checkout {
+                background: #80b435;
+            }
+
+            .block-compare .button-compare {
+                background: #80b435;
+            }
+
+            .block-company li strong {
+                color: #80b435;
+            }
+
+            .toolbar a.button-active.button-grid {
+                background-color: #80b435;
+                border: 1px #80b435 solid;
+            }
+
+            .toolbar a.button-active.button-list {
+                background-color: #80b435;
+                border: 1px #80b435 solid;
+            }
+
+            .products-list .product-shop button.button {
+                background-color: #80b435;
+            }
+
+            .products-list .actions .add-to-links a.link-wishlist:hover {
+                background: #80b435
+            }
+
+            .products-list .actions .add-to-links a.link-compare:hover {
+                background: #80b435
+            }
+
+            .product-view .product-shop .add-to-box .btn-cart:hover {
+                background-color: #80b435;
+            }
+
+            .nav-tabs > li.active > a, .nav-tabs > li.active > a:hover, .nav-tabs > li.active > a:focus {
+                background: none repeat scroll 0 0 #80b435;
+            }
+
+            .form-add-tags button.button {
+                background: #80b435;
+            }
+
+            .comment-form .bnt-comment {
+                background: #80b435;
+            }
+
+            .comment-respond .form-submit input[type=submit] {
+                background: #80b435;
+            }
+
+            .checkout-progress li {
+                border: 2px #80b435 solid;
+                background: #80b435
+            }
+
+            button.button.create-account {
+                background: #80b435;
+            }
+
+            .newsletter-col {
+                background: #80b435
+            }
+
+            footer h4 {
+                color: #80b435;
+            }
+
+            button.button:hover {
+                background-color: #80b435;
+            }
+
+            .custom-slider .link {
+                color: #80b435;
+            }
+
+            .cat-img-title.cat-box {
+                border-left: 5px #80b435 solid;
+            }
+
+            .small-tag {
+                color: #80b435;
+            }
+
+            .category-description .slider-items-products .owl-buttons a:hover {
+                background: #80b435;
+            }
+
+            .title-buttons strong {
+                color: #80b435;
+            }
+
+            .newsletter-sign-box .subscribe {
+                background: #80b435;
+            }
+
+            .fl-links .clicker:before {
+                color: #80b435;
+            }
+
+            .fl-links .no-js:hover .fl-nav-links {
+                border-top: 3px #80b435 solid;
+            }
+
+            .clients_author {
+                color: #80b435
+            }
+
+            .icon-align-justify:before {
+                color: #80b435;
+            }
+
+            .mobile-menu li a {
+                color: #80b435;
+            }
+
+            .mm-toggle .icon-align-justify:before {
+                color: #80b435
+            }
+
+            .buy-btn {
+                color: #80b435;
+            }
+
+                .buy-btn:hover {
+                    background: #80b435;
+                }
+
+                .buy-btn:after {
+                    color: #80b435;
+                }
+
+            .pages .pagination > .active > a, .pages .pagination > .active > span, .pages .pagination > .active > a:hover, .pages .pagination > .active > span:hover, .pages .pagination > .active > a:focus, .pages .pagination > .active > span:focus {
+                background-color: #80b435;
+                border-color: #80b435;
+            }
+
+            .header-banner .assetBlock span {
+                color: #80b435;
+            }
+
+            footer a:hover {
+                color: #80b435;
+            }
+
+            ul.page-numbers span.page-numbers.current {
+                background-color: #80b435;
+                border-color: #80b435;
+            }
+
+            .products-list .desc .link-learn {
+                color: #80b435;
+            }
+
+            .single-product .tinvwl_add_to_wishlist_button:hover, .single-product a.compare.button:hover {
+                background-color: #80b435;
+                border-color: #80b435;
+            }
+
+            .breadcrumbs strong {
+                font-weight: 400;
+                color: #80b435 !important;
+            }
+
+            .product-view .product-next-prev .product-prev:hover {
+                box-shadow: inset 0 -40px 0 0 #80b435;
+                border: 1px solid #80b435;
+            }
+
+            .product-view .product-next-prev .product-next:hover {
+                box-shadow: inset 0 -40px 0 0 #80b435;
+                border: 1px solid #80b435;
+            }
+
+            .header-banner {
+                background: #131e2c;
+            }
+
+            .sticky-header-bar, .header-container, .navbar-collapse form[role="search"].active input,
+            .navbar-form .search-btn {
+                background:;
+            }
+
+            #nav > li > a {
+                color:;
+            }
+
+            #nav > li:hover > a, .vertnav-top li > a:hover {
+                color:;
+            }
+
+            .mega_main_menu.main-menu > .menu_holder > .menu_inner > ul li.additional_style_1 > .item_link *, .mega_main_menu.main-menu > .menu_holder > .menu_inner > ul li.additional_style_1 > .item_link .link_content {
+                color:;
+            }
+
+            .mega_main_menu > .menu_holder > .menu_inner > ul li > a.item_link:hover span > span, .mega_main_menu.main-menu > .menu_holder > .menu_inner > ul > li.current-menu-item > .item_link * {
+                color: !important;
+            }
+
+            footer {
+                background:;
+            }
+
+                .contacts-info p, footer .coppyright, .contacts-info i {
+                    color: #b7bcc8;
+                }
+
+                footer h4 {
+                    color:;
+                }
+
+            #preloader {
+                background: #fff url('') no-repeat center center;
+            }
+        </style>
+        <noscript>
+            <style>
+                .woocommerce-product-gallery {
+                    opacity: 1 !important;
+                }
+            </style>
+        </noscript>
+        <style>
+            .recentcomments a {
+                display: inline !important;
+                padding: 0 !important;
+                margin: 0 !important;
+            }
+        </style>
+        <meta name="generator" content="Powered by WPBakery Page Builder - drag and drop page builder for WordPress." />
+        <meta name="generator" content="Powered by Slider Revolution 6.2.1 - responsive, Mobile-Friendly Slider Plugin for WordPress with comfortable drag and drop interface." />
+        <link rel="icon" href="/WebContent/qualis/wp-content/uploads/2019/01/favicon.ico" sizes="32x32" />
+        <link rel="icon" href="/WebContent/qualis/wp-content/uploads/2019/01/favicon.ico" sizes="192x192" />
+        <link rel="apple-touch-icon" href="/WebContent/qualis/wp-content/uploads/2019/01/cropped-favicon-180x180.png" />
+        <meta name="msapplication-TileImage" content="https://klbtheme.com//WebContent/qualis/wp-content/uploads/2019/01/cropped-favicon-270x270.png" />
+        <style id="kirki-inline-styles"></style>
+        <style data-type="vc_shortcodes-custom-css">
+            .vc_custom_1545648066104 {
+                margin-top: 50px !important;
+                margin-bottom: 10px !important;
+            }
+
+            .vc_custom_1545722648407 {
+                padding-bottom: 80px !important;
+            }
+
+            .vc_custom_1544605181180 {
+                padding-left: 0px !important;
+            }
+
+            .vc_custom_1544605181183 {
+                padding-left: 15px !important;
+            }
+
+            .vc_custom_1544605273521 {
+                padding-right: 0px !important;
+            }
+
+            .vc_custom_1544605273524 {
+                padding-right: 15px !important;
+            }
+
+            .vc_custom_1544687714545 {
+                padding-right: 0px !important;
+                padding-left: 0px !important;
+            }
+
+            .nav-height {
+                padding-top: 0.9rem !important;
+            }
+        </style>
+        <noscript>
+            <style>
+                .wpb_animate_when_almost_visible {
+                    opacity: 1;
+                }
+            </style>
+        </noscript>
+        <script data-wpfc-render="false">var Wpfcll = { s: [], osl: 0, scroll: false, i: function () { Wpfcll.ss(); window.addEventListener('load', function () { window.addEventListener("DOMSubtreeModified", function (e) { Wpfcll.osl = Wpfcll.s.length; Wpfcll.ss(); if (Wpfcll.s.length > Wpfcll.osl) { Wpfcll.ls(false); } }, false); Wpfcll.ls(true); }); window.addEventListener('scroll', function () { Wpfcll.scroll = true; Wpfcll.ls(false); }); window.addEventListener('resize', function () { Wpfcll.scroll = true; Wpfcll.ls(false); }); window.addEventListener('click', function () { Wpfcll.scroll = true; Wpfcll.ls(false); }); }, c: function (e, pageload) { var w = document.documentElement.clientHeight || body.clientHeight; var n = 0; if (pageload) { n = 0; } else { n = (w > 800) ? 800 : 200; n = Wpfcll.scroll ? 800 : n; } var er = e.getBoundingClientRect(); var t = 0; var p = e.parentNode ? e.parentNode : false; if (typeof p.getBoundingClientRect == "undefined") { var pr = false; } else { var pr = p.getBoundingClientRect(); } if (er.x == 0 && er.y == 0) { for (var i = 0; i < 10; i++) { if (p) { if (pr.x == 0 && pr.y == 0) { if (p.parentNode) { p = p.parentNode; } if (typeof p.getBoundingClientRect == "undefined") { pr = false; } else { pr = p.getBoundingClientRect(); } } else { t = pr.top; break; } } }; } else { t = er.top; } if (w - t + n > 0) { return true; } return false; }, r: function (e, pageload) { var s = this; var oc, ot; try { oc = e.getAttribute("data-wpfc-original-src"); ot = e.getAttribute("data-wpfc-original-srcset"); originalsizes = e.getAttribute("data-wpfc-original-sizes"); if (s.c(e, pageload)) { if (oc || ot) { if (e.tagName == "DIV" || e.tagName == "A" || e.tagName == "SPAN") { e.style.backgroundImage = "url(" + oc + ")"; e.removeAttribute("data-wpfc-original-src"); e.removeAttribute("data-wpfc-original-srcset"); e.removeAttribute("onload"); } else { if (oc) { e.setAttribute('src', oc); } if (ot) { e.setAttribute('srcset', ot); } if (originalsizes) { e.setAttribute('sizes', originalsizes); } if (e.getAttribute("alt") && e.getAttribute("alt") == "blank") { e.removeAttribute("alt"); } e.removeAttribute("data-wpfc-original-src"); e.removeAttribute("data-wpfc-original-srcset"); e.removeAttribute("data-wpfc-original-sizes"); e.removeAttribute("onload"); if (e.tagName == "IFRAME") { var y = "https://www.youtube.com/embed/"; if (navigator.userAgent.match(/\sEdge?\/\d/i)) { e.setAttribute('src', e.getAttribute("src").replace(/.+\/templates\/youtube\.html\#/, y)); } e.onload = function () { if (typeof window.jQuery != "undefined") { if (jQuery.fn.fitVids) { jQuery(e).parent().fitVids({ customSelector: "iframe[src]" }); } } var s = e.getAttribute("src").match(/templates\/youtube\.html\#(.+)/); if (s) { try { var i = e.contentDocument || e.contentWindow; if (i.location.href == "about:blank") { e.setAttribute('src', y + s[1]); } } catch (err) { e.setAttribute('src', y + s[1]); } } } } } } else { if (e.tagName == "NOSCRIPT") { if (jQuery(e).attr("data-type") == "wpfc") { e.removeAttribute("data-type"); jQuery(e).after(jQuery(e).text()); } } } } } catch (error) { console.log(error); console.log("==>", e); } }, ss: function () { var i = Array.prototype.slice.call(document.getElementsByTagName("img")); var f = Array.prototype.slice.call(document.getElementsByTagName("iframe")); var d = Array.prototype.slice.call(document.getElementsByTagName("div")); var a = Array.prototype.slice.call(document.getElementsByTagName("a")); var s = Array.prototype.slice.call(document.getElementsByTagName("span")); var n = Array.prototype.slice.call(document.getElementsByTagName("noscript")); this.s = i.concat(f).concat(d).concat(a).concat(s).concat(n); }, ls: function (pageload) { var s = this;[].forEach.call(s.s, function (e, index) { s.r(e, pageload); }); } }; document.addEventListener('DOMContentLoaded', function () { wpfci(); }); function wpfci() { Wpfcll.i(); }</script>
+    </head>
+    <body class="home page-template page-template-frontpage page-template-frontpage-php page page-id-28 theme-qualis mmm mega_main_menu-2-1-7 woocommerce-no-js tinvwl-theme-style wpb-js-composer js-comp-ver-6.8.0 vc_responsive">
+      
+        <div id="preloader"></div>
+        <div id="page">
+            <header class="sticky-klb-header">
+                <div id="header">
+                    <div class="container nav-height">
+                        <div class="header-container row">
+                            <div class="logo">
+                                <a href="index.html" title="Qualis &#8211; Responsive eCommerce Theme">
+                                    <div><img src="/WebContent/qualis/wp-content/uploads/2018/12/navlogo.png" height="65" width="100" alt="KOF &#8211; Khan Organic Food"></div>
+                                </a>
+                            </div>
+                            <div class="fl-nav-menu">
+                                <nav>
+                                    <div class="mm-toggle-wrap">
+                                        <div class="mm-toggle"><i class="icon-align-justify"></i><span class="mm-label">Menu</span></div>
+                                    </div>
+                                    <div class="nav-inner">
+                                        <div id="main-menu" class="mega_main_menu main-menu primary_style-flat icons-left first-lvl-align-left first-lvl-separator-none direction-horizontal fullwidth-disable pushing_content-disable mobile_minimized-enable dropdowns_trigger-hover dropdowns_animation-none no-search no-woo_cart no-buddypress responsive-enable coercive_styles-disable indefinite_location_mode-disable language_direction-ltr version-2-1-7 mega_main">
+                                            <div class="menu_holder">
+                                                <div class="mmm_fullwidth_container"></div>
+                                                <div class="menu_inner" role="navigation">
+                                                    <span class="nav_logo"> <span class="mobile_toggle" role="menu" data-target="#main_ul-main-menu" aria-expanded="false" aria-controls="main_ul-main-menu"> <span class="mobile_button"> Menu &nbsp; <span class="symbol_menu">&equiv;</span> <span class="symbol_cross">&#x2573;</span> </span> </span> </span>
+                                                    <ul id="main_ul-main-menu" class="mega_main_menu_ul" role="menubar" aria-label="Menu">
+                                                        <li id="menu-item-248" class="menu-item menu-item-type-custom menu-item-object-custom current-menu-item current_page_item menu-item-home menu-item-248 default_dropdown default_style drop_to_right submenu_default_width columns1"> <a href="/Home/Index" class="item_link disable_icon" role="menuitem" tabindex="0"> <i></i> <span class="link_content"> <span class="link_text"> Home </span> </span> </a> </li>
+                                                        @*<li id="menu-item-366" class="menu-item menu-item-type-taxonomy menu-item-object-product_cat menu-item-has-children menu-item-366 parent drop-menu multicolumn_dropdown additional_style_1 drop_to_right submenu_full_width columns4">*@
+                                                        @*<a href="/WebContent/qualis/product-category/fruits.html" class="item_link disable_icon" aria-haspopup="true" aria-expanded="false" role="menuitem" tabindex="0"> <i></i> <span class="link_content"> <span class="link_text">Categories </span> </span> </a>
+                                                        <ul class="mega_dropdown" style="background-image:url(/WebContent/qualis/wp-content/uploads/2019/01/banner-300x271.jpg);background-repeat:no-repeat;background-attachment:scroll;background-position:center right;background-size:auto;" aria-expanded="false" aria-hidden="true" role="menu" aria-label="">*@
+                                                        @*<li id="menu-item-361" class="menu-item menu-item-type-taxonomy menu-item-object-product_cat menu-item-has-children menu-item-361 parent drop-menu default_dropdown default_style drop_to_right submenu_default_width columns1" style="width:25%;">
+                                                        @foreach (var item in categories)
+                                                        {
+                                                            <a href="@Url.Action("ProductGridView","Home",new {id=item.Id })" class="item_link disable_icon" aria-haspopup="true" aria-expanded="false" role="menuitem" tabindex="0"> <i></i> <span class="link_content"> <span class="link_text"> @item.Name </span> </span> </a>
+
+                                                        }
+                                                        </li>*@
+                                                        @*<li id="menu-item-356" class="menu-item menu-item-type-taxonomy menu-item-object-product_cat menu-item-has-children menu-item-356 parent drop-menu default_dropdown default_style drop_to_right submenu_default_width columns1" style="width:25%;">
+                                                            <a href="/WebContent/qualis/product-category/fruits/seasonal-fruits.html" class="item_link disable_icon" aria-haspopup="true" aria-expanded="false" role="menuitem" tabindex="0"> <i></i> <span class="link_content"> <span class="link_text"> Seasonal Fruits </span> </span> </a>
+                                                            <ul class="mega_dropdown" aria-expanded="false" aria-hidden="true" role="menu" aria-label="">
+                                                                <li id="menu-item-357" class="menu-item menu-item-type-taxonomy menu-item-object-product_cat menu-item-357 default_dropdown default_style drop_to_right submenu_default_width columns1"> <span class="item_link disable_icon" role="menuitem" tabindex="0"> <i></i> <span class="link_content"> <span class="link_text"> Black Jamuns </span> </span> </span> </li>
+                                                                <li id="menu-item-358" class="menu-item menu-item-type-taxonomy menu-item-object-product_cat menu-item-358 default_dropdown default_style drop_to_right submenu_default_width columns1"> <span class="item_link disable_icon" role="menuitem" tabindex="0"> <i></i> <span class="link_content"> <span class="link_text"> Fresh Mangos </span> </span> </span> </li>
+                                                                <li id="menu-item-359" class="menu-item menu-item-type-taxonomy menu-item-object-product_cat menu-item-359 default_dropdown default_style drop_to_right submenu_default_width columns1"> <span class="item_link disable_icon" role="menuitem" tabindex="0"> <i></i> <span class="link_content"> <span class="link_text"> Longans </span> </span> </span> </li>
+                                                                <li id="menu-item-360" class="menu-item menu-item-type-taxonomy menu-item-object-product_cat menu-item-360 default_dropdown default_style drop_to_right submenu_default_width columns1"> <span class="item_link disable_icon" role="menuitem" tabindex="0"> <i></i> <span class="link_content"> <span class="link_text"> Organic Litchis </span> </span> </span> </li>
+                                                            </ul>
+                                                        </li>
+                                                        <li id="menu-item-381" class="menu-item menu-item-type-taxonomy menu-item-object-product_cat menu-item-has-children menu-item-381 parent drop-menu default_dropdown default_style drop_to_right submenu_default_width columns1" style="width:25%;">
+                                                            <a href="/WebContent/qualis/product-category/fruits/tropical-fruits.html" class="item_link disable_icon" aria-haspopup="true" aria-expanded="false" role="menuitem" tabindex="0"> <i></i> <span class="link_content"> <span class="link_text"> Tropical Fruits </span> </span> </a>
+                                                            <ul class="mega_dropdown" aria-expanded="false" aria-hidden="true" role="menu" aria-label="">
+                                                                <li id="menu-item-382" class="menu-item menu-item-type-taxonomy menu-item-object-product_cat menu-item-382 default_dropdown default_style drop_to_right submenu_default_width columns1"> <span class="item_link disable_icon" role="menuitem" tabindex="0"> <i></i> <span class="link_content"> <span class="link_text"> Coconuts </span> </span> </span> </li>
+                                                                <li id="menu-item-383" class="menu-item menu-item-type-taxonomy menu-item-object-product_cat menu-item-383 default_dropdown default_style drop_to_right submenu_default_width columns1"> <span class="item_link disable_icon" role="menuitem" tabindex="0"> <i></i> <span class="link_content"> <span class="link_text"> Dragonfruits </span> </span> </span> </li>
+                                                                <li id="menu-item-384" class="menu-item menu-item-type-taxonomy menu-item-object-product_cat menu-item-384 default_dropdown default_style drop_to_right submenu_default_width columns1"> <span class="item_link disable_icon" role="menuitem" tabindex="0"> <i></i> <span class="link_content"> <span class="link_text"> Passionfruit </span> </span> </span> </li>
+                                                                <li id="menu-item-385" class="menu-item menu-item-type-taxonomy menu-item-object-product_cat menu-item-385 default_dropdown default_style drop_to_right submenu_default_width columns1"> <span class="item_link disable_icon" role="menuitem" tabindex="0"> <i></i> <span class="link_content"> <span class="link_text"> Pomegranates </span> </span> </span> </li>
+                                                            </ul>
+                                                        </li>
+                                                        <li id="menu-item-386" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-386 default_dropdown default_style drop_to_right submenu_default_width columns1" style="width:25%;"> <a href="#" class="item_link menu_item_without_text disable_icon" role="menuitem" tabindex="0"> <i></i> <span class="link_content"> <span class="link_text"> HIDDEN COLUMN </span> </span> </a> </li>
+                                                        <li id="menu-item-355" class="menu-item menu-item-type-taxonomy menu-item-object-product_cat menu-item-has-children menu-item-355 parent drop-menu default_dropdown default_style drop_to_right submenu_default_width columns1" style="width:25%;">
+                                                            <a href="/WebContent/qualis/product-category/fruits/citrus-fruits.html" class="item_link disable_icon" aria-haspopup="true" aria-expanded="false" role="menuitem" tabindex="0"> <i></i> <span class="link_content"> <span class="link_text"> Citrus Fruits </span> </span> </a>
+                                                            <ul class="mega_dropdown" aria-expanded="false" aria-hidden="true" role="menu" aria-label="">
+                                                                <li id="menu-item-372" class="menu-item menu-item-type-taxonomy menu-item-object-product_cat menu-item-372 default_dropdown default_style drop_to_right submenu_default_width columns1"> <span class="item_link disable_icon" role="menuitem" tabindex="0"> <i></i> <span class="link_content"> <span class="link_text"> Fresh Oranges </span> </span> </span> </li>
+                                                                <li id="menu-item-373" class="menu-item menu-item-type-taxonomy menu-item-object-product_cat menu-item-373 default_dropdown default_style drop_to_right submenu_default_width columns1"> <span class="item_link disable_icon" role="menuitem" tabindex="0"> <i></i> <span class="link_content"> <span class="link_text"> Grapefruits </span> </span> </span> </li>
+                                                                <li id="menu-item-374" class="menu-item menu-item-type-taxonomy menu-item-object-product_cat menu-item-374 default_dropdown default_style drop_to_right submenu_default_width columns1"> <span class="item_link disable_icon" role="menuitem" tabindex="0"> <i></i> <span class="link_content"> <span class="link_text"> Organic Limes </span> </span> </span> </li>
+                                                                <li id="menu-item-375" class="menu-item menu-item-type-taxonomy menu-item-object-product_cat menu-item-375 default_dropdown default_style drop_to_right submenu_default_width columns1"> <span class="item_link disable_icon" role="menuitem" tabindex="0"> <i></i> <span class="link_content"> <span class="link_text"> Yellow Lemons </span> </span> </span> </li>
+                                                            </ul>
+                                                        </li>
+                                                        <li id="menu-item-376" class="menu-item menu-item-type-taxonomy menu-item-object-product_cat menu-item-has-children menu-item-376 parent drop-menu default_dropdown default_style drop_to_right submenu_default_width columns1" style="width:25%;">
+                                                            <a href="/WebContent/qualis/product-category/fruits/large-fruits.html" class="item_link disable_icon" aria-haspopup="true" aria-expanded="false" role="menuitem" tabindex="0"> <i></i> <span class="link_content"> <span class="link_text"> Large Fruits </span> </span> </a>
+                                                            <ul class="mega_dropdown" aria-expanded="false" aria-hidden="true" role="menu" aria-label="">
+                                                                <li id="menu-item-380" class="menu-item menu-item-type-taxonomy menu-item-object-product_cat menu-item-380 default_dropdown default_style drop_to_right submenu_default_width columns1"> <span class="item_link disable_icon" role="menuitem" tabindex="0"> <i></i> <span class="link_content"> <span class="link_text"> Pineapples </span> </span> </span> </li>
+                                                                <li id="menu-item-379" class="menu-item menu-item-type-taxonomy menu-item-object-product_cat menu-item-379 default_dropdown default_style drop_to_right submenu_default_width columns1"> <span class="item_link disable_icon" role="menuitem" tabindex="0"> <i></i> <span class="link_content"> <span class="link_text"> Organic Papayas </span> </span> </span> </li>
+                                                                <li id="menu-item-377" class="menu-item menu-item-type-taxonomy menu-item-object-product_cat menu-item-377 default_dropdown default_style drop_to_right submenu_default_width columns1"> <span class="item_link disable_icon" role="menuitem" tabindex="0"> <i></i> <span class="link_content"> <span class="link_text"> Fresh Melons </span> </span> </span> </li>
+                                                                <li id="menu-item-378" class="menu-item menu-item-type-taxonomy menu-item-object-product_cat menu-item-378 default_dropdown default_style drop_to_right submenu_default_width columns1"> <span class="item_link disable_icon" role="menuitem" tabindex="0"> <i></i> <span class="link_content"> <span class="link_text"> Grapefruits </span> </span> </span> </li>
+                                                            </ul>
+                                                        </li>
+                                                        <li id="menu-item-367" class="menu-item menu-item-type-taxonomy menu-item-object-product_cat menu-item-has-children menu-item-367 parent drop-menu default_dropdown default_style drop_to_right submenu_default_width columns1" style="width:25%;">
+                                                            <a href="/WebContent/qualis/product-category/fruits/berries-cherries.html" class="item_link disable_icon" aria-haspopup="true" aria-expanded="false" role="menuitem" tabindex="0"> <i></i> <span class="link_content"> <span class="link_text"> Berries % Cherries </span> </span> </a>
+                                                            <ul class="mega_dropdown" aria-expanded="false" aria-hidden="true" role="menu" aria-label="">
+                                                                <li id="menu-item-368" class="menu-item menu-item-type-taxonomy menu-item-object-product_cat menu-item-368 default_dropdown default_style drop_to_right submenu_default_width columns1"> <span class="item_link disable_icon" role="menuitem" tabindex="0"> <i></i> <span class="link_content"> <span class="link_text"> Blackberries </span> </span> </span> </li>
+                                                                <li id="menu-item-370" class="menu-item menu-item-type-taxonomy menu-item-object-product_cat menu-item-370 default_dropdown default_style drop_to_right submenu_default_width columns1"> <span class="item_link disable_icon" role="menuitem" tabindex="0"> <i></i> <span class="link_content"> <span class="link_text"> Raspberries </span> </span> </span> </li>
+                                                                <li id="menu-item-371" class="menu-item menu-item-type-taxonomy menu-item-object-product_cat menu-item-371 default_dropdown default_style drop_to_right submenu_default_width columns1"> <span class="item_link disable_icon" role="menuitem" tabindex="0"> <i></i> <span class="link_content"> <span class="link_text"> Strawberries </span> </span> </span> </li>
+                                                                <li id="menu-item-369" class="menu-item menu-item-type-taxonomy menu-item-object-product_cat menu-item-369 default_dropdown default_style drop_to_right submenu_default_width columns1"> <span class="item_link disable_icon" role="menuitem" tabindex="0"> <i></i> <span class="link_content"> <span class="link_text"> Cherries </span> </span> </span> </li>
+                                                            </ul>
+                                                        </li>*@
+                                                        @*</ul>*@
+                                                        @*</li>*@
+                                                        @*<li id="menu-item-387" class="menu-item menu-item-type-taxonomy menu-item-object-product_cat menu-item-has-children menu-item-387 parent drop-menu multicolumn_dropdown default_style drop_to_right submenu_full_width columns6">
+                                                            <a href="/WebContent/qualis/product-category/salads.html" class="item_link disable_icon" aria-haspopup="true" aria-expanded="false" role="menuitem" tabindex="0"> <i></i> <span class="link_content"> <span class="link_text"> Products </span> </span> </a>
+                                                            <ul class="mega_dropdown" aria-expanded="false" aria-hidden="true" role="menu" aria-label="">
+                                                                <li id="menu-item-388" class="menu-item menu-item-type-taxonomy menu-item-object-product_cat menu-item-has-children menu-item-388 parent drop-menu default_dropdown default_style drop_to_right submenu_default_width columns1" style="width:16.666666666667%;">
+                                                                    <a href="/WebContent/qualis/product-category/salads/veg-salads.html" class="item_link disable_icon" aria-haspopup="true" aria-expanded="false" role="menuitem" tabindex="0"> <i></i> <span class="link_content"> <span class="link_text"> Veg Salads </span> </span> </a>
+                                                                    <ul class="mega_dropdown" aria-expanded="false" aria-hidden="true" role="menu" aria-label="">
+                                                                        <li id="menu-item-390" class="menu-item menu-item-type-taxonomy menu-item-object-product_cat menu-item-390 default_dropdown default_style drop_to_right submenu_default_width columns1"> <span class="item_link disable_icon" role="menuitem" tabindex="0"> <i></i> <span class="link_content"> <span class="link_text"> Tomatoes </span> </span> </span> </li>
+                                                                        <li id="menu-item-389" class="menu-item menu-item-type-taxonomy menu-item-object-product_cat menu-item-389 default_dropdown default_style drop_to_right submenu_default_width columns1"> <a href="/WebContent/qualis/product-category/salads/veg-salads/peppers-capsicums.html" class="item_link disable_icon" role="menuitem" tabindex="0"> <i></i> <span class="link_content"> <span class="link_text"> Peppers & Capsicums </span> </span> </a> </li>
+                                                                        <li id="menu-item-391" class="menu-item menu-item-type-taxonomy menu-item-object-product_cat menu-item-391 default_dropdown default_style drop_to_right submenu_default_width columns1"> <a href="/WebContent/qualis/product-category/salads/veg-salads/cucumbers.html" class="item_link disable_icon" role="menuitem" tabindex="0"> <i></i> <span class="link_content"> <span class="link_text"> Cucumbers </span> </span> </a> </li>
+                                                                        <li id="menu-item-392" class="menu-item menu-item-type-taxonomy menu-item-object-product_cat menu-item-392 default_dropdown default_style drop_to_right submenu_default_width columns1"> <a href="/WebContent/qualis/product-category/salads/veg-salads/avocados.html" class="item_link disable_icon" role="menuitem" tabindex="0"> <i></i> <span class="link_content"> <span class="link_text"> Avocados </span> </span> </a> </li>
+                                                                    </ul>
+                                                                </li>
+                                                                <li id="menu-item-393" class="menu-item menu-item-type-taxonomy menu-item-object-product_cat menu-item-has-children menu-item-393 parent drop-menu default_dropdown default_style drop_to_right submenu_default_width columns1" style="width:16.666666666667%;">
+                                                                    <a href="/WebContent/qualis/product-category/salads/dressing-salads.html" class="item_link disable_icon" aria-haspopup="true" aria-expanded="false" role="menuitem" tabindex="0"> <i></i> <span class="link_content"> <span class="link_text"> Dressing Salads </span> </span> </a>
+                                                                    <ul class="mega_dropdown" aria-expanded="false" aria-hidden="true" role="menu" aria-label="">
+                                                                        <li id="menu-item-394" class="menu-item menu-item-type-taxonomy menu-item-object-product_cat menu-item-394 default_dropdown default_style drop_to_right submenu_default_width columns1"> <a href="/WebContent/qualis/product-category/salads/dressing-salads/hellmanns.html" class="item_link disable_icon" role="menuitem" tabindex="0"> <i></i> <span class="link_content"> <span class="link_text"> Hellmann’s </span> </span> </a> </li>
+                                                                        <li id="menu-item-395" class="menu-item menu-item-type-taxonomy menu-item-object-product_cat menu-item-395 default_dropdown default_style drop_to_right submenu_default_width columns1"> <a href="/WebContent/qualis/product-category/salads/dressing-salads/giuseppe-giusti.html" class="item_link disable_icon" role="menuitem" tabindex="0"> <i></i> <span class="link_content"> <span class="link_text"> Giuseppe Giusti </span> </span> </a> </li>
+                                                                        <li id="menu-item-396" class="menu-item menu-item-type-taxonomy menu-item-object-product_cat menu-item-396 default_dropdown default_style drop_to_right submenu_default_width columns1"> <a href="/WebContent/qualis/product-category/salads/dressing-salads/unitednature.html" class="item_link disable_icon" role="menuitem" tabindex="0"> <i></i> <span class="link_content"> <span class="link_text"> Unitednature </span> </span> </a> </li>
+                                                                        <li id="menu-item-397" class="menu-item menu-item-type-taxonomy menu-item-object-product_cat menu-item-397 default_dropdown default_style drop_to_right submenu_default_width columns1"> <a href="/WebContent/qualis/product-category/salads/dressing-salads/walden-farms.html" class="item_link disable_icon" role="menuitem" tabindex="0"> <i></i> <span class="link_content"> <span class="link_text"> Walden Farms </span> </span> </a> </li>
+                                                                    </ul>
+                                                                </li>
+                                                                <li id="menu-item-398" class="menu-item menu-item-type-taxonomy menu-item-object-product_cat menu-item-has-children menu-item-398 parent drop-menu default_dropdown default_style drop_to_right submenu_default_width columns1" style="width:16.666666666667%;">
+                                                                    <a href="/WebContent/qualis/product-category/salads/fruits-salads.html" class="item_link disable_icon" aria-haspopup="true" aria-expanded="false" role="menuitem" tabindex="0"> <i></i> <span class="link_content"> <span class="link_text"> Fruits Salads </span> </span> </a>
+                                                                    <ul class="mega_dropdown" aria-expanded="false" aria-hidden="true" role="menu" aria-label="">
+                                                                        <li id="menu-item-399" class="menu-item menu-item-type-taxonomy menu-item-object-product_cat menu-item-399 default_dropdown default_style drop_to_right submenu_default_width columns1"> <a href="/WebContent/qualis/product-category/salads/fruits-salads/pineapples-fruits-salads.html" class="item_link disable_icon" role="menuitem" tabindex="0"> <i></i> <span class="link_content"> <span class="link_text"> Pineapples </span> </span> </a> </li>
+                                                                        <li id="menu-item-400" class="menu-item menu-item-type-taxonomy menu-item-object-product_cat menu-item-400 default_dropdown default_style drop_to_right submenu_default_width columns1"> <a href="/WebContent/qualis/product-category/salads/fruits-salads/red-apple.html" class="item_link disable_icon" role="menuitem" tabindex="0"> <i></i> <span class="link_content"> <span class="link_text"> Red Apple </span> </span> </a> </li>
+                                                                        <li id="menu-item-401" class="menu-item menu-item-type-taxonomy menu-item-object-product_cat menu-item-401 default_dropdown default_style drop_to_right submenu_default_width columns1"> <a href="/WebContent/qualis/product-category/fruits/berries-cherries/strawberries.html" class="item_link disable_icon" role="menuitem" tabindex="0"> <i></i> <span class="link_content"> <span class="link_text"> Strawberries </span> </span> </a> </li>
+                                                                        <li id="menu-item-402" class="menu-item menu-item-type-taxonomy menu-item-object-product_cat menu-item-402 default_dropdown default_style drop_to_right submenu_default_width columns1"> <a href="/WebContent/qualis/product-category/salads/fruits-salads/row-mangos.html" class="item_link disable_icon" role="menuitem" tabindex="0"> <i></i> <span class="link_content"> <span class="link_text"> Row Mangos </span> </span> </a> </li>
+                                                                    </ul>
+                                                                </li>
+                                                                <li id="menu-item-403" class="menu-item menu-item-type-taxonomy menu-item-object-product_cat menu-item-has-children menu-item-403 parent drop-menu default_dropdown default_style drop_to_right submenu_default_width columns1" style="width:16.666666666667%;">
+                                                                    <a href="/WebContent/qualis/product-category/salads/bagged-salads.html" class="item_link disable_icon" aria-haspopup="true" aria-expanded="false" role="menuitem" tabindex="0"> <i></i> <span class="link_content"> <span class="link_text"> Bagged Salads </span> </span> </a>
+                                                                    <ul class="mega_dropdown" aria-expanded="false" aria-hidden="true" role="menu" aria-label="">
+                                                                        <li id="menu-item-404" class="menu-item menu-item-type-taxonomy menu-item-object-product_cat menu-item-404 default_dropdown default_style drop_to_right submenu_default_width columns1"> <a href="/WebContent/qualis/product-category/salads/bagged-salads/italian-baby-spinach.html" class="item_link disable_icon" role="menuitem" tabindex="0"> <i></i> <span class="link_content"> <span class="link_text"> Italian Baby Spinach </span> </span> </a> </li>
+                                                                        <li id="menu-item-405" class="menu-item menu-item-type-taxonomy menu-item-object-product_cat menu-item-405 default_dropdown default_style drop_to_right submenu_default_width columns1"> <a href="/WebContent/qualis/product-category/salads/bagged-salads/australia-green-kale.html" class="item_link disable_icon" role="menuitem" tabindex="0"> <i></i> <span class="link_content"> <span class="link_text"> Australia Green Kale </span> </span> </a> </li>
+                                                                        <li id="menu-item-406" class="menu-item menu-item-type-taxonomy menu-item-object-product_cat menu-item-406 default_dropdown default_style drop_to_right submenu_default_width columns1"> <a href="/WebContent/qualis/product-category/salads/bagged-salads/oro-rocket-salad.html" class="item_link disable_icon" role="menuitem" tabindex="0"> <i></i> <span class="link_content"> <span class="link_text"> Oro Rocket Salad </span> </span> </a> </li>
+                                                                        <li id="menu-item-407" class="menu-item menu-item-type-taxonomy menu-item-object-product_cat menu-item-407 default_dropdown default_style drop_to_right submenu_default_width columns1"> <a href="/WebContent/qualis/product-category/salads/bagged-salads/sustenir-fresh-toscano.html" class="item_link disable_icon" role="menuitem" tabindex="0"> <i></i> <span class="link_content"> <span class="link_text"> Sustenir Fresh Toscano </span> </span> </a> </li>
+                                                                    </ul>
+                                                                </li>
+                                                                <li id="menu-item-408" class="menu-item menu-item-type-taxonomy menu-item-object-product_cat menu-item-has-children menu-item-408 parent drop-menu default_dropdown default_style drop_to_right submenu_default_width columns1" style="width:16.666666666667%;">
+                                                                    <a href="/WebContent/qualis/product-category/salads/lettuce-salads.html" class="item_link disable_icon" aria-haspopup="true" aria-expanded="false" role="menuitem" tabindex="0"> <i></i> <span class="link_content"> <span class="link_text"> Lettuce Salads </span> </span> </a>
+                                                                    <ul class="mega_dropdown" aria-expanded="false" aria-hidden="true" role="menu" aria-label="">
+                                                                        <li id="menu-item-409" class="menu-item menu-item-type-taxonomy menu-item-object-product_cat menu-item-409 default_dropdown default_style drop_to_right submenu_default_width columns1"> <a href="/WebContent/qualis/product-category/salads/lettuce-salads/butterhead.html" class="item_link disable_icon" role="menuitem" tabindex="0"> <i></i> <span class="link_content"> <span class="link_text"> Butterhead </span> </span> </a> </li>
+                                                                        <li id="menu-item-411" class="menu-item menu-item-type-taxonomy menu-item-object-product_cat menu-item-411 default_dropdown default_style drop_to_right submenu_default_width columns1"> <a href="/WebContent/qualis/product-category/salads/lettuce-salads/red-coral.html" class="item_link disable_icon" role="menuitem" tabindex="0"> <i></i> <span class="link_content"> <span class="link_text"> Red Coral </span> </span> </a> </li>
+                                                                        <li id="menu-item-412" class="menu-item menu-item-type-taxonomy menu-item-object-product_cat menu-item-412 default_dropdown default_style drop_to_right submenu_default_width columns1"> <a href="/WebContent/qualis/product-category/salads/lettuce-salads/rolla-rosa-lettuce.html" class="item_link disable_icon" role="menuitem" tabindex="0"> <i></i> <span class="link_content"> <span class="link_text"> Rolla Rosa Lettuce </span> </span> </a> </li>
+                                                                        <li id="menu-item-410" class="menu-item menu-item-type-taxonomy menu-item-object-product_cat menu-item-410 default_dropdown default_style drop_to_right submenu_default_width columns1"> <a href="/WebContent/qualis/product-category/salads/lettuce-salads/summercrisp.html" class="item_link disable_icon" role="menuitem" tabindex="0"> <i></i> <span class="link_content"> <span class="link_text"> Summercrisp </span> </span> </a> </li>
+                                                                    </ul>
+                                                                </li>
+                                                                <li id="menu-item-413" class="menu-item menu-item-type-taxonomy menu-item-object-product_cat menu-item-has-children menu-item-413 parent drop-menu default_dropdown default_style drop_to_right submenu_default_width columns1" style="width:16.666666666667%;">
+                                                                    <a href="/WebContent/qualis/product-category/salads/bread-salads.html" class="item_link disable_icon" aria-haspopup="true" aria-expanded="false" role="menuitem" tabindex="0"> <i></i> <span class="link_content"> <span class="link_text"> Bread Salads </span> </span> </a>
+                                                                    <ul class="mega_dropdown" aria-expanded="false" aria-hidden="true" role="menu" aria-label="">
+                                                                        <li id="menu-item-414" class="menu-item menu-item-type-taxonomy menu-item-object-product_cat menu-item-414 default_dropdown default_style drop_to_right submenu_default_width columns1"> <a href="/WebContent/qualis/product-category/salads/bread-salads/green-goddess.html" class="item_link disable_icon" role="menuitem" tabindex="0"> <i></i> <span class="link_content"> <span class="link_text"> Green Goddess </span> </span> </a> </li>
+                                                                        <li id="menu-item-415" class="menu-item menu-item-type-taxonomy menu-item-object-product_cat menu-item-415 default_dropdown default_style drop_to_right submenu_default_width columns1"> <a href="/WebContent/qualis/product-category/salads/bread-salads/grilled-broccoli.html" class="item_link disable_icon" role="menuitem" tabindex="0"> <i></i> <span class="link_content"> <span class="link_text"> Grilled Broccoli </span> </span> </a> </li>
+                                                                        <li id="menu-item-417" class="menu-item menu-item-type-taxonomy menu-item-object-product_cat menu-item-417 default_dropdown default_style drop_to_right submenu_default_width columns1"> <a href="/WebContent/qualis/product-category/salads/bread-salads/panzanella.html" class="item_link disable_icon" role="menuitem" tabindex="0"> <i></i> <span class="link_content"> <span class="link_text"> Panzanella </span> </span> </a> </li>
+                                                                        <li id="menu-item-416" class="menu-item menu-item-type-taxonomy menu-item-object-product_cat menu-item-416 default_dropdown default_style drop_to_right submenu_default_width columns1"> <a href="/WebContent/qualis/product-category/salads/bread-salads/green-tomato.html" class="item_link disable_icon" role="menuitem" tabindex="0"> <i></i> <span class="link_content"> <span class="link_text"> Green Tomato </span> </span> </a> </li>
+                                                                    </ul>
+                                                                </li>
+                                                            </ul>
+                                                        </li>
+                                                        <li id="menu-item-419" class="menu-item menu-item-type-taxonomy menu-item-object-product_cat menu-item-419 default_dropdown default_style drop_to_right submenu_default_width columns1"> <a href="/Home/ProductListView" class="item_link disable_icon" role="menuitem" tabindex="0"> <i></i> <span class="link_content"> <span class="link_text"> List View </span> </span> </a> </li>*@
+                                                        <li id="menu-item-418" class="menu-item menu-item-type-taxonomy menu-item-object-product_cat menu-item-418 default_dropdown default_style drop_to_right submenu_default_width columns1"> <a href="/Home/ProductGridView" class="item_link disable_icon" role="menuitem" tabindex="0"> <i></i> <span class="link_content"> <span class="link_text"> Products </span> </span> </a> </li>
+
+                                                        <li id="menu-item-249" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-has-children menu-item-249 parent drop-menu default_dropdown default_style drop_to_right submenu_default_width columns1">
+                                                            <a href="#" class="item_link disable_icon" aria-haspopup="true" aria-expanded="false" role="menuitem" tabindex="0"> <i></i> <span class="link_content"> <span class="link_text"> Categories </span> </span> </a>
+                                                            <ul class="mega_dropdown" aria-expanded="false" aria-hidden="true" role="menu" aria-label="Pages">
+                                                                @foreach (var item in categories)
+                                                                {
+
+                                                                    <li id="menu-item-426" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-426 default_dropdown default_style drop_to_right submenu_default_width columns1"> <a href="@Url.Action("ProductGridView","Home",new {id=item.Id })" class="item_link disable_icon" role="menuitem" tabindex="0"> <i></i> <span class="link_content"> <span class="link_text">@item.Name </span> </span> </a> </li>
+
+                                                                }
+                                                                @*<li id="menu-item-427" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-427 default_dropdown default_style drop_to_right submenu_default_width columns1"> <a href="/WebContent/qualis/products-list-view.html" class="item_link disable_icon" role="menuitem" tabindex="0"> <i></i> <span class="link_content"> <span class="link_text"> Products List </span> </span> </a> </li>
+                                                                <li id="menu-item-428" class="menu-item menu-item-type-post_type menu-item-object-product menu-item-428 default_dropdown default_style drop_to_right submenu_default_width columns1"> <a href="/WebContent/qualis/product/fresh-organic-mustard-leaves.html" class="item_link disable_icon" role="menuitem" tabindex="0"> <i></i> <span class="link_content"> <span class="link_text"> Product Detail </span> </span> </a> </li>
+                                                                <li id="menu-item-423" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-423 default_dropdown default_style drop_to_right submenu_default_width columns1"> <a href="/WebContent/qualis/cart.html" class="item_link disable_icon" role="menuitem" tabindex="0"> <i></i> <span class="link_content"> <span class="link_text"> Cart Page </span> </span> </a> </li>
+                                                                <li id="menu-item-422" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-422 default_dropdown default_style drop_to_right submenu_default_width columns1"> <a href="/WebContent/qualis/checkout.html" class="item_link disable_icon" role="menuitem" tabindex="0"> <i></i> <span class="link_content"> <span class="link_text"> Checkout </span> </span> </a> </li>
+                                                                <li id="menu-item-424" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-424 default_dropdown default_style drop_to_right submenu_default_width columns1"> <a href="/WebContent/qualis/wishlist.html" class="item_link disable_icon" role="menuitem" tabindex="0"> <i></i> <span class="link_content"> <span class="link_text"> Wishlist </span> </span> </a> </li>
+                                                                <li id="menu-item-425" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-425 default_dropdown default_style drop_to_right submenu_default_width columns1"> <a href="/Home/MyAccount" class="item_link disable_icon" role="menuitem" tabindex="0"> <i></i> <span class="link_content"> <span class="link_text"> My account </span> </span> </a> </li>
+                                                                <li id="menu-item-433" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-433 default_dropdown default_style drop_to_right submenu_default_width columns1"> <a href="/WebContent/qualis/blog.html" class="item_link disable_icon" role="menuitem" tabindex="0"> <i></i> <span class="link_content"> <span class="link_text"> Blog </span> </span> </a> </li>
+                                                                <li id="menu-item-434" class="menu-item menu-item-type-post_type menu-item-object-post menu-item-434 default_dropdown default_style drop_to_right submenu_default_width columns1"> <a href="/WebContent/qualis/powerful-and-flexible-premium-ecommerce-themes.html" class="item_link disable_icon" role="menuitem" tabindex="0"> <i></i> <span class="link_content"> <span class="link_text"> Blog Detail </span> </span> </a> </li>
+                                                                <li id="menu-item-420" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-420 default_dropdown default_style drop_to_right submenu_default_width columns1"> <a href="/WebContent/qualis/404.html" class="item_link disable_icon" role="menuitem" tabindex="0"> <i></i> <span class="link_content"> <span class="link_text"> 404 Error Page </span> </span> </a> </li>*@
+                                                            </ul>
+                                                        </li>
+                                                        <li id="menu-item-429" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-429 default_dropdown default_style drop_to_right submenu_default_width columns1"> <a href="/Home/about" class="item_link disable_icon" role="menuitem" tabindex="0"> <i></i> <span class="link_content"> <span class="link_text"> About Us </span> </span> </a> </li>
+                                                        <li id="menu-item-429" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-429 default_dropdown default_style drop_to_right submenu_default_width columns1"> <a href="/Home/ContactUs" class="item_link disable_icon" role="menuitem" tabindex="0"> <i></i> <span class="link_content"> <span class="link_text"> Contact Us </span> </span> </a> </li>
+                                                        @if (SignInManager.IsSignedIn(User))
+                                                        {
+                                                            var netuserid = UserManager.GetUserId(User);
+                                                            var username = _dbContext.AllUsers.Where(x => x.IdentityUserId == netuserid).SingleOrDefault().Name;
+                                                            <li id="menu-item-429" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-429 default_dropdown default_style drop_to_right submenu_default_width columns1"> <a href="/Home/ContactUs" class="item_link disable_icon" role="menuitem" tabindex="0"> <i></i> <span class="link_content" style="margin-left:150px"> <span class="link_text" >Hi!. @username </span> </span> </a> </li>
+
+                                                        }
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </nav>
+                            </div>
+                            <div class="fl-header-right">
+                                <div class="fl-links">
+                                    <div class="no-js">
+                                        <a title="Company" class="clicker"></a>
+                                        <div class="fl-nav-links">
+                                            <ul id="menu-right-menu" class="links">
+                                                @*<li id="menu-item-430" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-430"><a href="/Home/MyAccount">My account</a></li>*@
+                                                @*<li id="menu-item-431" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-431"><a href="/Home/WishList">Wishlist</a></li>*@
+                                                <li id="menu-item-432" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-432"><a href="/Home/Checkout">Checkout</a></li>
+                                                @if (SignInManager.IsSignedIn(User))
+                                                {
+                                                    <form id="logoutForm" class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">
+                                                        @*<li id="menu-item-432" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-432"><a asp-page="/Account/Register">Register</a></li>*@
+                                                        <button id="logout" type="submit">Logout</button>
+                                                    </form>
+                                                    @*<li id="menu-item-432" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-432"><a asp-page="/Account/Register">Register</a></li>*@
+                                                }
+                                                else
+                                                {
+                                                    <li id="menu-item-432" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-432"><a asp-page="/Account/Register">Register</a></li>
+                                                    <li id="menu-item-432" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-432"><a asp-page="/Account/Login">Login</a></li>
+                                                }
+
+
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="fl-cart-contain">
+                                    <div class="mini-cart">
+                                        <div class="basket">
+                                            <a href="/Home/Checkout">
+                                                <span class="cart-value cart-contents">@mycart.Count() </span>
+                                            </a>
+                                        </div>
+                                        <div class="fl-mini-cart-content">
+                                            @if (@mycart.Count() == 0)
+                                            {
+
+
+                                                <p class="woocommerce-mini-cart__empty-message">No products in the cart.</p>
+                                            }
+                                            else
+                                            {
+                                                <div class="block-subtitle">
+                                                    <div class="top-subtotal">@mycart.Count() items, <span class="price"><span class="woocommerce-Price-amount amount"><bdi><span class="woocommerce-Price-currencySymbol">Rs.</span>@mycart.Sum(x => x.TotalPrice)</bdi></span></span> </div>
+                                                </div>
+                                                foreach (var item in mycart)
+                                                {
+                                                    var productname = _dbContext.Products.Where(x => x.Id == item.ProductId).SingleOrDefault().Name;
+
+                                                    var src = _dbContext.ProductImages.Where(x => x.ProductId == item.ProductId).FirstOrDefault().ImageUrl;
+                                                    <ul class="mini-products-list woocommerce-mini-cart cart_list product_list_widget ">
+                                                        <li class="item woocommerce-mini-cart-item mini_cart_item">
+                                                            <div class="item-inner">
+                                                                <a class="product-image"href="@Url.Action("Productdetail","Home",new {id=item.inventoryId })">
+                                                                    <img width="80" height="80" src="/Images/ProductImages/@Url.Content(src)" class="attachment-woocommerce_thumbnail size-woocommerce_thumbnail" alt="" srcset="/Images/ProductImages/@Url.Content(src) 80w, /Images/ProductImages/@Url.Content(src) 150w,/Images/ProductImages/@Url.Content(src) 300w,/Images/ProductImages/@Url.Content(src) 768w,/Images/ProductImages/@Url.Content(src),/Images/ProductImages/@Url.Content(src),/Images/ProductImages/@Url.Content(src) 99w,/Images/ProductImages/@Url.Content(src) 800w">
+                                                                </a>
+                                                                <div class="product-details">
+                                                                    <div class="access">
+
+                                                                        <a href="@Url.Action("removecart","Home",new {id=item.Id})" class="remove remove_from_cart_button btn-remove1" aria-label="Remove this item" data-product_id="94" data-cart_item_key="f4b9ec30ad9f68f89b29639786cb62ef" data-product_sku="K27SA62">×</a>
+                                                                        <span class="quantity">@item.Quantity (@item.unit) × <span class="woocommerce-Price-amount amount"><bdi><span class="woocommerce-Price-currencySymbol">Rs.</span>@item.PerUnitPrice =@(item.PerUnitPrice* item.Quantity)</bdi></span></span>
+
+
+                                                                        <p class="product-name"><a href="@Url.Action("Productdetail","Home",new {id=item.inventoryId })">@productname</a></p>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </li>
+                                                    </ul>
+                                                }
+
+                                                <p class="woocommerce-mini-cart__buttons buttons"><a href="/Home/Checkout" class="button wc-forward">View cart</a><a href="/Home/Checkout" class="button checkout wc-forward">Checkout</a></p>
+                                            }
+
+                                        </div>
+                                    </div>
+
+                                </div>
+                                @*<div class="collapse navbar-collapse">
+                                    <form class="navbar-form" role="search" method="get" id="searchform" action="index.html">
+                                        <div class="input-group"> <input type="text" class="form-control" value="" name="s" id="s" placeholder="Search"> <span class="input-group-btn"> <button type="submit" class="search-btn"> <span class="glyphicon glyphicon-search"> <span class="sr-only">Search</span> </span> </button> <input type="hidden" name="post_type" value="product" /> </span></div>
+                                    </form>
+                                </div>*@
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </header>
+            @RenderBody()
+            <footer>
+                <div class="footer-inner">
+                    <div class="newsletter-row">
+                        <div class="container">
+                            <div class="row">
+                                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 col1">
+                                    <div class="newsletter-wrap">
+                                        <h5>NEWSLETTER</h5>
+
+                                        <form id="mc4wp-form-1" class="mc4wp-form mc4wp-form-205" method="post" data-id="205" data-name="">
+                                            <div class="mc4wp-form-fields">
+                                                <div id="container_form_news">
+                                                    <div id="container_form_news2"> <input type="email" id="newsletter1" name="EMAIL" placeholder="Your email address" required /> <button type="submit" class="button subscribe"><span>Subscribe</span></button></div>
+                                                </div>
+                                            </div>
+                                            <label style="display: none !important;">Leave this field empty if you're human: <input type="text" name="_mc4wp_honeypot" value="" tabindex="-1" autocomplete="off" /></label><input type="hidden" name="_mc4wp_timestamp" value="1643209383" /><input type="hidden" name="_mc4wp_form_id" value="205" /><input type="hidden" name="_mc4wp_form_element_id" value="mc4wp-form-1" />
+                                            <div class="mc4wp-response"></div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="footer-middle">
+                        <div class="container">
+                            <div class="row">
+                                <div class="col-md-3 col-sm-6">
+                                    <div class="footer-column">
+                                        <div class="klbfooterwidget widget_nav_menu">
+                                            <h4>Information</h4>
+                                            <div class="menu-information-container">
+                                                <ul id="menu-information" class="menu">
+
+                                                    <li id="menu-item-489" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-489"><a href="/Home/about">About Us</a></li>
+                                                    <li id="menu-item-490" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-490"><a href="/Home/ContactUs">Contact Us</a></li>
+
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-3 col-sm-6">
+                                    <div class="footer-column">
+                                        <div class="klbfooterwidget widget_contact_box">
+                                            <h4>Contact Us</h4>
+                                            <div class="contacts-info">
+                                                <div class="phone-footer">
+                                                    <i class="fa fa-map-marker"></i>
+                                                    <p>G-200 <br> valancia town, Lahore 54000 Pakistan</p>
+                                                </div>
+                                                <div class="phone-footer">
+                                                    <i class="fa fa-phone"></i>
+                                                    <p>+92 3107771866</p>
+                                                </div>
+                                                <div class="phone-footer">
+                                                    <i class="fa fa-envelope"></i>
+                                                    <p>Info@khanorganicfoods.pk</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="footer-top">
+                    <div class="container">
+                        <div class="row">
+                            @*<div class="col-xs-12 col-sm-4">
+                                <div class="social">
+                                    <ul>
+                                        <li class="facebook"><a href="#" target="_blank"> <i class="fa fa-facebook"></i></a></li>
+                                        <li class="twitter"><a href="#" target="_blank"> <i class="fa fa-twitter"></i></a></li>
+                                        <li class="google-plus"><a href="#" target="_blank"> <i class="fa fa-google-plus"></i></a></li>
+                                        <li class="rss"><a href="#" target="_blank"> <i class="fa fa-rss"></i></a></li>
+                                        <li class="pinterest"><a href="#" target="_blank"> <i class="fa fa-pinterest"></i></a></li>
+                                        <li class="linkedin"><a href="#" target="_blank"> <i class="fa fa-linkedin"></i></a></li>
+                                        <li class="youtube"><a href="#" target="_blank"> <i class="fa fa-youtube"></i></a></li>
+                                    </ul>
+                                </div>
+                            </div>*@
+                            <div class="col-lg-12 coppyright"> © 2021 KOF. All Rights Reserved.</div>
+                            @*<div class="col-xs-12 col-sm-4">
+                                <div class="payment-accept"> <img onload="Wpfcll.r(this,true);" src="/WebContent/qualis/wp-content/plugins/wp-fastest-cache-premium/pro/images/blank.gif" data-wpfc-original-src="https://klbtheme.com//WebContent/qualis/wp-content/uploads/2019/01/payment-1.png" alt="payment-image"> <img onload="Wpfcll.r(this,true);" src="/WebContent/qualis/wp-content/plugins/wp-fastest-cache-premium/pro/images/blank.gif" data-wpfc-original-src="https://klbtheme.com//WebContent/qualis/wp-content/uploads/2019/01/payment-3.png" alt="payment-image"> <img onload="Wpfcll.r(this,true);" src="/WebContent/qualis/wp-content/plugins/wp-fastest-cache-premium/pro/images/blank.gif" data-wpfc-original-src="https://klbtheme.com//WebContent/qualis/wp-content/uploads/2019/01/payment-2.png" alt="payment-image"> <img onload="Wpfcll.r(this,true);" src="/WebContent/qualis/wp-content/plugins/wp-fastest-cache-premium/pro/images/blank.gif" data-wpfc-original-src="https://klbtheme.com//WebContent/qualis/wp-content/uploads/2019/01/payment-4.png" alt="payment-image"></div>
+                            </div>*@
+                        </div>
+                    </div>
+                </div>
+            </footer>
+        </div>
+        <div id="mobile-menu">
+            <ul id="menu-menu-1">
+                <li class="menu-item menu-item-type-custom menu-item-object-custom current-menu-item current_page_item menu-item-home menu-item-248"><a href="index.html" aria-current="page">Home</a></li>
+                <li class="menu-item menu-item-type-taxonomy menu-item-object-product_cat menu-item-has-children menu-item-366 parent drop-menu">
+                    <a href="/WebContent/qualis/product-category/fruits.html">Fruits</a>
+                    <ul class="sub-menu">
+                        <li class="menu-item menu-item-type-taxonomy menu-item-object-product_cat menu-item-has-children menu-item-361 parent drop-menu">
+                            <a href="/WebContent/qualis/product-category/fruits/stone-fruits.html">Stone Fruits</a>
+                            <ul class="sub-menu">
+                                <li class="menu-item menu-item-type-taxonomy menu-item-object-product_cat menu-item-362"><a href="/WebContent/qualis/product-category/fruits/stone-fruits/doughnut-peachs.html">Doughnut Peachs</a></li>
+                                <li class="menu-item menu-item-type-taxonomy menu-item-object-product_cat menu-item-363"><a href="/WebContent/qualis/product-category/fruits/stone-fruits/italian-fruits.html">Italian Fruits</a></li>
+                                <li class="menu-item menu-item-type-taxonomy menu-item-object-product_cat menu-item-364"><a href="/WebContent/qualis/product-category/fruits/stone-fruits/nectarines.html">Nectarines</a></li>
+                                <li class="menu-item menu-item-type-taxonomy menu-item-object-product_cat menu-item-365"><a href="/WebContent/qualis/product-category/fruits/stone-fruits/sweet-apricots.html">Sweet Apricots</a></li>
+                            </ul>
+                        </li>
+                        <li class="menu-item menu-item-type-taxonomy menu-item-object-product_cat menu-item-has-children menu-item-356 parent drop-menu">
+                            <a href="/WebContent/qualis/product-category/fruits/seasonal-fruits.html">Seasonal Fruits</a>
+                            <ul class="sub-menu">
+                                <li class="menu-item menu-item-type-taxonomy menu-item-object-product_cat menu-item-357"><a href="/WebContent/qualis/product-category/fruits/seasonal-fruits/black-jamuns.html">Black Jamuns</a></li>
+                                <li class="menu-item menu-item-type-taxonomy menu-item-object-product_cat menu-item-358"><a href="/WebContent/qualis/product-category/fruits/seasonal-fruits/fresh-mangos.html">Fresh Mangos</a></li>
+                                <li class="menu-item menu-item-type-taxonomy menu-item-object-product_cat menu-item-359"><a href="/WebContent/qualis/product-category/fruits/seasonal-fruits/longans.html">Longans</a></li>
+                                <li class="menu-item menu-item-type-taxonomy menu-item-object-product_cat menu-item-360"><a href="/WebContent/qualis/product-category/fruits/seasonal-fruits/organic-litchis.html">Organic Litchis</a></li>
+                            </ul>
+                        </li>
+                        <li class="menu-item menu-item-type-taxonomy menu-item-object-product_cat menu-item-has-children menu-item-381 parent drop-menu">
+                            <a href="/WebContent/qualis/product-category/fruits/tropical-fruits.html">Tropical Fruits</a>
+                            <ul class="sub-menu">
+                                <li class="menu-item menu-item-type-taxonomy menu-item-object-product_cat menu-item-382"><a href="/WebContent/qualis/product-category/fruits/tropical-fruits/coconuts.html">Coconuts</a></li>
+                                <li class="menu-item menu-item-type-taxonomy menu-item-object-product_cat menu-item-383"><a href="/WebContent/qualis/product-category/fruits/tropical-fruits/dragonfruits.html">Dragonfruits</a></li>
+                                <li class="menu-item menu-item-type-taxonomy menu-item-object-product_cat menu-item-384"><a href="/WebContent/qualis/product-category/fruits/tropical-fruits/passionfruit.html">Passionfruit</a></li>
+                                <li class="menu-item menu-item-type-taxonomy menu-item-object-product_cat menu-item-385"><a href="/WebContent/qualis/product-category/fruits/tropical-fruits/pomegranates.html">Pomegranates</a></li>
+                            </ul>
+                        </li>
+                        <li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-386"><a href="#">HIDDEN COLUMN</a></li>
+                        <li class="menu-item menu-item-type-taxonomy menu-item-object-product_cat menu-item-has-children menu-item-355 parent drop-menu">
+                            <a href="/WebContent/qualis/product-category/fruits/citrus-fruits.html">Citrus Fruits</a>
+                            <ul class="sub-menu">
+                                <li class="menu-item menu-item-type-taxonomy menu-item-object-product_cat menu-item-372"><a href="/WebContent/qualis/product-category/fruits/citrus-fruits/fresh-oranges.html">Fresh Oranges</a></li>
+                                <li class="menu-item menu-item-type-taxonomy menu-item-object-product_cat menu-item-373"><a href="/WebContent/qualis/product-category/fruits/citrus-fruits/grapefruits.html">Grapefruits</a></li>
+                                <li class="menu-item menu-item-type-taxonomy menu-item-object-product_cat menu-item-374"><a href="/WebContent/qualis/product-category/fruits/citrus-fruits/organic-limes.html">Organic Limes</a></li>
+                                <li class="menu-item menu-item-type-taxonomy menu-item-object-product_cat menu-item-375"><a href="/WebContent/qualis/product-category/fruits/citrus-fruits/yellow-lemons.html">Yellow Lemons</a></li>
+                            </ul>
+                        </li>
+                        <li class="menu-item menu-item-type-taxonomy menu-item-object-product_cat menu-item-has-children menu-item-376 parent drop-menu">
+                            <a href="/WebContent/qualis/product-category/fruits/large-fruits.html">Large Fruits</a>
+                            <ul class="sub-menu">
+                                <li class="menu-item menu-item-type-taxonomy menu-item-object-product_cat menu-item-380"><a href="/WebContent/qualis/product-category/fruits/large-fruits/pineapples.html">Pineapples</a></li>
+                                <li class="menu-item menu-item-type-taxonomy menu-item-object-product_cat menu-item-379"><a href="/WebContent/qualis/product-category/fruits/large-fruits/organic-papayas.html">Organic Papayas</a></li>
+                                <li class="menu-item menu-item-type-taxonomy menu-item-object-product_cat menu-item-377"><a href="/WebContent/qualis/product-category/fruits/large-fruits/fresh-melons.html">Fresh Melons</a></li>
+                                <li class="menu-item menu-item-type-taxonomy menu-item-object-product_cat menu-item-378"><a href="/WebContent/qualis/product-category/fruits/large-fruits/grapefruits-large-fruits.html">Grapefruits</a></li>
+                            </ul>
+                        </li>
+                        <li class="menu-item menu-item-type-taxonomy menu-item-object-product_cat menu-item-has-children menu-item-367 parent drop-menu">
+                            <a href="/WebContent/qualis/product-category/fruits/berries-cherries.html">Berries % Cherries</a>
+                            <ul class="sub-menu">
+                                <li class="menu-item menu-item-type-taxonomy menu-item-object-product_cat menu-item-368"><a href="/WebContent/qualis/product-category/fruits/berries-cherries/blackberries.html">Blackberries</a></li>
+                                <li class="menu-item menu-item-type-taxonomy menu-item-object-product_cat menu-item-370"><a href="/WebContent/qualis/product-category/fruits/berries-cherries/raspberries.html">Raspberries</a></li>
+                                <li class="menu-item menu-item-type-taxonomy menu-item-object-product_cat menu-item-371"><a href="/WebContent/qualis/product-category/fruits/berries-cherries/strawberries.html">Strawberries</a></li>
+                                <li class="menu-item menu-item-type-taxonomy menu-item-object-product_cat menu-item-369"><a href="/WebContent/qualis/product-category/fruits/berries-cherries/cherries.html">Cherries</a></li>
+                            </ul>
+                        </li>
+                    </ul>
+                </li>
+                <li class="menu-item menu-item-type-taxonomy menu-item-object-product_cat menu-item-has-children menu-item-387 parent drop-menu">
+                    <a href="/WebContent/qualis/product-category/salads.html">Salads</a>
+                    <ul class="sub-menu">
+                        <li class="menu-item menu-item-type-taxonomy menu-item-object-product_cat menu-item-has-children menu-item-388 parent drop-menu">
+                            <a href="/WebContent/qualis/product-category/salads/veg-salads.html">Veg Salads</a>
+                            <ul class="sub-menu">
+                                <li class="menu-item menu-item-type-taxonomy menu-item-object-product_cat menu-item-390"><a href="/WebContent/qualis/product-category/salads/veg-salads/tomatoes.html">Tomatoes</a></li>
+                                <li class="menu-item menu-item-type-taxonomy menu-item-object-product_cat menu-item-389"><a href="/WebContent/qualis/product-category/salads/veg-salads/peppers-capsicums.html">Peppers & Capsicums</a></li>
+                                <li class="menu-item menu-item-type-taxonomy menu-item-object-product_cat menu-item-391"><a href="/WebContent/qualis/product-category/salads/veg-salads/cucumbers.html">Cucumbers</a></li>
+                                <li class="menu-item menu-item-type-taxonomy menu-item-object-product_cat menu-item-392"><a href="/WebContent/qualis/product-category/salads/veg-salads/avocados.html">Avocados</a></li>
+                            </ul>
+                        </li>
+                        <li class="menu-item menu-item-type-taxonomy menu-item-object-product_cat menu-item-has-children menu-item-393 parent drop-menu">
+                            <a href="/WebContent/qualis/product-category/salads/dressing-salads.html">Dressing Salads</a>
+                            <ul class="sub-menu">
+                                <li class="menu-item menu-item-type-taxonomy menu-item-object-product_cat menu-item-394"><a href="/WebContent/qualis/product-category/salads/dressing-salads/hellmanns.html">Hellmann’s</a></li>
+                                <li class="menu-item menu-item-type-taxonomy menu-item-object-product_cat menu-item-395"><a href="/WebContent/qualis/product-category/salads/dressing-salads/giuseppe-giusti.html">Giuseppe Giusti</a></li>
+                                <li class="menu-item menu-item-type-taxonomy menu-item-object-product_cat menu-item-396"><a href="/WebContent/qualis/product-category/salads/dressing-salads/unitednature.html">Unitednature</a></li>
+                                <li class="menu-item menu-item-type-taxonomy menu-item-object-product_cat menu-item-397"><a href="/WebContent/qualis/product-category/salads/dressing-salads/walden-farms.html">Walden Farms</a></li>
+                            </ul>
+                        </li>
+                        <li class="menu-item menu-item-type-taxonomy menu-item-object-product_cat menu-item-has-children menu-item-398 parent drop-menu">
+                            <a href="/WebContent/qualis/product-category/salads/fruits-salads.html">Fruits Salads</a>
+                            <ul class="sub-menu">
+                                <li class="menu-item menu-item-type-taxonomy menu-item-object-product_cat menu-item-399"><a href="/WebContent/qualis/product-category/salads/fruits-salads/pineapples-fruits-salads.html">Pineapples</a></li>
+                                <li class="menu-item menu-item-type-taxonomy menu-item-object-product_cat menu-item-400"><a href="/WebContent/qualis/product-category/salads/fruits-salads/red-apple.html">Red Apple</a></li>
+                                <li class="menu-item menu-item-type-taxonomy menu-item-object-product_cat menu-item-401"><a href="/WebContent/qualis/product-category/fruits/berries-cherries/strawberries.html">Strawberries</a></li>
+                                <li class="menu-item menu-item-type-taxonomy menu-item-object-product_cat menu-item-402"><a href="/WebContent/qualis/product-category/salads/fruits-salads/row-mangos.html">Row Mangos</a></li>
+                            </ul>
+                        </li>
+                        <li class="menu-item menu-item-type-taxonomy menu-item-object-product_cat menu-item-has-children menu-item-403 parent drop-menu">
+                            <a href="/WebContent/qualis/product-category/salads/bagged-salads.html">Bagged Salads</a>
+                            <ul class="sub-menu">
+                                <li class="menu-item menu-item-type-taxonomy menu-item-object-product_cat menu-item-404"><a href="/WebContent/qualis/product-category/salads/bagged-salads/italian-baby-spinach.html">Italian Baby Spinach</a></li>
+                                <li class="menu-item menu-item-type-taxonomy menu-item-object-product_cat menu-item-405"><a href="/WebContent/qualis/product-category/salads/bagged-salads/australia-green-kale.html">Australia Green Kale</a></li>
+                                <li class="menu-item menu-item-type-taxonomy menu-item-object-product_cat menu-item-406"><a href="/WebContent/qualis/product-category/salads/bagged-salads/oro-rocket-salad.html">Oro Rocket Salad</a></li>
+                                <li class="menu-item menu-item-type-taxonomy menu-item-object-product_cat menu-item-407"><a href="/WebContent/qualis/product-category/salads/bagged-salads/sustenir-fresh-toscano.html">Sustenir Fresh Toscano</a></li>
+                            </ul>
+                        </li>
+                        <li class="menu-item menu-item-type-taxonomy menu-item-object-product_cat menu-item-has-children menu-item-408 parent drop-menu">
+                            <a href="/WebContent/qualis/product-category/salads/lettuce-salads.html">Lettuce Salads</a>
+                            <ul class="sub-menu">
+                                <li class="menu-item menu-item-type-taxonomy menu-item-object-product_cat menu-item-409"><a href="/WebContent/qualis/product-category/salads/lettuce-salads/butterhead.html">Butterhead</a></li>
+                                <li class="menu-item menu-item-type-taxonomy menu-item-object-product_cat menu-item-411"><a href="/WebContent/qualis/product-category/salads/lettuce-salads/red-coral.html">Red Coral</a></li>
+                                <li class="menu-item menu-item-type-taxonomy menu-item-object-product_cat menu-item-412"><a href="/WebContent/qualis/product-category/salads/lettuce-salads/rolla-rosa-lettuce.html">Rolla Rosa Lettuce</a></li>
+                                <li class="menu-item menu-item-type-taxonomy menu-item-object-product_cat menu-item-410"><a href="/WebContent/qualis/product-category/salads/lettuce-salads/summercrisp.html">Summercrisp</a></li>
+                            </ul>
+                        </li>
+                        <li class="menu-item menu-item-type-taxonomy menu-item-object-product_cat menu-item-has-children menu-item-413 parent drop-menu">
+                            <a href="/WebContent/qualis/product-category/salads/bread-salads.html">Bread Salads</a>
+                            <ul class="sub-menu">
+                                <li class="menu-item menu-item-type-taxonomy menu-item-object-product_cat menu-item-414"><a href="/WebContent/qualis/product-category/salads/bread-salads/green-goddess.html">Green Goddess</a></li>
+                                <li class="menu-item menu-item-type-taxonomy menu-item-object-product_cat menu-item-415"><a href="/WebContent/qualis/product-category/salads/bread-salads/grilled-broccoli.html">Grilled Broccoli</a></li>
+                                <li class="menu-item menu-item-type-taxonomy menu-item-object-product_cat menu-item-417"><a href="/WebContent/qualis/product-category/salads/bread-salads/panzanella.html">Panzanella</a></li>
+                                <li class="menu-item menu-item-type-taxonomy menu-item-object-product_cat menu-item-416"><a href="/WebContent/qualis/product-category/salads/bread-salads/green-tomato.html">Green Tomato</a></li>
+                            </ul>
+                        </li>
+                    </ul>
+                </li>
+                <li class="menu-item menu-item-type-taxonomy menu-item-object-product_cat menu-item-419"><a href="/WebContent/qualis/product-category/juices.html">List View</a></li>
+                <li class="menu-item menu-item-type-taxonomy menu-item-object-product_cat menu-item-418"><a href="/WebContent/qualis/product-category/meats.html">Grid View</a></li>
+                <li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-has-children menu-item-249 parent drop-menu">
+                    <a href="#">Pages</a>
+                    <ul class="sub-menu">
+                        <li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-426"><a href="/WebContent/qualis/shop.html">Products Grid</a></li>
+                        <li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-427"><a href="/WebContent/qualis/products-list-view.html">Products List</a></li>
+                        <li class="menu-item menu-item-type-post_type menu-item-object-product menu-item-428"><a href="/WebContent/qualis/product/fresh-organic-mustard-leaves.html">Product Detail</a></li>
+                        <li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-423"><a href="/WebContent/qualis/cart.html">Cart Page</a></li>
+                        <li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-422"><a href="/WebContent/qualis/checkout.html">Checkout</a></li>
+                        <li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-424"><a href="/WebContent/qualis/wishlist.html">Wishlist</a></li>
+                        <li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-425"><a href="/Home/MyAccount">My account</a></li>
+                        <li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-433"><a href="/WebContent/qualis/blog.html">Blog</a></li>
+                        <li class="menu-item menu-item-type-post_type menu-item-object-post menu-item-434"><a href="/WebContent/qualis/powerful-and-flexible-premium-ecommerce-themes.html">Blog Detail</a></li>
+                        <li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-420"><a href="/WebContent/qualis/404.html">404 Error Page</a></li>
+                    </ul>
+                </li>
+                <li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-429"><a href="/Home/ContactUs">Contact Us</a></li>
+                <li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-429"><a href="/Home/About">About</a></li>
+            </ul>
+        </div>
+        <script type="text/html" id="wpb-modifications">
+        </script>
+        <link rel="stylesheet" type="text/css" href="/WebContent/qualis/wp-content/cache/wpfc-minified/q6r7hjst/3xnse.css" media="all" />
+        <noscript id="wpfc-google-fonts">
+            <link rel='stylesheet' id='qualis-font-css' href='//fonts.googleapis.com/css?family=Merriweather:300,300i,400,400i,700|Oswald:300,400,500,600,700|Open+Sans:700,600,800,400|Rubik:400,400i,500,500i,700,700i,900&#038;subset=latin,latin-ext' type='text/css' media='all' />
+            <link href="//fonts.googleapis.com/css?family=Oswald:400%2C600%7CRoboto:400%7COpen+Sans:600" rel="stylesheet" property="stylesheet" media="all" type="text/css">
+        </noscript>
+        <script id='wc-add-to-cart-js-extra'>var wc_add_to_cart_params = { "ajax_url": "index.html", "wc_ajax_url": "\/qualis\/?wc-ajax=%%endpoint%%", "i18n_view_cart": "View cart", "cart_url": "https:\/\/klbtheme.com\/qualis\/cart\/", "is_cart": "", "cart_redirect_after_add": "no" };</script>
+        <script>
+            (function () {
+                var c = document.body.className;
+                c = c.replace(/woocommerce-no-js/, 'woocommerce-js');
+                document.body.className = c;
+            })();
+        </script>
+        <script id='contact-form-7-js-extra'>var wpcf7 = { "api": { "root": "https:\/\/klbtheme.com\/qualis\/wp-json\/", "namespace": "contact-form-7\/v1" } };</script>
+        <script id='woocommerce-js-extra'>var woocommerce_params = { "ajax_url": "index.html", "wc_ajax_url": "\/qualis\/?wc-ajax=%%endpoint%%" };</script>
+        <script id='wc-cart-fragments-js-extra'>var wc_cart_fragments_params = { "ajax_url": "index.html", "wc_ajax_url": "\/qualis\/?wc-ajax=%%endpoint%%", "cart_hash_key": "wc_cart_hash_b82fd1e602d3929a2e8e26009ed3c00d", "fragment_name": "wc_fragments_b82fd1e602d3929a2e8e26009ed3c00d", "request_timeout": "5000" };</script>
+        <script id='yith-woocompare-main-js-extra'>var yith_woocompare = { "ajaxurl": "\/qualis\/?wc-ajax=%%endpoint%%", "actionadd": "yith-woocompare-add-product", "actionremove": "yith-woocompare-remove-product", "actionview": "yith-woocompare-view-table", "actionreload": "yith-woocompare-reload-product", "added_label": "Added", "table_title": "Product Comparison", "auto_open": "yes", "loader": "https:\/\/klbtheme.com\/qualis\/wp-content\/plugins\/yith-woocommerce-compare\/assets\/images\/loader.gif", "button_text": "Compare", "cookie_name": "yith_woocompare_list", "close_label": "Close" };</script>
+        <script id='tinvwl-js-extra'>var tinvwl_add_to_wishlist = { "text_create": "Create New", "text_already_in": "Product already in Wishlist", "simple_flow": "", "hide_zero_counter": "", "i18n_make_a_selection_text": "Please select some product options before adding this product to your wishlist.", "tinvwl_break_submit": "No items or actions are selected.", "tinvwl_clipboard": "Copied!", "allow_parent_variable": "", "block_ajax_wishlists_data": "", "update_wishlists_data": "", "hash_key": "ti_wishlist_data_b82fd1e602d3929a2e8e26009ed3c00d", "nonce": "0d83da41f0", "rest_root": "https:\/\/klbtheme.com\/qualis\/wp-json\/", "plugin_url": "https:\/\/klbtheme.com\/qualis\/wp-content\/plugins\/ti-woocommerce-wishlist\/" };</script>
+        <script id='qualis-quick-ajax-js-extra'>var MyAjax = { "ajaxurl": "https:\/\/klbtheme.com\/qualis\/wp-admin\/admin-ajax.php", "current_page": "1", "per_page": "0" };</script>
+        <script id='qualis-slidetext-js-extra'>var slidetext = { "speed": "3000" };</script>
+        <script id='qualis-carousel-category-js-extra'>var productcategory = { "displayitem": "8", "mobileitem": "2" };</script>
+        <script id='qualis-products-carosuel-js-extra'>var productcarousel = { "displayitem": "4", "mobileitem": "2" };</script>
+        <script id='qualis-countdown-js-extra'>var translate = { "day": "day", "hrs": "hrs", "mins": "mins", "secs": "secs" };</script>
+        <script src='/WebContent/qualis/wp-content/cache/wpfc-minified/lktapqc1/3xnsg.js'></script>
+        <script>
+            function setREVStartSize(e) {
+                try {
+                    var pw = document.getElementById(e.c).parentNode.offsetWidth,
+                        newh;
+                    pw = pw === 0 || isNaN(pw) ? window.innerWidth : pw;
+                    e.tabw = e.tabw === undefined ? 0 : parseInt(e.tabw);
+                    e.thumbw = e.thumbw === undefined ? 0 : parseInt(e.thumbw);
+                    e.tabh = e.tabh === undefined ? 0 : parseInt(e.tabh);
+                    e.thumbh = e.thumbh === undefined ? 0 : parseInt(e.thumbh);
+                    e.tabhide = e.tabhide === undefined ? 0 : parseInt(e.tabhide);
+                    e.thumbhide = e.thumbhide === undefined ? 0 : parseInt(e.thumbhide);
+                    e.mh = e.mh === undefined || e.mh == "" || e.mh === "auto" ? 0 : parseInt(e.mh, 0);
+                    if (e.layout === "fullscreen" || e.l === "fullscreen")
+                        newh = Math.max(e.mh, window.innerHeight);
+                    else {
+                        e.gw = Array.isArray(e.gw) ? e.gw : [e.gw];
+                        for (var i in e.rl) if (e.gw[i] === undefined || e.gw[i] === 0) e.gw[i] = e.gw[i - 1];
+                        e.gh = e.el === undefined || e.el === "" || (Array.isArray(e.el) && e.el.length == 0) ? e.gh : e.el;
+                        e.gh = Array.isArray(e.gh) ? e.gh : [e.gh];
+                        for (var i in e.rl) if (e.gh[i] === undefined || e.gh[i] === 0) e.gh[i] = e.gh[i - 1];
+                        var nl = new Array(e.rl.length),
+                            ix = 0,
+                            sl;
+                        e.tabw = e.tabhide >= pw ? 0 : e.tabw;
+                        e.thumbw = e.thumbhide >= pw ? 0 : e.thumbw;
+                        e.tabh = e.tabhide >= pw ? 0 : e.tabh;
+                        e.thumbh = e.thumbhide >= pw ? 0 : e.thumbh;
+                        for (var i in e.rl) nl[i] = e.rl[i] < window.innerWidth ? 0 : e.rl[i];
+                        sl = nl[0];
+                        for (var i in nl) if (sl > nl[i] && nl[i] > 0) { sl = nl[i]; ix = i; }
+                        var m = pw > (e.gw[ix] + e.tabw + e.thumbw) ? 1 : (pw - (e.tabw + e.thumbw)) / (e.gw[ix]);
+                        newh = (e.type === "carousel" && e.justify === "true" ? e.gh[ix] : (e.gh[ix] * m)) + (e.tabh + e.thumbh);
+                    }
+                    if (window.rs_init_css === undefined) window.rs_init_css = document.head.appendChild(document.createElement("style"));
+                    document.getElementById(e.c).height = newh;
+                    window.rs_init_css.innerHTML += "#" + e.c + "_wrapper { height: " + newh + "px }";
+                } catch (e) {
+                    console.log("Failure at Presize of Slider:" + e)
+                }
+            };
+        </script>
+        <script>
+            setREVStartSize({ c: 'rev_slider_1_1', rl: [1240, 1024, 778, 480], el: [750, 600, 500, 400], gw: [1240, 1024, 778, 480], gh: [750, 600, 500, 400], type: 'standard', justify: '', layout: 'fullwidth', mh: "0" });
+            var revapi1,
+                tpj;
+            jQuery(function () {
+                tpj = jQuery;
+                if (tpj("#rev_slider_1_1").revolution == undefined) {
+                    revslider_showDoubleJqueryError("#rev_slider_1_1");
+                } else {
+                    revapi1 = tpj("#rev_slider_1_1").show().revolution({
+                        jsFileLocation: "/WebContent/qualis/wp-content/plugins/revslider/public/assets/js/",
+                        sliderLayout: "fullwidth",
+                        visibilityLevels: "1240,1024,778,480",
+                        gridwidth: "1240,1024,778,480",
+                        gridheight: "750,600,500,400",
+                        lazyType: "smart",
+                        editorheight: "750,600,500,400",
+                        responsiveLevels: "1240,1024,778,480",
+                        navigation: {
+                            mouseScrollNavigation: false,
+                            touch: {
+                                touchenabled: true,
+                                swipe_min_touches: 50
+                            },
+                            arrows: {
+                                enable: true,
+                                style: "uranus",
+                                hide_onmobile: true,
+                                hide_under: 600,
+                                hide_onleave: true,
+                                left: {
+                                    h_offset: 30
+                                },
+                                right: {
+                                    h_offset: 30
+                                }
+                            }
+                        },
+                        parallax: {
+                            levels: [2, 3, 4, 5, 6, 7, 12, 16, 10, 50, 47, 48, 49, 50, 51, 55],
+                            type: "mouse",
+                            origo: "slidercenter",
+                            speed: 2000
+                        },
+                        fallbacks: {
+                            allowHTML5AutoPlayOnAndroid: true
+                        },
+                    });
+                }
+            });
+        </script>
+        <script>
+            var htmlDivCss = unescape("%23rev_slider_1_1_wrapper%20.uranus.tparrows%20%7B%0A%20%20width%3A50px%3B%0A%20%20height%3A50px%3B%0A%20%20background%3Argba%28255%2C255%2C255%2C0%29%3B%0A%20%7D%0A%20%23rev_slider_1_1_wrapper%20.uranus.tparrows%3Abefore%20%7B%0A%20width%3A50px%3B%0A%20height%3A50px%3B%0A%20line-height%3A50px%3B%0A%20font-size%3A40px%3B%0A%20transition%3Aall%200.3s%3B%0A-webkit-transition%3Aall%200.3s%3B%0A%20%7D%0A%20%0A%20%20%23rev_slider_1_1_wrapper%20.uranus.tparrows%3Ahover%3Abefore%20%7B%0A%20%20%20%20opacity%3A0.75%3B%0A%20%20%7D%0A");
+            var htmlDiv = document.getElementById('rs-plugin-settings-inline-css');
+            if (htmlDiv) {
+                htmlDiv.innerHTML = htmlDiv.innerHTML + htmlDivCss;
+            } else {
+                var htmlDiv = document.createElement('div');
+                htmlDiv.innerHTML = '<style>' + htmlDivCss + '</style>';
+                document.getElementsByTagName('head')[0].appendChild(htmlDiv.childNodes[0]);
+            }
+        </script>
+        <script>
+            var htmlDivCss = unescape("%0A%0A");
+            var htmlDiv = document.getElementById('rs-plugin-settings-inline-css');
+            if (htmlDiv) {
+                htmlDiv.innerHTML = htmlDiv.innerHTML + htmlDivCss;
+            } else {
+                var htmlDiv = document.createElement('div');
+                htmlDiv.innerHTML = '<style>' + htmlDivCss + '</style>';
+                document.getElementsByTagName('head')[0].appendChild(htmlDiv.childNodes[0]);
+            }
+        </script>
+        <script>
+            (function () {
+                window.mc4wp = window.mc4wp || {
+                    listeners: [],
+                    forms: {
+                        on: function (evt, cb) {
+                            window.mc4wp.listeners.push({
+                                event: evt,
+                                callback: cb
+                            }
+                            );
+                        }
+                    }
+                }
+            })();
+        </script>
+        <script>
+            (function () {
+                function maybePrefixUrlField() {
+                    if (this.value.trim() !== '' && this.value.indexOf('http') !== 0) {
+                        this.value = "http://" + this.value;
+                    }
+                }
+                var urlFields = document.querySelectorAll('.mc4wp-form input[type="url"]');
+                if (urlFields) {
+                    for (var j = 0; j < urlFields.length; j++) {
+                        urlFields[j].addEventListener('blur', maybePrefixUrlField);
+                    }
+                }
+            })();
+        </script>
+        <script>
+            if (typeof revslider_showDoubleJqueryError === "undefined") {
+                function revslider_showDoubleJqueryError(sliderID) {
+                    var err = "<div class='rs_error_message_box'>";
+                    err += "<div class='rs_error_message_oops'>Oops...</div>";
+                    err += "<div class='rs_error_message_content'>"; err += "You have some jquery.js library include that comes after the Slider Revolution files js inclusion.<br>"; err += "To fix this, you can:<br>&nbsp;&nbsp;&nbsp; 1. Set 'Module General Options' -> 'Advanced' -> 'jQuery & OutPut Filters' -> 'Put JS to Body' to on"; err += "<br>&nbsp;&nbsp;&nbsp; 2. Find the double jQuery.js inclusion and remove it"; err += "</div>";
+                    err += "</div>";
+                    jQuery(sliderID).show().html(err);
+                }
+            }
+        </script>
+        <script defer src='/WebContent/qualis/wp-content/cache/wpfc-minified/d5esbcf/3xnsf.js'></script>
+        <script defer src='/WebContent/qualis/wp-content/cache/wpfc-minified/o8l0w9j/3xnsf.js' id='tinvwl-js'></script>
+        <script defer src='/WebContent/qualis/wp-content/cache/wpfc-minified/e6334xmt/3xnsg.js'></script>
+        <script>document.addEventListener('DOMContentLoaded', function () { function wpfcgl() { var wgh = document.querySelector('noscript#wpfc-google-fonts').innerText, wgha = wgh.match(/<link[^\>]+>/gi); for (i = 0; i < wgha.length; i++) { var wrpr = document.createElement('div'); wrpr.innerHTML = wgha[i]; document.body.appendChild(wrpr.firstChild); } } wpfcgl(); });</script>
+
+    </body>
+</html>
+<!-- WP Fastest Cache file was created in 0.91145896911621 seconds, on 26-01-22 18:03:04 -->

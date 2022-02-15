@@ -7,7 +7,7 @@ export const environment = {
   production: false,
  
  // apiurl:"https://ewholesalerauth.com/Api/",
-  apiurl:"https://localhost:44391/Api/",
+  apiurl:"https://localhost:44370/Api/",
   //Imagebaseurl:"https://ewholesalerauth.com/Content/"
-  Imagebaseurl:"https://ewhosaler.conveyor.cloud/Content/"
+  Imagebaseurl:"https://localhost:44370/Content/"
 };

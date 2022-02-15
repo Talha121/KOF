@@ -90,6 +90,7 @@ const routes: Routes = [
      
       },
       {  path: 'posorders', redirectTo: '/allorders/posorders', pathMatch: 'full'},
+      {  path: 'messages', redirectTo: '/allorders/messages', pathMatch: 'full'},
     
     {
         path: 'allvendors',

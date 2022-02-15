@@ -272,9 +272,10 @@ changestatus(data:any){
              this.alertify.success('Product Created seccussfully');
             
            }, error => {
+             debugger
             this.modalService.dismissAll();
             this.singleproductform.reset();
-            this.alertify.success('Product Created seccussfully');
+            this.alertify.error(error.error.response)
              console.log(error);
            });
       }else{

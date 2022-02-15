@@ -46,11 +46,12 @@ export class SupplierlistComponent implements OnInit {
   
   }
   AddSalesman(){
+    debugger;
     this.SpinnerService.show();
     this.trigger=false;
     
     console.log(this.AddSuppluerForm.value)
-    if(this.AddSuppluerForm.value.id==0)
+    if(this.AddSuppluerForm.value.id==0||this.AddSuppluerForm.value.id==null)
     {
       this.productservice.postsupplier(this.AddSuppluerForm.value).subscribe(next => {
         this.SpinnerService.hide();

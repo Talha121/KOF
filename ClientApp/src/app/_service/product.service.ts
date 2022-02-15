@@ -30,6 +30,7 @@ GetInventory(){
 GetSupplier(){
   return this.http.get<any>(environment.apiurl+'Supplier/getall')
 };
+
 Updatesupplier(form: any){
   return this.http.put<any>(environment.apiurl+'Supplier/updatesupplier', form)
 };
